@@ -1,7 +1,9 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
+import SignUpPage from "../pages/SignUpPage";
+import HomePage from "../pages/HomePage";
 
-const Router = isAuthenticated => {
+const Router = ({isAuthenticated}) => {
     if (isAuthenticated) {
         return(
             <Routes>
@@ -19,9 +21,9 @@ const Router = isAuthenticated => {
 
     return(
         <Routes>
-            <Route path={'/'}/>
-            <Route path={'/sign in'}/>
-            <Route path={'/sign up'}/>
+            <Route path={'/'} element={<HomePage />}/>
+            <Route path={'/sign-in'}/>
+            <Route exact path={'/sign-up'} element={<SignUpPage />}/>
             <Route path={'/items'}/>
             <Route path={'/houses'}/>
             <Route path={'/services'}/>
