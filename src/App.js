@@ -1,6 +1,11 @@
+import Router from "./components/Router";
+import {BrowserRouter} from "react-router-dom";
+
 function App() {
   return (
-    <h1>Hello</h1>
+      <BrowserRouter>
+        <Router isAuth={true}/>
+      </BrowserRouter>
   );
 }
 
