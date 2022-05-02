@@ -2,6 +2,7 @@ import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import SignUpPage from "../pages/SignUpPage";
 import HomePage from "../pages/HomePage";
+import SignInPage from "../pages/SignInPage";
 
 const Router = ({isAuthenticated}) => {
     if (isAuthenticated) {
@@ -22,7 +23,7 @@ const Router = ({isAuthenticated}) => {
     return(
         <Routes>
             <Route path={'/'} element={<HomePage />}/>
-            <Route path={'/sign-in'}/>
+            <Route path={'/sign-in'} element={<SignInPage />}/>
             <Route exact path={'/sign-up'} element={<SignUpPage />}/>
             <Route path={'/items'}/>
             <Route path={'/houses'}/>
