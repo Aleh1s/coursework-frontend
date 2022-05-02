@@ -3,13 +3,18 @@ import NavBar from "./components/NavBar";
 
 function App() {
 
+    const style = {
+        backgroundColor: '#263238',
+        color: 'white',
+        minHeight: '100vh'
+    }
     const isAuthenticated = false
 
   return (
-      <div>
+      <header style={style}>
         <NavBar isAuthenticated={isAuthenticated}/>
         <Router isAuthenticated={isAuthenticated}/>
-      </div>
+      </header>
   );
 }
 

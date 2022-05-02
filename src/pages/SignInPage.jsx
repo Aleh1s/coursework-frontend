@@ -13,11 +13,15 @@ const SignInPage = () => {
 
     }
 
+    const style = {
+        backgroundColor: '#37474f', color: 'white'
+    }
+
     return (
         <div>
             <Container>
                 <Row>
-                    <Col className={'col-5 mx-auto my-5 shadow'}>
+                    <Col style={style} className={'col-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign in</p>
                         <Form className={'p-4'} onSubmit={signIn}>
                             <Row className="mb-3">
