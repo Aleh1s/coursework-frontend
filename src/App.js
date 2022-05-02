@@ -1,8 +1,15 @@
 import Router from "./components/Router";
+import NavBar from "./components/NavBar";
 
 function App() {
+
+    const isAuthenticated = false
+
   return (
-        <Router isAuthenticated={false}/>
+      <div>
+        <NavBar isAuthenticated={isAuthenticated}/>
+        <Router isAuthenticated={isAuthenticated}/>
+      </div>
   );
 }
 
