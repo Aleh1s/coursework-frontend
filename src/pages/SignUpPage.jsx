@@ -26,7 +26,7 @@ const SignUpPage = () => {
         <div>
             <Container>
                 <Row>
-                    <Col style={style} className={'col-5 mx-auto my-5 shadow'}>
+                    <Col style={style} className={'col-lg-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign up</p>
                         <Form className={'p-4'} onSubmit={signUp}>
                             <Row className="mb-3">
