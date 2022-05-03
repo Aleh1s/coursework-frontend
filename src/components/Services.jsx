@@ -2,10 +2,12 @@ import React from 'react';
 import {Container, Row} from "react-bootstrap";
 import Item from "./Item";
 import Service from "./Service";
+import SearchBlock from "./SearchBlock";
 
 const Services = ({services}) => {
     return (
         <Container>
+            <SearchBlock placeHolderText={'Search service'} textForButton={'Search'}/>
             <Row>
                 {
                     services ? services.map(
