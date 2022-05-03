@@ -1,6 +1,5 @@
 import React from 'react';
-import {Button, Card, Col, Container, FormControl, InputGroup, Row} from "react-bootstrap";
-import {Link} from "react-router-dom";
+import {Container, Row} from "react-bootstrap";
 import Item from "./Item";
 import SearchBlock from "./SearchBlock";
 

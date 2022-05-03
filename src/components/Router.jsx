@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import SignInPage from "../pages/SignInPage";
 import ItemPage from "../pages/ItemPage";
 import ServicePage from "../pages/ServicesPage";
+import AboutPage from "../pages/AboutPage";
 
 const Router = ({isAuthenticated}) => {
     if (isAuthenticated) {
@@ -27,6 +28,7 @@ const Router = ({isAuthenticated}) => {
             <Route path={'/'} element={<HomePage />}/>
             <Route path={'/sign-in'} element={<SignInPage />}/>
             <Route path={'/sign-up'} element={<SignUpPage />}/>
+            <Route path={'/about'} element={<AboutPage />}/>
             <Route path={'/houses/house'}/>
             <Route path={'/services/service'} element={<ServicePage />}/>
             <Route path={'/items/item'} element={<ItemPage />}/>

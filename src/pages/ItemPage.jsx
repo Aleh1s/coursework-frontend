@@ -51,6 +51,12 @@ const ItemPage = () => {
                     <Button variant={'outline-secondary'} as={Col} className={'mx-1'} onClick={handleShowModalPhone}>Order by phone</Button>
                 </Col>
             </Row>
+            <hr/>
+            <Row>
+                <Col className={'mx-auto my-auto col-8'} style={{backgroundColor: '#37474f', color: 'white'}}>
+
+                </Col>
+            </Row>
             <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
             <ModalPhone show={showModalPhone} onHide={handleHideModalPhone}/>
         </Container>
