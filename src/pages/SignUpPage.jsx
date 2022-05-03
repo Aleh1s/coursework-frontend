@@ -7,6 +7,7 @@ const SignUpPage = () => {
     const [signUpData, setSignUpData] = useState({
         email: '',
         password: '',
+        fullName: '',
         city: '',
         address: '',
         postNumber: '',
@@ -44,6 +45,13 @@ const SignUpPage = () => {
                                     }/>
                                 </Form.Group>
                             </Row>
+
+                            <Form.Group className="mb-3" controlId="formGridAddress1">
+                                <Form.Label>Full name</Form.Label>
+                                <Form.Control placeholder="Full name" onChange={
+                                    event => setSignUpData({...signUpData, fullName: event.target.value})
+                                }/>
+                            </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGridAddress1">
                                 <Form.Label>City</Form.Label>

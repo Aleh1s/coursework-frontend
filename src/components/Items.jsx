@@ -10,7 +10,7 @@ const Items = ({items}) => {
                 {
                     items ? items.map(
                         (item, index) =>
-                            <Item key={index} item={item}/>
+                            <Item key={index} item={item} />
                     ) : <p>No items</p>
                 }
             </Row>

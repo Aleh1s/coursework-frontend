@@ -1,7 +1,14 @@
 import React from 'react';
 import {Button, Card, Col, Container} from "react-bootstrap";
+import { useNavigate } from 'react-router-dom'
 
 const Item = ({item, key}) => {
+
+    const navigate = useNavigate()
+
+    const handleViewMore = () => {
+        navigate('/items/item')
+    }
 
     const style = {
         backgroundColor: '#37474f',
@@ -19,7 +26,7 @@ const Item = ({item, key}) => {
                     <Card.Text>
                         {item.text}
                     </Card.Text>
-                    <a className={'link-info'}>View more</a>
+                    <a className={'link-info'} onClick={handleViewMore}>View more</a>
                 </Card.Body>
             </Card>
         </Col>
