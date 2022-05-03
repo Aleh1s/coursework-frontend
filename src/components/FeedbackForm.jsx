@@ -16,6 +16,7 @@ const FeedbackForm = () => {
         <Container>
             <Row>
                 <Col className={'mx-auto my-4 col-8 rounded'} style={{backgroundColor: '#37474f'}}>
+                    <p className={'h2 p-2'} align={'center'}>Feedback</p>
                     <Form className={'p-3'} onSubmit={submit}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Email address</Form.Label>
