@@ -1,12 +1,12 @@
 import React from 'react';
 import {Route, Routes} from 'react-router-dom';
-import SignUpPage from "../pages/SignUpPage";
-import HomePage from "../pages/HomePage";
-import SignInPage from "../pages/SignInPage";
-import ItemPage from "../pages/ItemPage";
-import ServicePage from "../pages/ServicesPage";
-import AboutPage from "../pages/AboutPage";
-import ProfilePage from "../pages/ProfilePage";
+import SignUpPage from "../../pages/SignUpPage";
+import HomePage from "../../pages/HomePage";
+import SignInPage from "../../pages/SignInPage";
+import ItemPage from "../../pages/ItemPage";
+import ServicePage from "../../pages/ServicesPage";
+import AboutPage from "../../pages/AboutPage";
+import ProfilePage from "../../pages/ProfilePage";
 
 const Router = ({isAuthenticated}) => {
     if (isAuthenticated) {

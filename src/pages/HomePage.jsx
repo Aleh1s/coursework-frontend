@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {Col, Container, Row} from "react-bootstrap";
-import TabHome from "../components/TabHome";
+import React, {useEffect, useState} from 'react';
+import {Col, Container, Pagination, Row} from "react-bootstrap";
+import TabHome from "../components/UI/TabHome";
 
 const HomePage = () => {
 
@@ -42,9 +42,15 @@ const HomePage = () => {
         }
     ])
 
+    useEffect(() => {
+
+    }, [])
+
+
+
     return (
         <Container>
-            <Row>
+            <Row className={'justify-content-center'}>
                 <Col className={'col-12 mx-auto my-4'}>
                     <TabHome items={items} services={services}/>
                 </Col>

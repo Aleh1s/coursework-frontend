@@ -1,5 +1,5 @@
-import Router from "./components/Router";
-import NavBar from "./components/NavBar";
+import Router from "./components/UI/Router";
+import NavBar from "./components/UI/NavBar";
 import {Col, Container, Row} from "react-bootstrap";
 
 function App() {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import FeedbackForm from "../components/FeedbackForm";
+import FeedbackForm from "../components/UI/FeedbackForm";
 
 const AboutPage = () => {
     return (

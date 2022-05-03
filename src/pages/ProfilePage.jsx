@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Col, Container, Image, Row} from "react-bootstrap";
-import TabProfile from "../components/TabProfile";
-import UserInfoTab from "../components/UserInfoTab";
+import TabProfile from "../components/UI/TabProfile";
+import UserInfoTab from "../components/UI/UserInfoTab";
 
 const ProfilePage = () => {
 

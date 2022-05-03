@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Carousel, Col, Container, ListGroup, Row} from "react-bootstrap";
-import ModalItemForm from "../components/ModalItemForm";
-import ModalPhone from "../components/ModalPhone";
+import ModalItemForm from "../components/modals/ModalItemForm";
+import ModalPhone from "../components/modals/ModalPhone";
 
 const ItemPage = () => {
 

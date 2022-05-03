@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Button, Carousel, Col, Container, Row} from "react-bootstrap";
-import ModalItemForm from "../components/ModalItemForm";
-import ModalServiceForm from "../components/ModalServiceForm";
-import ModalPhone from "../components/ModalPhone";
+import ModalItemForm from "../components/modals/ModalItemForm";
+import ModalServiceForm from "../components/modals/ModalServiceForm";
+import ModalPhone from "../components/modals/ModalPhone";
 
 const ServicePage = () => {
 
