@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Carousel, Col, Container, Row} from "react-bootstrap";
 import ModalItemForm from "../components/ModalItemForm";
+import ModalServiceForm from "../components/ModalServiceForm";
 
 const ServicePage = () => {
 
@@ -45,7 +46,7 @@ const ServicePage = () => {
                     <Button variant={'secondary'} onClick={handleShowModal}>Order</Button>
                 </Col>
             </Row>
-            <ModalItemForm show={showModal} onHide={handleCloseModal}/>
+            <ModalServiceForm show={showModal} onHide={handleCloseModal}/>
         </Container>
     );
 };

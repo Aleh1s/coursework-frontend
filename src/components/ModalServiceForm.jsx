@@ -1,21 +1,15 @@
 import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 
-const ModalItemForm = (props) => {
+const ModalServiceForm = (props) => {
 
     const [orderData, setOrderData] = useState({
         fullName: '',
-        city: '',
         phoneNumber: '',
+        city: '',
         address: '',
-        postNumber: '',
         wishes: ''
     })
-
-    const style = {
-        backgroundColor: '#37474f',
-        color: 'white'
-    }
 
     const submitForm = (e) => {
         e.preventDefault()
@@ -66,13 +60,6 @@ const ModalItemForm = (props) => {
                         </Form.Text>
                     </Form.Group>
 
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Post number</Form.Label>
-                        <Form.Control type="text" placeholder="Enter post number" onChange={
-                            event => setOrderData({...orderData, postNumber: event.target.value})
-                        }/>
-                    </Form.Group>
-
                     <Form.Group
                         className="mb-3"
                         controlId="exampleForm.ControlTextarea1"
@@ -95,4 +82,4 @@ const ModalItemForm = (props) => {
     );
 };
 
-export default ModalItemForm;
+export default ModalServiceForm;
