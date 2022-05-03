@@ -9,7 +9,7 @@ function App() {
         color: 'white',
         minHeight: '100vh'
     }
-    const isAuthenticated = false
+    const isAuthenticated = true
 
     return (
         <div>

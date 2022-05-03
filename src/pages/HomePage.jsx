@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Col, Container, Row} from "react-bootstrap";
-import Tab from "../components/Tab";
+import TabHome from "../components/TabHome";
 
 const HomePage = () => {
 
@@ -46,7 +46,7 @@ const HomePage = () => {
         <Container>
             <Row>
                 <Col className={'col-12 mx-auto my-4'}>
-                    <Tab items={items} services={services}/>
+                    <TabHome items={items} services={services}/>
                 </Col>
             </Row>
         </Container>

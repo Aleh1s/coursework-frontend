@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, Carousel, Col, Container, Row} from "react-bootstrap";
+import {Button, Carousel, Col, Container, ListGroup, Row} from "react-bootstrap";
 import ModalItemForm from "../components/ModalItemForm";
 import ModalPhone from "../components/ModalPhone";
 
@@ -52,11 +52,6 @@ const ItemPage = () => {
                 </Col>
             </Row>
             <hr/>
-            <Row>
-                <Col className={'mx-auto my-auto col-8'} style={{backgroundColor: '#37474f', color: 'white'}}>
-
-                </Col>
-            </Row>
             <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
             <ModalPhone show={showModalPhone} onHide={handleHideModalPhone}/>
         </Container>

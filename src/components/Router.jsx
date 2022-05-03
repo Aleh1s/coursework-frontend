@@ -6,18 +6,20 @@ import SignInPage from "../pages/SignInPage";
 import ItemPage from "../pages/ItemPage";
 import ServicePage from "../pages/ServicesPage";
 import AboutPage from "../pages/AboutPage";
+import ProfilePage from "../pages/ProfilePage";
 
 const Router = ({isAuthenticated}) => {
     if (isAuthenticated) {
         return(
             <Routes>
-                <Route path={'/'}/>
-                <Route path={'/personal-info'}/>
+                <Route path={'/'} element={<HomePage />}/>
+                <Route path={'/personal-info'} element={<ProfilePage />}/>
+                <Route path={'/about'} element={<AboutPage />}/>
                 <Route path={'/my-orders'}/>
                 <Route path={'/my-sales'}/>
-                <Route path={'/items'}/>
-                <Route path={'/houses'}/>
-                <Route path={'/services'}/>
+                <Route path={'/items/item'} element={<ItemPage />}/>
+                <Route path={'/houses/house'}/>
+                <Route path={'/services/service'} element={<ServicePage />}/>
                 <Route path={'*'}/>
             </Routes>
         );

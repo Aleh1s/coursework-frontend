@@ -3,20 +3,20 @@ import {Tabs} from "react-bootstrap";
 import Items from "./Items";
 import Services from "./Services";
 
-const Tab = ({items, services}) => {
+const TabHome = ({items, services}) => {
     return (
         <Tabs defaultActiveKey="items" id="uncontrolled-tab-example" className="mb-3 justify-content-center ">
-            <Tab eventKey="items" title="Items">
+            <TabHome eventKey="items" title="Items">
                 <Items items={items}/>
-            </Tab>
-            <Tab eventKey="services" title="Services">
+            </TabHome>
+            <TabHome eventKey="services" title="Services">
                 <Services services={services}/>
-            </Tab>
-            <Tab eventKey="houses" title="Houses">
+            </TabHome>
+            <TabHome eventKey="houses" title="Houses">
 
-            </Tab>
+            </TabHome>
         </Tabs>
     );
 };
 
-export default Tab;
+export default TabHome;
