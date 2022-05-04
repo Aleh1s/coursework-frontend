@@ -5,9 +5,9 @@ const Sale = ({sale}) => {
     return (
         <Col className={'col-lg-4 col-12 mx-auto my-auto'}>
             <Card
-                bg={'dark'}
+                bg={'light'}
                 key={'dark'}
-                text={'white'}
+                text={'dark'}
                 style={{width: '14rem'}}
                 className="mb-2"
             >
@@ -20,6 +20,14 @@ const Sale = ({sale}) => {
                         <p>Receiver: {sale.receiver ? sale.receiver : 'none'}</p>
                         <p>City: {sale.city}</p>
                         <p>Status: {sale.status}</p>
+                        {sale.status === 'SOLD_OUT' ?
+                            <a className={'link-info'}>Details</a>
+                            :
+                            <Col className={'justify-content-between'}>
+                                <a className={'link-info'}>Details</a>
+                                <a className={'link-danger'}>Delete</a>
+                            </Col>
+                        }
                     </Card.Text>
                 </Card.Body>
             </Card>

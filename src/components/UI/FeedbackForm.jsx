@@ -15,7 +15,7 @@ const FeedbackForm = () => {
     return (
         <Container>
             <Row>
-                <Col className={'mx-auto my-4 col-8 rounded'} style={{backgroundColor: '#37474f'}}>
+                <Col className={'mx-auto my-4 col-8 rounded'} >
                     <p className={'h2 p-2'} align={'center'}>Feedback</p>
                     <Form className={'p-3'} onSubmit={submit}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -30,7 +30,7 @@ const FeedbackForm = () => {
                                 event => setFeedback({...feedback, text: event.target.value})
                             }/>
                         </Form.Group>
-                        <Button variant={'secondary'} type={'submit'} onClick={submit}>Send</Button>
+                        <Button variant={'primary'} type={'submit'} onClick={submit}>Send</Button>
                     </Form>
                 </Col>
             </Row>

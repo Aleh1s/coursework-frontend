@@ -19,15 +19,11 @@ const SignUpPage = () => {
         e.preventDefault()
     }
 
-    const style = {
-        backgroundColor: '#37474f', color: 'white'
-    }
-
     return (
         <div>
             <Container>
                 <Row>
-                    <Col style={style} className={'col-lg-5 mx-auto my-5 shadow'}>
+                    <Col className={'col-lg-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign up</p>
                         <Form className={'p-4'} onSubmit={signUp}>
                             <Row className="mb-3">
@@ -84,7 +80,7 @@ const SignUpPage = () => {
                             </Row>
 
                             <Row className={'my-4 mx-auto'}>
-                                <Button variant="secondary" type="submit">
+                                <Button variant="primary" type="submit">
                                     Sign up
                                 </Button>
                             </Row>

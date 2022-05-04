@@ -5,9 +5,9 @@ const Order = ({order}) => {
     return (
         <Col className={'col-lg-4 col-12 mx-auto my-auto'}>
             <Card
-                bg={'dark'}
+                bg={'light'}
                 key={'dark'}
-                text={'white'}
+                text={'dark'}
                 style={{width: '14rem'}}
                 className="mb-2"
             >

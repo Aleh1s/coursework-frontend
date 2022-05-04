@@ -13,15 +13,11 @@ const SignInPage = () => {
 
     }
 
-    const style = {
-        backgroundColor: '#37474f', color: 'white'
-    }
-
     return (
         <div>
             <Container>
                 <Row>
-                    <Col style={style} className={'col-lg-5 mx-auto my-5 shadow'}>
+                    <Col className={'col-lg-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign in</p>
                         <Form className={'p-4'} onSubmit={signIn}>
                             <Row className="mb-3">
@@ -41,12 +37,15 @@ const SignInPage = () => {
                             </Row>
 
                             <Row className={'my-4 mx-auto'}>
-                                <Button variant="secondary" type="submit">
+                                <Button variant="primary" type="submit">
                                     Sign in
                                 </Button>
                             </Row>
                         </Form>
                     </Col>
+                </Row>
+                <Row style={{height: '5rem'}}>
+
                 </Row>
             </Container>
         </div>
