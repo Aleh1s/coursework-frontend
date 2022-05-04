@@ -47,8 +47,8 @@ const ServicePage = () => {
                     <p className={'h1'}>Title</p>
                     <hr/>
                     <p>Перекладач Google, Google Translate, або Google Translator — сервіс компанії Google, що дозволяє автоматично перекладати слова, фрази та web-сторінки з однієї мови на іншу. Google використовує власне програмне забезпечення для перекладу. Використовується підхід статистичного машинного перекладу.</p>
-                    <Button variant={'secondary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order online</Button>
-                    <Button variant={'outline-secondary'} as={Col} className={'mx-1'} onClick={handleShowModalPhone}>Order by phone</Button>
+                    <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order online</Button>
+                    <Button variant={'outline-primary'} as={Col} className={'mx-1'} onClick={handleShowModalPhone}>Order by phone</Button>
                 </Col>
             </Row>
             <ModalServiceForm show={showModalForm} onHide={handleHideModalForm}/>

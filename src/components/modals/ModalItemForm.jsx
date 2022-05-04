@@ -83,13 +83,13 @@ const ModalItemForm = (props) => {
                         }/>
                     </Form.Group>
 
-                    <Button variant="secondary" type="submit">
+                    <Button variant="success" type="submit">
                         Submit
                     </Button>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={'secondary'} onClick={props.onHide}>Close</Button>
+                <Button variant={'danger'} onClick={props.onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
     );

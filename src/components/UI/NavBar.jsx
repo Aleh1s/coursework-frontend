@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, Button, Col, Container, Nav, Navbar, Row} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import LogoutAlert from "../alert/LogoutAlert";
 
 const NavBar = ({isAuthenticated}) => {
 
@@ -20,28 +21,14 @@ const NavBar = ({isAuthenticated}) => {
                             <Nav.Link><Link className="nav-link active" to={"/about"}>About</Link></Nav.Link>
                         </Nav>
                         <Nav>
-                            <Nav.Link><Link className="nav-link active" to={"/personal-info"}>Profile</Link></Nav.Link>
-                            <Button variant={'danger'} className={'mx-1'} onClick={() => setShowLogout(!showLogout)}>Logout</Button>
+                            <Nav.Link><Link className="nav-link active"
+                                            to={"/personal-info"}>Profile</Link></Nav.Link>
+                            <Button variant={'danger'} className={'mx-1'}
+                                    onClick={() => setShowLogout(!showLogout)}>Logout</Button>
                         </Nav>
                     </Container>
                 </Navbar>
-                <>
-                    <Alert show={showLogout} variant="info">
-                        <Alert.Heading>Logout ?</Alert.Heading>
-                        <p>
-                            Do you want to logout ?
-                        </p>
-                        <hr/>
-                        <div className="d-flex justify-content-end">
-                            <Button onClick={() => setShowLogout(false)} className={'mx-1'} variant="outline-success">
-                                No
-                            </Button>
-                            <Button onClick={handleLogout} className={'mx-1'} variant="outline-danger">
-                                Yes
-                            </Button>
-                        </div>
-                    </Alert>
-                </>
+                <LogoutAlert showLogout={showLogout} setShowLogout={setShowLogout} handleLogout={handleLogout}/>
             < />
         );
     }
