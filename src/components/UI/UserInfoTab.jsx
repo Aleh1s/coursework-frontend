@@ -1,7 +1,11 @@
-import React from 'react';
-import {Button, Col, Image} from "react-bootstrap";
+import React, {useContext} from 'react';
+import {Col, Image} from "react-bootstrap";
+import {Context} from "../../index";
 
 const UserInfoTab = () => {
+
+    const {user} = useContext(Context)
+
     return (
         <Col className={'col-lg-4 col-10 mx-auto my-4 shadow'} >
             <div className={'p-4'}>
@@ -11,15 +15,17 @@ const UserInfoTab = () => {
                        width={'300px'}
                 />
                 <div className={'my-4'}>
-                    <p className={'h6'} align={'center'}>Full name</p>
+                    <p className={'h6'} align={'center'}>{`${user.getUser().firstName} ${user.getUser().lastName}`}</p>
                     <hr/>
-                    <p>Email: name@gmail.com</p>
+                    <p>Email: {user.getUser().email}</p>
                     <hr/>
-                    <p>Age: 30</p>
+                    <p>Age: {user.getUser().age}</p>
                     <hr/>
-                    <p>City: London</p>
+                    <p>City: {user.getUser().city}</p>
                     <hr/>
-                    <p>Phone number: +380XXXXXXXXX</p>
+                    <p>Phone number: {
+                        user.getUser().phoneNumber.includes('+38') ?
+                            user.getUser().phoneNumber : `+38${user.getUser().phoneNumber}`}</p>
                 </div>
             </div>
         </Col>
