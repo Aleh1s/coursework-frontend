@@ -1,17 +1,13 @@
 import Router from "./components/UI/Router";
 import NavBar from "./components/UI/NavBar";
-import {Col, Container, Row} from "react-bootstrap";
+import React from 'react'
 
 function App() {
-
-
-    const isAuthenticated = true
-
     return (
         <div>
             <header>
-                <NavBar isAuthenticated={isAuthenticated}/>
-                <Router isAuthenticated={isAuthenticated}/>
+                <NavBar/>
+                <Router/>
             </header>
             <footer style={{backgroundColor: '#212529', height: '80px'}}>
 

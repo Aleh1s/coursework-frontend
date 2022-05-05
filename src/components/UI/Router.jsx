@@ -7,8 +7,12 @@ import ItemPage from "../../pages/ItemPage";
 import ServicePage from "../../pages/ServicesPage";
 import AboutPage from "../../pages/AboutPage";
 import ProfilePage from "../../pages/ProfilePage";
+import {useSelector} from "react-redux";
 
-const Router = ({isAuthenticated}) => {
+const Router = () => {
+
+    const isAuthenticated = useSelector(state => state.isAuthenticated)
+
     if (isAuthenticated) {
         return(
             <Routes>

@@ -7,7 +7,8 @@ const SignUpPage = () => {
     const [signUpData, setSignUpData] = useState({
         email: '',
         password: '',
-        fullName: '',
+        firstName: '',
+        lastName: '',
         city: '',
         address: '',
         postNumber: '',
@@ -29,36 +30,45 @@ const SignUpPage = () => {
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" onChange={
+                                    <Form.Control type="email" placeholder="Enter email" value={signUpData.email} onChange={
                                         event => setSignUpData({...signUpData, email: event.target.value})
                                     }/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter password" onChange={
+                                    <Form.Control type="password" placeholder="Enter password" value={signUpData.password} onChange={
                                         event => setSignUpData({...signUpData, password: event.target.value})
                                     }/>
                                 </Form.Group>
                             </Row>
 
-                            <Form.Group className="mb-3" controlId="formGridAddress1">
-                                <Form.Label>Full name</Form.Label>
-                                <Form.Control placeholder="Full name" onChange={
-                                    event => setSignUpData({...signUpData, fullName: event.target.value})
-                                }/>
-                            </Form.Group>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} className="mb-3" controlId="formGridFirstName">
+                                    <Form.Label>First name</Form.Label>
+                                    <Form.Control placeholder="Enter first name" value={signUpData.firstName} onChange={
+                                        event => setSignUpData({...signUpData, firstName: event.target.value})
+                                    }/>
+                                </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formGridAddress1">
+                                <Form.Group as={Col} className="mb-3" controlId="formGridLastName">
+                                    <Form.Label>Last name</Form.Label>
+                                    <Form.Control placeholder="Enter last name" value={signUpData.lastName} onChange={
+                                        event => setSignUpData({...signUpData, lastName: event.target.value})
+                                    }/>
+                                </Form.Group>
+                            </Row>
+
+                            <Form.Group as={Col} className="mb-3" controlId="formGridCity">
                                 <Form.Label>City</Form.Label>
-                                <Form.Control placeholder="London" onChange={
+                                <Form.Control placeholder="London" value={signUpData.city} onChange={
                                     event => setSignUpData({...signUpData, city: event.target.value})
                                 }/>
                             </Form.Group>
 
-                            <Form.Group className="mb-3" controlId="formGridAddress2">
+                            <Form.Group as={Col} className="mb-3" controlId="formGridAddress">
                                 <Form.Label>Address</Form.Label>
-                                <Form.Control placeholder="street, house number, apartment number" onChange={
+                                <Form.Control placeholder="street, house number, apartment number" value={signUpData.address} onChange={
                                     event => setSignUpData({...signUpData, address: event.target.value})
                                 }/>
                             </Form.Group>
@@ -66,14 +76,14 @@ const SignUpPage = () => {
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridCity">
                                     <Form.Label>Post number</Form.Label>
-                                    <Form.Control placeholder="number" onChange={
+                                    <Form.Control placeholder="number" value={signUpData.postNumber} onChange={
                                         event => setSignUpData({...signUpData, postNumber: event.target.value})
                                     }/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Phone number</Form.Label>
-                                    <Form.Control placeholder={'+380XXXXXXXXX'} onChange={
+                                    <Form.Control placeholder={'+380XXXXXXXXX'} value={signUpData.phoneNumber} onChange={
                                         event => setSignUpData({...signUpData, phoneNumber: event.target.value})
                                     }/>
                                 </Form.Group>

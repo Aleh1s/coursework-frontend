@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
-import {Alert, Button, Col, Container, Nav, Navbar, Row} from "react-bootstrap";
+import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import LogoutAlert from "../alert/LogoutAlert";
+import {useSelector} from "react-redux";
 
-const NavBar = ({isAuthenticated}) => {
+const NavBar = () => {
 
     const [showLogout, setShowLogout] = useState(false)
-
+    const isAuthenticated = useSelector(state => state.isAuthenticated)
     const handleLogout = () => {
         setShowLogout(false)
     }
