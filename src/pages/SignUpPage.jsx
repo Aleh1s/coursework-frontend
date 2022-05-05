@@ -1,9 +1,18 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {Context} from "../index";
+import {useNavigate} from "react-router-dom";
+import ServerErrorAlert from "../components/alert/ServerErrorAlert";
 
 const SignUpPage = () => {
 
+    const navigate = useNavigate()
+    const {user} = useContext(Context)
+    const [serverError, setServerError] = useState({
+        show: false,
+        message: ''
+    })
     const [signUpData, setSignUpData] = useState({
         email: '',
         password: '',
@@ -17,11 +26,18 @@ const SignUpPage = () => {
     })
     const signUp = (e) => {
         e.preventDefault()
+        user.register(signUpData, navigate)
     }
+
+    const handleShowServerErrorAlert = (message) => setServerError({...serverError, show: true, message: message})
+    const handleCloseServerErrorAlert = () => setServerError({...serverError, show: false, message: ''})
 
     return (
         <div>
             <Container>
+                <Row>
+                    <ServerErrorAlert show={serverError.show} onHide={handleCloseServerErrorAlert} message={serverError.message}/>
+                </Row>
                 <Row>
                     <Col className={'col-lg-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign up</p>

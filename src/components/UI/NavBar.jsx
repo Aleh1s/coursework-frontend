@@ -15,8 +15,7 @@ const NavBar = () => {
     const navigate = useNavigate()
     const handleLogout = () => {
         setShowLogout(false)
-        user.logout(dispatcher)
-        navigate('/')
+        user.logout(dispatcher, navigate)
     }
 
     if (isAuthenticated) {

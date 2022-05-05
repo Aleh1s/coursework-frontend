@@ -18,9 +18,7 @@ const SignInPage = () => {
 
     const signIn = (e) => {
         e.preventDefault()
-        user.login(signInData, dispatch)
-            .then(() => navigate('/'))
-            .catch(err => console.log(err))
+        user.login(signInData, dispatch, navigate)
     }
 
     return (
