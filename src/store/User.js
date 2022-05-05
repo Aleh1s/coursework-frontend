@@ -28,7 +28,9 @@ export default class User {
     }
 
     logout(dispatch) {
-
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        dispatch({type: 'LOGOUT', payload: false})
     }
 }
 

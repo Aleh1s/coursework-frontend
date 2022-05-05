@@ -9,4 +9,5 @@ export default class AuthService {
     static async register(regData) {
         return axios.post(`${API_URL}/v1/registration/register`, regData)
     }
+
 }
