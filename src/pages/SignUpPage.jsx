@@ -26,7 +26,12 @@ const SignUpPage = () => {
     })
     const signUp = (e) => {
         e.preventDefault()
-        user.register(signUpData, navigate)
+        user.register(signUpData)
+            .then(response => response.status === 201 ? navigate('/sign-in') : handleShowServerErrorAlert('Unknown exception'))
+            .catch(err => {
+                handleShowServerErrorAlert(err.response.data.message)
+                window.scrollTo(0,0)
+            })
     }
 
     const handleShowServerErrorAlert = (message) => setServerError({...serverError, show: true, message: message})

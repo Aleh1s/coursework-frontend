@@ -29,12 +29,15 @@ export default class User {
     }
 
     async register(regData, navigate) {
-        try {
-            await AuthService.register(regData)
-            navigate('/sign-in')
-        } catch (e) {
-            console.log(e.response?.data?.message)
-        }
+        // try {
+        //     await AuthService.register(regData)
+        //     navigate('/sign-in')
+        // } catch (e) {
+        //     console.log(e)
+        // }
+
+        return await AuthService.register(regData)
+
 
     }
 

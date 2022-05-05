@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Col} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 
 const Sale = ({sale}) => {
     return (
@@ -23,10 +23,14 @@ const Sale = ({sale}) => {
                         {sale.status === 'SOLD_OUT' ?
                             <a className={'link-info'}>Details</a>
                             :
-                            <Col className={'justify-content-between'}>
-                                <a className={'link-info'}>Details</a>
-                                <a className={'link-danger'}>Delete</a>
-                            </Col>
+                            <Row className={'d-flex'}>
+                                <Col>
+                                    <a className={'link-info'}>Details</a>
+                                </Col>
+                                <Col className={'d-flex flex-column-reverse rever'}>
+                                    <a className={'link-danger'}>Delete</a>
+                                </Col>
+                            </Row>
                         }
                     </Card.Text>
                 </Card.Body>
