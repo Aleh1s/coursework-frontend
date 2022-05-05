@@ -26,5 +26,9 @@ export default class User {
             console.log(e.response?.data?.message)
         }
     }
+
+    logout(dispatch) {
+
+    }
 }
 

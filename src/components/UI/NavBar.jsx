@@ -2,14 +2,16 @@ import React, {useState} from 'react';
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import LogoutAlert from "../alert/LogoutAlert";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const NavBar = () => {
 
     const [showLogout, setShowLogout] = useState(false)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
+    const dispatcher = useDispatch()
     const handleLogout = () => {
         setShowLogout(false)
+        dispatcher()
     }
 
     if (isAuthenticated) {

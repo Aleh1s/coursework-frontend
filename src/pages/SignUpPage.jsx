@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SignUpPage = () => {
@@ -12,10 +12,9 @@ const SignUpPage = () => {
         city: '',
         address: '',
         postNumber: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        dob: '',
     })
-    const [alerts, setAlerts] = useState([])
-
     const signUp = (e) => {
         e.preventDefault()
     }
@@ -88,6 +87,13 @@ const SignUpPage = () => {
                                     }/>
                                 </Form.Group>
                             </Row>
+
+                            <Form.Group as={Col} controlId="formGridZip">
+                                <Form.Label>Date of birthday</Form.Label>
+                                <Form.Control placeholder={'Example: YYYY-MM-DD'} value={signUpData.dob} onChange={
+                                    event => setSignUpData({...signUpData, dob: event.target.value})
+                                }/>
+                            </Form.Group>
 
                             <Row className={'my-4 mx-auto'}>
                                 <Button variant="primary" type="submit">
