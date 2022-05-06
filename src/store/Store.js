@@ -1,7 +1,9 @@
 import {createStore} from "redux";
 
 const initialState = {
-    isAuthenticated: false
+    isAuthenticated: false,
+    email: ''
+
 }
 
 const reducer = (state = initialState, action) => {

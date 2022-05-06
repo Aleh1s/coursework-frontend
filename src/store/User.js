@@ -18,8 +18,8 @@ export default class User {
     async login(authData, dispatch, navigate) {
         try {
             const response = await AuthService.authenticate(authData)
-            localStorage.setItem('accessToken', response.data.accessToken)
-            localStorage.setItem('refreshToken', response.data.refreshToken)
+            localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
+            localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
             this.setUser(response.data.userModel)
             dispatch({type: 'AUTHENTICATE', payload: true})
             navigate('/')
@@ -39,6 +39,18 @@ export default class User {
         return await AuthService.register(regData)
 
 
+    }
+
+    async refresh(dispatch) {
+        try {
+            const response = await AuthService.refresh()
+            localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
+            localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
+            this.setUser(response.data.userModel)
+            dispatch({type: 'AUTHENTICATE', payload: true})
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     logout(dispatch, navigate) {

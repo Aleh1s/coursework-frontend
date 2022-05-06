@@ -15,6 +15,7 @@ export const Context = React.createContext({
     user
 })
 
+
 root.render(
     <React.StrictMode>
         <Context.Provider value={{

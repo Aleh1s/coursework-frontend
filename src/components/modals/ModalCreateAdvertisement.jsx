@@ -1,22 +1,23 @@
 import React, {useContext, useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
-import {Context} from "../../index";
 import AdvertisementService from "../../service/AdvertisementService";
+import {useSelector} from "react-redux";
+import {Context} from "../../index";
 
 const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
 
-
-    const {user} = useContext(Context)
-    const creatorEmail = user.getUser().email
+    let {user} = useContext(Context)
     const [creationData, setCreationData] = useState({
         title: '',
         description: '',
         category,
-        creatorEmail: creatorEmail,
+        creatorEmail: user.getUser().email,
         height: '',
         length: '',
         width: ''
     })
+
+    // todo: problem with email while refresh
 
     const handleSubmit = () => {
         AdvertisementService.createAdvertisement(creationData)

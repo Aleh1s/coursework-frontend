@@ -1,8 +1,18 @@
 import Router from "./components/UI/Router";
 import NavBar from "./components/UI/NavBar";
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import AuthService from "./service/AuthService";
+import {useDispatch} from "react-redux";
+import {Context} from "./index";
 
 function App() {
+
+    const dispatch = useDispatch()
+    const {user} = useContext(Context)
+    useEffect(() => {
+        user.refresh(dispatch)
+    },[])
+
     return (
         <div>
             <header>

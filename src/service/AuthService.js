@@ -10,4 +10,7 @@ export default class AuthService {
         return axios.post(`${API_URL}/v1/registration/register`, regData)
     }
 
+    static async refresh() {
+        return axios.post(`${API_URL}/v1/authentication/refresh?refreshToken=${localStorage.getItem("refreshToken")}`, )
+    }
 }
