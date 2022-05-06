@@ -8,6 +8,6 @@ export default class AdvertisementService {
     }
 
     static async getPageOfSortedAdvertisements(page, limit, category, status) {
-        return await axios.get(`${API_URL}/v1/advertisements/page/${category}?limit=${limit}&page=${page}&status=${status}`)
+        return await axios.get(`${API_URL}/v1/advertisements/page/${category}?_limit=${limit}&_page=${page}&_status=${status}`)
     }
 }

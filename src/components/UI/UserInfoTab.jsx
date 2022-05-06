@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Col, Image} from "react-bootstrap";
-import {Context} from "../../index";
+import {useSelector} from "react-redux";
 
 const UserInfoTab = () => {
 
-    const {user} = useContext(Context)
-
+    const user = useSelector(state => state.user)
     return (
         <Col className={'col-lg-4 col-10 mx-auto my-4 shadow'} >
             <div className={'p-4'}>
@@ -15,17 +14,17 @@ const UserInfoTab = () => {
                        width={'300px'}
                 />
                 <div className={'my-4'}>
-                    <p className={'h6'} align={'center'}>{`${user.getUser().firstName} ${user.getUser().lastName}`}</p>
+                    <p className={'h6'} align={'center'}>{`${user.firstName} ${user.lastName}`}</p>
                     <hr/>
-                    <p>Email: {user.getUser().email}</p>
+                    <p>Email: {user.email}</p>
                     <hr/>
-                    <p>Age: {user.getUser().age}</p>
+                    <p>Age: {user.age}</p>
                     <hr/>
-                    <p>City: {user.getUser().city}</p>
+                    <p>City: {user.city}</p>
                     <hr/>
                     <p>Phone number: {
-                        user.getUser().phoneNumber.includes('+38') ?
-                            user.getUser().phoneNumber : `+38${user.getUser().phoneNumber}`}</p>
+                        user.phoneNumber.includes('+38') ?
+                            user.phoneNumber : `+38${user.phoneNumber}`}</p>
                 </div>
             </div>
         </Col>

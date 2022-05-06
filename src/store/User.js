@@ -41,23 +41,8 @@ export default class User {
 
     }
 
-    async refresh(dispatch) {
-        try {
-            const response = await AuthService.refresh()
-            localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
-            localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
-            this.setUser(response.data.userModel)
-            dispatch({type: 'AUTHENTICATE', payload: true})
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
-    logout(dispatch, navigate) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-        dispatch({type: 'LOGOUT', payload: false})
-        navigate('/sign-in')
-    }
+
+
 }
 

@@ -4,6 +4,7 @@ import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {Context} from "../index";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import AuthService from "../service/AuthService";
 
 
 const SignInPage = () => {
@@ -18,7 +19,14 @@ const SignInPage = () => {
 
     const signIn = (e) => {
         e.preventDefault()
-        user.login(signInData, dispatch, navigate)
+        AuthService.authenticate(signInData)
+            .then(response => {
+                localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
+                localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
+                dispatch({type: 'AUTHENTICATE', payload: response.data.userModel})
+                navigate('/')
+            })
+            .catch(err => console.log(err))
     }
 
     return (

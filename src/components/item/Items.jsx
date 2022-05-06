@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Pagination, Row} from "react-bootstrap";
+import {Button, Col, Container, Pagination, Row} from "react-bootstrap";
 import Item from "./Item";
 import SearchBlock from "../UI/SearchBlock";
 import ModalCreateAdvertisement from "../modals/ModalCreateAdvertisement";
@@ -23,11 +23,22 @@ const Items = () => {
         }
     }
 
-    const onCreate = (status) => {
-        if (status && status === 201) {
-            window.location.reload()
-        }
+    const fetchAdvertisements = () => {
+        AdvertisementService.getPageOfSortedAdvertisements(activePage - 1, 12, 'ITEM', 'UNCONFIRMED')
+            .then(response => {
+                setItems(response.data.advertisements)
+                setTotalPageCount(response.data.totalCount)
+            })
+            .catch(err => console.log(err))
     }
+
+    const onCreate = () => {
+        fetchAdvertisements()
+    }
+
+    useEffect(() => {
+        fetchAdvertisements()
+    }, [activePage])
 
     let numbers = [];
     for (let number = 1; number <= Math.ceil(totalPagesCount / 12); number++) {
@@ -37,17 +48,6 @@ const Items = () => {
             </Pagination.Item>,
         );
     }
-
-    useEffect(() => {
-        AdvertisementService.getPageOfSortedAdvertisements(activePage - 1, 12, 'ITEM', 'UNCONFIRMED')
-            .then(response => {
-                setItems(response.data.advertisements)
-                setTotalPageCount(response.data.totalCount)
-            })
-            .catch(err => console.log(err))
-    }, [activePage])
-
-
 
     return (
         <Container>

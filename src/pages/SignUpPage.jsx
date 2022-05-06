@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Context} from "../index";
 import {useNavigate} from "react-router-dom";
 import ServerErrorAlert from "../components/alert/ServerErrorAlert";
+import AuthService from "../service/AuthService";
 
 const SignUpPage = () => {
 
@@ -26,7 +27,7 @@ const SignUpPage = () => {
     })
     const signUp = (e) => {
         e.preventDefault()
-        user.register(signUpData)
+        AuthService.register(signUpData)
             .then(response => response.status === 201 ? navigate('/sign-in') : handleShowServerErrorAlert('Unknown exception'))
             .catch(err => {
                 handleShowServerErrorAlert(err.response.data.message)

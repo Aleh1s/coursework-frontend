@@ -1,21 +1,20 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import {Link, useNavigate} from "react-router-dom";
 import LogoutAlert from "../alert/LogoutAlert";
 import {useDispatch, useSelector} from "react-redux";
-import AuthService from "../../service/AuthService";
-import {Context} from "../../index";
 
 const NavBar = () => {
 
-    const {user} = useContext(Context)
     const [showLogout, setShowLogout] = useState(false)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
-    const dispatcher = useDispatch()
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleLogout = () => {
-        setShowLogout(false)
-        user.logout(dispatcher, navigate)
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('refreshToken')
+        dispatch({type: 'LOGOUT', payload: false})
+        navigate('/sign-in')
     }
 
     if (isAuthenticated) {

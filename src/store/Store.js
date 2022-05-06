@@ -2,16 +2,17 @@ import {createStore} from "redux";
 
 const initialState = {
     isAuthenticated: false,
-    email: ''
-
+    user: {}
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'AUTHENTICATE':
-            return {...state, isAuthenticated: action.payload}
+            return {...state, isAuthenticated: true, user: action.payload}
         case 'LOGOUT':
-            return {...state, isAuthenticated: action.payload}
+            return {...state, isAuthenticated: false, user: {}}
+        case 'REFRESH':
+            return {...state, isAuthenticated: true, user: action.payload}
         default:
             return state
     }

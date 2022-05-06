@@ -24,8 +24,6 @@ const HomePage = () => {
         }
     ])
 
-    // const {user} = useContext(Context)
-
     return (
         <Container>
             <Row className={'justify-content-center'}>
@@ -33,7 +31,6 @@ const HomePage = () => {
                     <TabHome services={services}/>
                 </Col>
             </Row>
-            {/*<Button onClick={() => console.log(user.getUser())}>test</Button>*/}
         </Container>
     );
 };

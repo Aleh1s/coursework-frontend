@@ -1,17 +1,28 @@
 import Router from "./components/UI/Router";
 import NavBar from "./components/UI/NavBar";
-import React, {useContext, useEffect} from 'react'
+import React, {useEffect} from 'react'
 import AuthService from "./service/AuthService";
 import {useDispatch} from "react-redux";
-import {Context} from "./index";
+import {useNavigate} from "react-router-dom";
 
 function App() {
 
     const dispatch = useDispatch()
-    const {user} = useContext(Context)
+    const navigate = useNavigate()
     useEffect(() => {
-        user.refresh(dispatch)
+        checkAuth()
     },[])
+
+    const checkAuth = () => {
+        AuthService.refresh()
+            .then(response => {
+                localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
+                localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
+                dispatch({type: 'REFRESH', payload: response.data.userModel})
+                navigate('/')
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         <div>

@@ -1,29 +1,23 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
 import AdvertisementService from "../../service/AdvertisementService";
-import {useSelector} from "react-redux";
-import {Context} from "../../index";
 
 const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
 
-    let {user} = useContext(Context)
     const [creationData, setCreationData] = useState({
         title: '',
         description: '',
         category,
-        creatorEmail: user.getUser().email,
         height: '',
         length: '',
         width: ''
     })
-
-    // todo: problem with email while refresh
-
+    
     const handleSubmit = () => {
         AdvertisementService.createAdvertisement(creationData)
-            .then(response => {
+            .then(() => {
                 handleClose()
-                onCreate(response.status)
+                onCreate()
             })
             .catch(err => console.log(err))
     }
@@ -35,7 +29,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                     <Modal.Title>Create advertisement in item category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
+                    <Form>
                         <Form.Group controlId="formFileMultiple" className="mb-3">
                             <Form.Label>Image</Form.Label>
                             <Form.Control type="file" multiple/>
