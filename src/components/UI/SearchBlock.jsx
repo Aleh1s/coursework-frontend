@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Col, FormControl, InputGroup, Row} from "react-bootstrap";
 
-const SearchBlock = ({placeHolderText, textForButton}) => {
+const SearchBlock = ({placeHolderText, handleShowCreateModal}) => {
     return (
         <Row>
             <Col className={'mx-auto my-2'}>
@@ -12,7 +12,10 @@ const SearchBlock = ({placeHolderText, textForButton}) => {
                         aria-describedby="basic-addon2"
                     />
                     <Button variant="outline-primary" id="button-addon2">
-                        {textForButton}
+                        Search
+                    </Button>
+                    <Button variant="primary" id="button-addon2" onClick={handleShowCreateModal}>
+                        Create
                     </Button>
                 </InputGroup>
             </Col>

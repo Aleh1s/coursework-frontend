@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Item = ({item, key}) => {
 
+    const id = item.id
     const navigate = useNavigate()
     const defaultImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
         '2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E' +
@@ -28,7 +29,7 @@ const Item = ({item, key}) => {
                 <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
                     <Card.Text>
-                        {item.text}
+                        {item.description}
                     </Card.Text>
                     <a className={'link-info'} onClick={handleViewMore}>View more</a>
                 </Card.Body>

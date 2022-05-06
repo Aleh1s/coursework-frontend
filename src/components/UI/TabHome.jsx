@@ -12,7 +12,7 @@ const TabHome = ({items, services}) => {
                     <Tabs defaultActiveKey="items" id="uncontrolled-tab-example"
                           className="mb-3 justify-content-center ">
                         <TabHome eventKey="items" title="Items">
-                            <Items items={items}/>
+                            <Items />
                         </TabHome>
                         <TabHome eventKey="services" title="Services">
                             <Services services={services}/>
