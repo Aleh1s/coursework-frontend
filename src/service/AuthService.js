@@ -11,6 +11,6 @@ export default class AuthService {
     }
 
     static async refresh() {
-        return axios.post(`${API_URL}/v1/authentication/refresh?refreshToken=${localStorage.getItem("refreshToken")}`, )
+        return axios.post(`${API_URL}/v1/authentication/refresh?_token=${localStorage.getItem("refreshToken")}`, )
     }
 }

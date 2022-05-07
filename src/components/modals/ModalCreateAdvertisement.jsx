@@ -12,14 +12,18 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
         length: '',
         width: ''
     })
-    
+
     const handleSubmit = () => {
         AdvertisementService.createAdvertisement(creationData)
             .then(() => {
                 handleClose()
                 onCreate()
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                handleClose()
+            })
+
     }
 
     return (
