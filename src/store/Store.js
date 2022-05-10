@@ -2,7 +2,8 @@ import {createStore} from "redux";
 
 const initialState = {
     isAuthenticated: false,
-    user: {}
+    user: {},
+    advertisementId: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,6 +14,8 @@ const reducer = (state = initialState, action) => {
             return {...state, isAuthenticated: false, user: {}}
         case 'REFRESH':
             return {...state, isAuthenticated: true, user: action.payload}
+        case 'TO_PAGE':
+            return {...state, advertisementId: action.payload}
         default:
             return state
     }

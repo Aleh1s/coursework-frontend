@@ -1,10 +1,12 @@
 import React from 'react';
-import {Button, Card, Col, Container} from "react-bootstrap";
-import { useNavigate } from 'react-router-dom'
+import {Card, Col} from "react-bootstrap";
+import {useNavigate} from 'react-router-dom'
+import {useDispatch} from "react-redux";
 
 const Item = ({item, key}) => {
 
     const id = item.id
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const defaultImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
         '2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E' +
@@ -14,6 +16,7 @@ const Item = ({item, key}) => {
         'E%3Ctext%20x%3D%22108.53125%22%20y%3D%2297.44000034332275%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
 
     const handleViewMore = () => {
+        dispatch({type: 'TO_PAGE', payload: id})
         navigate('/items/item')
     }
 

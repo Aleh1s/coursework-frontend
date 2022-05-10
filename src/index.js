@@ -9,17 +9,17 @@ import {store} from "./store/Store";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const user = new User()
+let advertisementId = "";
 
 export const Context = React.createContext({
-    user
+    advertisementId
 })
 
 
 root.render(
     <React.StrictMode>
         <Context.Provider value={{
-            user
+            advertisementId
         }}>
             <BrowserRouter>
                 <Provider store={store}>

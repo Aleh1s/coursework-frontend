@@ -16,11 +16,11 @@ const ModalPhone = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    +380XXXXXXXXX
+                    {props.phoneNumber}
                 </p>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={'secondary'} onClick={props.onHide}>Close</Button>
+                <Button variant={'danger'} onClick={props.onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
     );

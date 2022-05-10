@@ -1,7 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
-import {Context} from "../index";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import AuthService from "../service/AuthService";
@@ -9,7 +8,6 @@ import AuthService from "../service/AuthService";
 
 const SignInPage = () => {
 
-    const {user} = useContext(Context)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [signInData, setSignInData] = useState({

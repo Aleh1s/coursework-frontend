@@ -27,7 +27,7 @@ const Sale = ({sale}) => {
                                 <Col>
                                     <a className={'link-info'}>Details</a>
                                 </Col>
-                                <Col className={'d-flex flex-column-reverse rever'}>
+                                <Col className={'d-flex flex-column-reverse reverse'}>
                                     <a className={'link-danger'}>Delete</a>
                                 </Col>
                             </Row>

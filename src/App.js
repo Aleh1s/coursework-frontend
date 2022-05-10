@@ -18,7 +18,7 @@ function App() {
             .then(response => {
                 localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
                 localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
-                dispatch({type: 'REFRESH', payload: response.data.userModel})
+                dispatch({type: 'REFRESH', payload: response.data.userResponseModel})
                 navigate('/')
             })
             .catch(err => console.log(err))
