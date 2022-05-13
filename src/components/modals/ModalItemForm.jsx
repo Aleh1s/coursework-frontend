@@ -1,24 +1,25 @@
 import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
+import {useSelector} from "react-redux";
+import OrdersService from "../../service/OrdersService";
 
 const ModalItemForm = (props) => {
 
+    const id = useSelector(state => state.advertisementId)
     const [orderData, setOrderData] = useState({
-        fullName: '',
-        city: '',
-        phoneNumber: '',
-        address: '',
-        postNumber: '',
-        wishes: ''
+        advertisementId: id,
+        city: null,
+        address: null,
+        postNumber: null,
+        wishes: null,
+        orderCategory: 'ITEM'
     })
-
-    const style = {
-        backgroundColor: '#37474f',
-        color: 'white'
-    }
 
     const submitForm = (e) => {
         e.preventDefault()
+        OrdersService.makeOrder(orderData)
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -36,9 +37,16 @@ const ModalItemForm = (props) => {
             <Modal.Body>
                 <Form onSubmit={submitForm}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Label>Full name</Form.Label>
-                        <Form.Control type="text" placeholder="Full name" onChange={
-                            event => setOrderData({...orderData, fullName: event.target.value})
+                        <Form.Label>First name</Form.Label>
+                        <Form.Control type="text" placeholder="First name" onChange={
+                            event => setOrderData({...orderData, firstName: event.target.value})
+                        }/>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                        <Form.Label>Last name</Form.Label>
+                        <Form.Control type="text" placeholder="Last name" onChange={
+                            event => setOrderData({...orderData, lastName: event.target.value})
                         }/>
                     </Form.Group>
 

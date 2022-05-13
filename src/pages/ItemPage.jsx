@@ -15,10 +15,14 @@ const ItemPage = () => {
     const handleShowModalForm = () => setShowModalForm(true)
     const handleCloseModalForm = () => setShowModalForm(false)
     const [advertisementInfo, setAdvertisementInfo] = useState({})
+
     useEffect
     (() => {
         AdvertisementService.getAdvertisementDetails("ITEM", id)
-            .then(response => setAdvertisementInfo(response.data))
+            .then(response => {
+                setAdvertisementInfo(response.data)
+                console.log(response)
+            })
             .catch(err => console.log(err))
     }, [])
 
@@ -63,10 +67,13 @@ const ItemPage = () => {
                                 </Col>
                             </Row>
                         </Col>
-                        <Col className={'col-12 d-flex align-self-end justify-content-center mx-auto my-auto'}>
-                            <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
-                                online</Button>
-                        </Col>
+                        {
+
+                            <Col className={'col-12 d-flex align-self-end justify-content-center mx-auto my-auto'}>
+                                <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
+                                    online</Button>
+                            </Col>
+                        }
                     </Row>
                 </Col>
                 <Col className={'d-flex col-12 shadow-lg mx-auto my-5 p-2'}>
@@ -80,17 +87,6 @@ const ItemPage = () => {
                     </Row>
                 </Col>
             </Row>
-            {/*<Row className={'my-4 mx-auto'}>*/}
-            {/*    <Col className={'col-lg-6 col-12 p-2 shadow'}>*/}
-            {/*
-            {/*    </Col>*/}
-            {/*    <Col className={'col-lg-6 col-12 my-lg-0 my-4 shadow'}>*/}
-            {/*        <p className={'h1'}>{advertisementInfo.title}</p>*/}
-            {/*        <hr/>*/}
-            {/*        <p>{advertisementInfo.description}</p>*/}
-            {/*        }
-            {/*    </Col>*/}
-            {/*</Row>*/}
             <CreatorInfo advertisementInfo={advertisementInfo}/>
             <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
         </Container>

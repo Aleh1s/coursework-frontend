@@ -24,7 +24,7 @@ const Items = () => {
     }
 
     const fetchAdvertisements = () => {
-        AdvertisementService.getPageOfSortedAdvertisements(activePage - 1, 12, 'ITEM', 'UNCONFIRMED')
+        AdvertisementService.getPageOfSortedAdvertisements(activePage - 1, 12, 'ITEM', 'createdAt')
             .then(response => {
                 setItems(response.data.advertisements)
                 setTotalPageCount(response.data.totalCount)

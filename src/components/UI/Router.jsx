@@ -8,6 +8,7 @@ import ServicePage from "../../pages/ServicesPage";
 import AboutPage from "../../pages/AboutPage";
 import ProfilePage from "../../pages/ProfilePage";
 import {useSelector} from "react-redux";
+import OrderDetailsPage from "../../pages/OrderDetailsPage";
 
 const Router = () => {
 
@@ -24,6 +25,7 @@ const Router = () => {
                 <Route path={'/items/item'} element={<ItemPage />}/>
                 <Route path={'/houses/house'}/>
                 <Route path={'/services/service'} element={<ServicePage />}/>
+                <Route path={'/order/details'} element={<OrderDetailsPage />}/>
                 <Route path={'*'}/>
             </Routes>
         );

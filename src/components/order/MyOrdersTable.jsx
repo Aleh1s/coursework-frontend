@@ -1,15 +1,17 @@
-import React, {useState} from 'react';
-import {Col, Container, Row, Table} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Container} from "react-bootstrap";
 import Orders from "./Orders";
+import OrdersService from "../../service/OrdersService";
 
-const MyOrdersTable = ({orders}) => {
+const MyOrdersTable = () => {
 
-    const style = {
-        backgroundColor: 'white',
-        color: 'black'
-    }
+    const [orders, setOrders] = useState([])
 
-
+    useEffect(() => {
+        OrdersService.getAllByEmail()
+            .then(response => setOrders(response.data))
+            .catch(err => console.log(err))
+    }, [])
 
     return (
         <Container>

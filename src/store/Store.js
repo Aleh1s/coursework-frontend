@@ -3,7 +3,8 @@ import {createStore} from "redux";
 const initialState = {
     isAuthenticated: false,
     user: {},
-    advertisementId: ''
+    advertisementId: '',
+    orderId: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const reducer = (state = initialState, action) => {
             return {...state, isAuthenticated: true, user: action.payload}
         case 'TO_PAGE':
             return {...state, advertisementId: action.payload}
+        case 'TO_ORDER':
+            return {...state, orderId: action.payload}
         default:
             return state
     }
