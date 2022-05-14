@@ -8,9 +8,6 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
         title: '',
         description: '',
         category,
-        height: '',
-        length: '',
-        width: ''
     })
 
     const handleSubmit = () => {
@@ -49,34 +46,6 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                             />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Height</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter height"
-                                autoFocus
-                                onChange={event => setCreationData({...creationData, height: event.target.value})}
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Length</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter length"
-                                autoFocus
-                                onChange={event => setCreationData({...creationData, length: event.target.value})}
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Width</Form.Label>
-                            <Form.Control
-                                type="number"
-                                placeholder="Enter width"
-                                autoFocus
-                                onChange={event => setCreationData({...creationData, width: event.target.value})}
-                            />
-                        </Form.Group>
                         <Form.Group
                             className="mb-3"
                             controlId="exampleForm.ControlTextarea1"

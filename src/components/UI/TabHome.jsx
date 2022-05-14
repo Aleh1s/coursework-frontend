@@ -3,7 +3,7 @@ import {Col, Container, Pagination, Row, Tabs} from "react-bootstrap";
 import Items from "../item/Items";
 import Services from "../service/Services";
 
-const TabHome = ({items, services}) => {
+const TabHome = ({services}) => {
 
     return (
         <Container>

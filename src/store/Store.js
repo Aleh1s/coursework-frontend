@@ -2,7 +2,12 @@ import {createStore} from "redux";
 
 const initialState = {
     isAuthenticated: false,
-    user: {},
+    user: {
+        email: '',
+        firstName: '',
+        lastName: '',
+        phoneNumber: ''
+    },
     advertisementId: '',
     orderId: ''
 }

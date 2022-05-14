@@ -9,6 +9,7 @@ function App() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     useEffect(() => {
         checkAuth()
     },[])
@@ -18,8 +19,14 @@ function App() {
             .then(response => {
                 localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
                 localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
-                dispatch({type: 'REFRESH', payload: response.data.userResponseModel})
-                navigate('/')
+                dispatch({type: 'REFRESH', payload:
+                        {
+                            email: response.data.userResponseModel.email,
+                            firstName: response.data.userResponseModel.firstName,
+                            lastName: response.data.userResponseModel.lastName,
+                            phoneNumber: response.data.userResponseModel.phoneNumber
+                        }
+                })
             })
             .catch(err => console.log(err))
     }

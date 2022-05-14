@@ -1,10 +1,8 @@
 import React from 'react';
 import {Col, Image} from "react-bootstrap";
-import {useSelector} from "react-redux";
 
-const UserInfoTab = () => {
+const UserInfoTab = ({user}) => {
 
-    const user = useSelector(state => state.user)
     return (
         <Col className={'col-lg-4 col-10 mx-auto my-4 shadow'} >
             <div className={'p-4'}>
@@ -17,10 +15,6 @@ const UserInfoTab = () => {
                     <p className={'h6'} align={'center'}>{`${user.firstName} ${user.lastName}`}</p>
                     <hr/>
                     <p>Email: {user.email}</p>
-                    <hr/>
-                    <p>Age: {user.age}</p>
-                    <hr/>
-                    <p>City: {user.city}</p>
                     <hr/>
                     <p>Phone number: {
                         user.phoneNumber.includes('+38') ?

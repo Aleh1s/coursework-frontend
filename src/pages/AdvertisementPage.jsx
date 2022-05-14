@@ -1,12 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Carousel, Col, Container, Image, Row} from "react-bootstrap";
+import {Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
 import ModalItemForm from "../components/modals/ModalItemForm";
-import ModalPhone from "../components/modals/ModalPhone";
 import {useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import CreatorInfo from "../components/UI/CreatorInfo";
 
-const ItemPage = () => {
+const AdvertisementPage = () => {
 
     const id = useSelector(state => state.advertisementId)
     const image = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18085ec4d35%20text%20%7B%20fill%3A%23ffffff%3Bfont-weight%3Anormal%3Bfont-family%3Avar(--bs-font-sans-serif)%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18085ec4d35%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22289.71875%22%20y%3D%22221.36000137329103%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
@@ -14,7 +13,17 @@ const ItemPage = () => {
     const [showModalForm, setShowModalForm] = useState(false)
     const handleShowModalForm = () => setShowModalForm(true)
     const handleCloseModalForm = () => setShowModalForm(false)
-    const [advertisementInfo, setAdvertisementInfo] = useState({})
+    const [advertisementInfo, setAdvertisementInfo] = useState({
+        title: '',
+        description: '',
+        createdAt: '',
+        userResponseModel: {
+            email: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: ''
+        }
+    })
 
     useEffect
     (() => {
@@ -56,17 +65,6 @@ const ItemPage = () => {
                 </Col>
                 <Col className={'d-flex col-12 col-lg-4 shadow-lg offset-1 my-lg-0 my-4 p-2'}>
                     <Row className={'h-100 d-flex col-12 mx-auto justify-content-center align-items-start'}>
-                        <Col className={'col-12 d-flex col-12 mx-auto justify-content-center'}>
-                            <p className={'h3'}>Location</p>
-                        </Col>
-                        <Col className={'col-12 d-flex mx-auto justify-content-between align-items-center'}>
-                            <Row className={'d-flex mx-auto flex-row'}>
-                                <Col className={'d-flex col-6 mx-auto justify-content-center align-items-center'}>
-                                    <Image src={locationImage} width={'40px'} height={'40px'}/>
-                                    <p className={'align-self-center'}>{advertisementInfo.creatorCity}</p>
-                                </Col>
-                            </Row>
-                        </Col>
                         {
 
                             <Col className={'col-12 d-flex align-self-end justify-content-center mx-auto my-auto'}>
@@ -81,16 +79,21 @@ const ItemPage = () => {
                         <Col className={'col-12 d-flex justify-content-start align-self-start'}>
                             <p className={'h2'}>{advertisementInfo.title}</p>
                         </Col>
+                        <Col className={'col-12 d-flex justify-content-start align-items-start'}>
+                            <Figure>
+                                <Figure.Caption>Created at: {advertisementInfo.createdAt.substring(0, 10)} {advertisementInfo.createdAt.substring(11, 19)}</Figure.Caption>
+                            </Figure>
+                        </Col>
                         <Col className={'col-12 d-flex justify-content-start align-self-start'}>
                             <p>{advertisementInfo.description}</p>
                         </Col>
                     </Row>
                 </Col>
             </Row>
-            <CreatorInfo advertisementInfo={advertisementInfo}/>
+            <CreatorInfo creatorInfo={advertisementInfo.userResponseModel}/>
             <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
         </Container>
     );
 };
 
-export default ItemPage;
+export default AdvertisementPage;

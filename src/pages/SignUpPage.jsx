@@ -1,7 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Context} from "../index";
 import {useNavigate} from "react-router-dom";
 import ServerErrorAlert from "../components/alert/ServerErrorAlert";
 import AuthService from "../service/AuthService";
@@ -9,7 +8,6 @@ import AuthService from "../service/AuthService";
 const SignUpPage = () => {
 
     const navigate = useNavigate()
-    const {user} = useContext(Context)
     const [serverError, setServerError] = useState({
         show: false,
         message: ''
@@ -19,11 +17,7 @@ const SignUpPage = () => {
         password: '',
         firstName: '',
         lastName: '',
-        city: '',
-        address: '',
-        postNumber: '',
         phoneNumber: '',
-        dob: '',
     })
     const signUp = (e) => {
         e.preventDefault()
@@ -80,27 +74,7 @@ const SignUpPage = () => {
                                 </Form.Group>
                             </Row>
 
-                            <Form.Group as={Col} className="mb-3" controlId="formGridCity">
-                                <Form.Label>City</Form.Label>
-                                <Form.Control placeholder="London" value={signUpData.city} onChange={
-                                    event => setSignUpData({...signUpData, city: event.target.value})
-                                }/>
-                            </Form.Group>
-
-                            <Form.Group as={Col} className="mb-3" controlId="formGridAddress">
-                                <Form.Label>Address</Form.Label>
-                                <Form.Control placeholder="street, house number, apartment number" value={signUpData.address} onChange={
-                                    event => setSignUpData({...signUpData, address: event.target.value})
-                                }/>
-                            </Form.Group>
-
                             <Row className="mb-3">
-                                <Form.Group as={Col} controlId="formGridCity">
-                                    <Form.Label>Post number</Form.Label>
-                                    <Form.Control placeholder="number" value={signUpData.postNumber} onChange={
-                                        event => setSignUpData({...signUpData, postNumber: event.target.value})
-                                    }/>
-                                </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Phone number</Form.Label>
@@ -109,13 +83,6 @@ const SignUpPage = () => {
                                     }/>
                                 </Form.Group>
                             </Row>
-
-                            <Form.Group as={Col} controlId="formGridZip">
-                                <Form.Label>Date of birthday</Form.Label>
-                                <Form.Control placeholder={'Example: YYYY-MM-DD'} value={signUpData.dob} onChange={
-                                    event => setSignUpData({...signUpData, dob: event.target.value})
-                                }/>
-                            </Form.Group>
 
                             <Row className={'my-4 mx-auto'}>
                                 <Button variant="primary" type="submit">
