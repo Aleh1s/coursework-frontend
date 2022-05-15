@@ -7,7 +7,10 @@ const TabProfile = ({
                         orders,
                         sales,
                         setShowCancelOrderModal,
-                        setShowMarkAsDeliveredModal
+                        setShowMarkAsDeliveredModal,
+                        setShowOrdersModal,
+                        showOrdersModal,
+                        handleOrder
                     }) => {
     return (
         <Col className={'col-lg-7 col-12 mx-auto my-4'}>
@@ -18,7 +21,7 @@ const TabProfile = ({
                         setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal} orders={orders}/>
                 </Tab>
                 <Tab eventKey="my-sales" title="My sales">
-                    <MySalesTable sales={sales}/>
+                    <MySalesTable handleOrder={handleOrder} sales={sales} show={showOrdersModal} setShow={setShowOrdersModal}/>
                 </Tab>
             </Tabs>
         </Col>

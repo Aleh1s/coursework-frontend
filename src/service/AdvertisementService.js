@@ -14,4 +14,8 @@ export default class AdvertisementService {
     static async getPageOfSortedAdvertisements(page, limit, category, sortBy) {
         return await axios.get(`${API_URL}/v1/advertisements/page?_category=${category}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
     }
+
+    static async getAdvertisementByEmail() {
+        return await $api.get('/v1/advertisements/email')
+    }
 }

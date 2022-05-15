@@ -16,7 +16,7 @@ const Item = ({item, key}) => {
         'E%3Ctext%20x%3D%22108.53125%22%20y%3D%2297.44000034332275%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
 
     const handleViewMore = () => {
-        dispatch({type: 'TO_PAGE', payload: id})
+        dispatch({type: 'TO_ADVERTISEMENT', payload: id})
         navigate('/items/item')
     }
 

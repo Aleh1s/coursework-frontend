@@ -75,7 +75,7 @@ const Order = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) =>
                                 )
                                     ? <Button variant={"danger"}
                                               onClick={() => {
-                                                  dispatch({type: 'TO_ORDER', payload: order.uniqueId})
+                                                  dispatch({type: 'TO_MY_ORDER', payload: order.uniqueId})
                                                   setShowCancelOrderModal(true)
                                               }}>Cancel</Button>
                                     : <OverlayTrigger
@@ -96,7 +96,7 @@ const Order = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) =>
                                 order.deliveryEntity.deliveryStatus === 'IN_ROAD' && order.orderStatus === 'CONFIRMED'
                                     ? <Button variant={"success"}
                                               onClick={() => {
-                                                  dispatch({type: 'TO_ORDER', payload: order.uniqueId})
+                                                  dispatch({type: 'TO_MY_ORDER', payload: order.uniqueId})
                                                   setShowMarkAsDeliveredModal(true)
                                               }}>Mark as
                                         delivered</Button>

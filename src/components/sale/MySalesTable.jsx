@@ -1,17 +1,12 @@
-import React, {useState} from 'react';
-import {Card, Col, Container, Row, Table} from "react-bootstrap";
+import React from 'react';
+import {Container} from "react-bootstrap";
 import Sales from "./Sales";
 
-const MySalesTable = ({sales}) => {
-
-    const style = {
-        backgroundColor: 'white',
-        color: 'black'
-    }
+const MySalesTable = ({sales, show, setShow, handleOrder}) => {
 
     return (
         <Container>
-            <Sales sales={sales}/>
+            <Sales handleOrder={handleOrder} setShow={setShow} show={show} sales={sales}/>
         </Container>
     );
 };

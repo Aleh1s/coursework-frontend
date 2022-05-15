@@ -20,4 +20,8 @@ export default class OrdersService{
     static async changeDeliveryStatus(id, status) {
         return await $api.put(`/v1/orders/change-status?_id=${id}&_status=${status}`)
     }
+
+    static async getAllByAdvertisementId(id) {
+        return await $api.get(`/v1/orders/advertisement?_id=${id}`)
+    }
 }

@@ -9,7 +9,7 @@ const initialState = {
         phoneNumber: ''
     },
     advertisementId: '',
-    orderId: ''
+    myOrderId: '',
 }
 
 const reducer = (state = initialState, action) => {
@@ -20,10 +20,10 @@ const reducer = (state = initialState, action) => {
             return {...state, isAuthenticated: false, user: {}}
         case 'REFRESH':
             return {...state, isAuthenticated: true, user: action.payload}
-        case 'TO_PAGE':
+        case 'TO_ADVERTISEMENT':
             return {...state, advertisementId: action.payload}
-        case 'TO_ORDER':
-            return {...state, orderId: action.payload}
+        case 'TO_MY_ORDER':
+            return {...state, myOrderId: action.payload}
         default:
             return state
     }

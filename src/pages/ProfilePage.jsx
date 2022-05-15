@@ -6,22 +6,55 @@ import CancelOrderModal from "../components/modals/CancelOrderModal";
 import MarkAsDeliveredModal from "../components/modals/MarkAsDeliveredModal";
 import OrdersService from "../service/OrdersService";
 import {useSelector} from "react-redux";
+import AdvertisementService from "../service/AdvertisementService";
+import ModalOrders from "../components/modals/ModalOrders";
 
 const ProfilePage = () => {
 
-    const orderId = useSelector(state => state.orderId)
     const user = useSelector(state => state.user)
+    const myOrderId = useSelector(state => state.myOrderId)
+    const orderId = useSelector(state => state.orderId)
+    const [showOrders, setShowOrders] = useState(false)
     const [showCancelOrderModal, setShowCancelOrderModal] = useState(false)
     const [showMarkAsDeliveredModal, setShowMarkAsDeliveredModal] = useState(false)
-    const [orders, setOrders] = useState()
+    const [myOrders, setMyOrders] = useState([])
+    const [order, setOrder] = useState([{
+        uniqueId: '',
+        createdAt: '',
+        orderStatus: '',
+        wishes: '',
+        deliveryEntity: {
+            address: '',
+            city: '',
+            deliveryStatus: '',
+            id: '',
+            postOffice: ''
+        },
+        receiver: {
+            email: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: ''
+        }
+    }])
+
+    const handleOrder = (id) => {
+        OrdersService.getAllByAdvertisementId(id)
+            .then(response => {
+                setOrder(response.data)
+                setShowOrders(true)
+            })
+            .catch(err => console.log(err))
+    }
 
     useEffect(() => {
         fetchOrders()
+        fetchAdvertisements()
     }, [])
 
     const fetchOrders = () => {
         OrdersService.getAllByEmail()
-            .then(response => setOrders(response.data))
+            .then(response => setMyOrders(response.data))
             .catch(err => console.log(err))
     }
 
@@ -43,42 +76,29 @@ const ProfilePage = () => {
             .catch(err => console.log(err))
     }
 
-    const [sales, setSales] = useState([{
-        id: '1',
-        category: 'ITEM',
-        name: 'Iphone',
-        receiver: 'Bob@gmail.com',
-        city: 'Manchester',
-        status: 'SOLD_OUT'
-    },
-        {
-            id: '2',
-            category: 'SERVICE',
-            name: 'Haircut',
-            receiver: '',
-            city: 'London',
-            status: 'FOR_SALE'
-        },
-        {
-            id: '3',
-            category: 'HOUSE',
-            name: 'House in Gdansk',
-            receiver: 'Alex@gmail.com',
-            city: 'Gdansk',
-            status: 'SOLD_OUT'
-        }])
+    const fetchAdvertisements = () => {
+        AdvertisementService.getAdvertisementByEmail()
+            .then(response => {
+                setSales(response.data)
+                console.log(response)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const [sales, setSales] = useState([])
 
     return (
         <Container>
             <Row>
                 <UserInfoTab user={user}/>
-                <TabProfile setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
-                            setShowCancelOrderModal={setShowCancelOrderModal} orders={orders} sales={sales}/>
+                <TabProfile handleOrder={handleOrder} setShowOrdersModal={setShowOrders} showOrdersModal={showOrders} setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
+                            setShowCancelOrderModal={setShowCancelOrderModal} orders={myOrders} sales={sales}/>
             </Row>
             <CancelOrderModal handleCancelOrder={handleCancelOrder} show={showCancelOrderModal}
                               setShow={setShowCancelOrderModal}/>
             <MarkAsDeliveredModal handleMarkAsDelivered={handleMarkAsDelivered} setShow={setShowMarkAsDeliveredModal}
                                   show={showMarkAsDeliveredModal}/>
+            <ModalOrders orders={order} handleSetOrders={handleOrder} show={showOrders} setShow={setShowOrders}/>
         </Container>
     );
 };

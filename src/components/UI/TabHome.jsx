@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Container, Pagination, Row, Tabs} from "react-bootstrap";
+import {Col, Container, Row, Tabs} from "react-bootstrap";
 import Items from "../item/Items";
 import Services from "../service/Services";
 
