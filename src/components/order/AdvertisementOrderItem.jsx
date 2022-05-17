@@ -2,7 +2,7 @@ import React from 'react';
 import {Accordion, Badge, Button, Col, Figure, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 
-const AdvertisementOrderItem = ({setShowOrders, order, setShowConfirmModal, setShowDeclineOrder, setShowSentOrder}) => {
+const AdvertisementOrderItem = ({setShowOrders, order, setShowConfirmModal, setShowDeclineModal, setShowSentModal}) => {
 
     const dispatch = useDispatch()
 
@@ -35,7 +35,7 @@ const AdvertisementOrderItem = ({setShowOrders, order, setShowConfirmModal, setS
                         </Col>
 
                         <Col className={'col-6 d-flex justify-content-center'}>
-                            <Button variant={'danger'}>Decline</Button>
+                            <Button onClick={() => handleDecline()} variant={'danger'}>Decline</Button>
                         </Col>
                     </Row>
                 )
@@ -73,13 +73,13 @@ const AdvertisementOrderItem = ({setShowOrders, order, setShowConfirmModal, setS
     const handleDecline = () => {
         setShowOrders(false)
         dispatch({type: 'MY_ADVERTISEMENT_ORDER_ID', payload: order.uniqueId})
-        setShowDeclineOrder(true)
+        setShowDeclineModal(true)
     }
 
     const handleSent = () => {
         setShowOrders(false)
         dispatch({type: 'MY_ADVERTISEMENT_ORDER_ID', payload: order.uniqueId})
-        setShowSentOrder(true)
+        setShowSentModal(true)
     }
 
     const onCompleted = () => {

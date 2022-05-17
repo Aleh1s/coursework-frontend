@@ -21,7 +21,7 @@ const TabProfile = ({
                         setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
                         myOrders={myOrders}/>
                 </Tab>
-                <Tab eventKey="my-sales" title="My sales">
+                <Tab eventKey="my-sales" title="My advertisements">
                     <MySalesTable handleOrder={handleOrder} sales={sales} show={showOrdersModal} setShow={setShowOrdersModal}/>
                 </Tab>
             </Tabs>

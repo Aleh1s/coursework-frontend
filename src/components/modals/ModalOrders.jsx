@@ -2,7 +2,7 @@ import React from 'react';
 import {Accordion, Modal} from "react-bootstrap";
 import AdvertisementOrderItem from "../order/AdvertisementOrderItem";
 
-const ModalOrders = ({show, setShow, orders, setShowConfirmModal, setShowDeclineOrder, setShowSentOrder}) => {
+const ModalOrders = ({show, setShow, orders, setShowConfirmModal, setShowDeclineModal, setShowSentModal}) => {
 
     return (
         <Modal
@@ -20,8 +20,8 @@ const ModalOrders = ({show, setShow, orders, setShowConfirmModal, setShowDecline
                 <Accordion>
                     {
                         orders ? orders.map(order => <AdvertisementOrderItem setShowOrders={setShow} setShowConfirmModal={setShowConfirmModal}
-                                                                             setShowDeclineOrder={setShowDeclineOrder}
-                                                                             setShowSentOrder={setShowSentOrder}
+                                                                             setShowDeclineModal={setShowDeclineModal}
+                                                                             setShowSentModal={setShowSentModal}
                                                                              order={order}/>) : <h1>No orders</h1>
                     }
                 </Accordion>

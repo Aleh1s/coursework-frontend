@@ -141,7 +141,7 @@ const ProfilePage = () => {
             <ProfileModal title={'Confirm order ?'} body={'Do you want to confirm order ?'} action={handleConfirmOrder}
                           setShow={setShowConfirmModal} show={showConfirmModal}/>
 
-            <ModalOrders setShowSentOrder={setShowSentModal} setShowDeclineOrder={setShowDeclineModal}
+            <ModalOrders setShowSentModal={setShowSentModal} setShowDeclineModal={setShowDeclineModal}
                          setShowConfirmModal={setShowConfirmModal} orders={advertisementsOrder}
                          handleSetOrders={handleOrder} show={showOrders} setShow={setShowOrders}/>
         </Container>
