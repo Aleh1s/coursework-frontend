@@ -4,7 +4,7 @@ import MyOrdersTable from "../order/MyOrdersTable";
 import MySalesTable from "../sale/MySalesTable";
 
 const TabProfile = ({
-                        orders,
+                        myOrders,
                         sales,
                         setShowCancelOrderModal,
                         setShowMarkAsDeliveredModal,
@@ -18,7 +18,8 @@ const TabProfile = ({
                 <Tab eventKey="my-orders" title="My orders">
                     <MyOrdersTable
                         setShowCancelOrderModal={setShowCancelOrderModal}
-                        setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal} orders={orders}/>
+                        setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
+                        myOrders={myOrders}/>
                 </Tab>
                 <Tab eventKey="my-sales" title="My sales">
                     <MySalesTable handleOrder={handleOrder} sales={sales} show={showOrdersModal} setShow={setShowOrdersModal}/>

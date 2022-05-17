@@ -1,14 +1,14 @@
 import React from 'react';
 import {Accordion, Row} from "react-bootstrap";
-import Order from "./Order";
+import MyOrder from "./MyOrder";
 
-const Orders = ({orders, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) => {
+const MyOrders = ({myOrders, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) => {
     return (
         <Row>
             <Accordion>
                 {
-                    orders ? orders.map(order =>
-                        <Order
+                    myOrders ? myOrders.map(order =>
+                        <MyOrder
                             setShowCancelOrderModal={setShowCancelOrderModal}
                             setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal} order={order}/>
                     ) : <p className={'h3'} align={'center'} style={{color: 'white'}}>No orders</p>
@@ -18,4 +18,4 @@ const Orders = ({orders, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) 
     );
 };
 
-export default Orders;
+export default MyOrders;

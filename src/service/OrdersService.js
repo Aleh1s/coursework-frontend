@@ -24,4 +24,12 @@ export default class OrdersService{
     static async getAllByAdvertisementId(id) {
         return await $api.get(`/v1/orders/advertisement?_id=${id}`)
     }
+
+    static async confirmOrder(id) {
+        return await $api.put(`/v1/orders/accept?_id=${id}`)
+    }
+
+    static async declineOrder(id) {
+        return await $api.put(`/v1/orders/decline?_id=${id}`)
+    }
 }

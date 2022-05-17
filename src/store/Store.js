@@ -10,6 +10,7 @@ const initialState = {
     },
     advertisementId: '',
     myOrderId: '',
+    myAdvertisementOrderId: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -22,8 +23,10 @@ const reducer = (state = initialState, action) => {
             return {...state, isAuthenticated: true, user: action.payload}
         case 'TO_ADVERTISEMENT':
             return {...state, advertisementId: action.payload}
-        case 'TO_MY_ORDER':
+        case 'MY_ORDER_ID':
             return {...state, myOrderId: action.payload}
+        case 'MY_ADVERTISEMENT_ORDER_ID':
+            return {...state, myAdvertisementOrderId: action.payload}
         default:
             return state
     }

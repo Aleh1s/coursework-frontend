@@ -37,9 +37,7 @@ function App() {
                 <NavBar/>
                 <Router/>
             </header>
-            <footer style={{backgroundColor: '#212529', height: '80px'}}>
-
-            </footer>
+            <footer style={{backgroundColor: '#212529', height: '80px'}}/>
         </div>
     );
 }
