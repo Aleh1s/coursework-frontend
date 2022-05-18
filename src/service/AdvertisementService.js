@@ -7,8 +7,8 @@ export default class AdvertisementService {
         return await $api.post('/v1/advertisements', advertisementData)
     }
 
-    static async getAdvertisementDetails(category, id) {
-        return await axios.get(`${API_URL}/v1/advertisements?_category=${category}&_id=${id}`)
+    static async getAdvertisementDetails(id) {
+        return await axios.get(`${API_URL}/v1/advertisements?_id=${id}`)
     }
 
     static async getPageOfSortedAdvertisements(page, limit, category, sortBy) {

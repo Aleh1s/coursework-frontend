@@ -22,10 +22,13 @@ const AdvertisementPage = () => {
         }
     }
 
+    //todo: make a city mark
+
     const handleCloseModalForm = () => setShowModalForm(false)
     const [advertisementInfo, setAdvertisementInfo] = useState({
         title: '',
         description: '',
+        city: '',
         createdAt: '',
         userResponseModel: {
             email: '',
@@ -37,7 +40,7 @@ const AdvertisementPage = () => {
 
     useEffect
     (() => {
-        AdvertisementService.getAdvertisementDetails("ITEM", id)
+        AdvertisementService.getAdvertisementDetails(id)
             .then(response => {
                 setAdvertisementInfo(response.data)
                 console.log(response)

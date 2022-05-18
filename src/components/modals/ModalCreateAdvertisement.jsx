@@ -7,6 +7,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
     const [creationData, setCreationData] = useState({
         title: '',
         description: '',
+        city: '',
         category,
     })
 
@@ -43,6 +44,16 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                                 placeholder="Enter title"
                                 autoFocus
                                 onChange={event => setCreationData({...creationData, title: event.target.value})}
+                            />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                            <Form.Label>City</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter city"
+                                autoFocus
+                                onChange={event => setCreationData({...creationData, city: event.target.value})}
                             />
                         </Form.Group>
 
