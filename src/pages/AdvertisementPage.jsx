@@ -22,10 +22,8 @@ const AdvertisementPage = () => {
         }
     }
 
-    //todo: make a city mark
-
     const handleCloseModalForm = () => setShowModalForm(false)
-    const [advertisementInfo, setAdvertisementInfo] = useState({
+    const [itemInfo, setItemInfo] = useState({
         title: '',
         description: '',
         city: '',
@@ -42,7 +40,7 @@ const AdvertisementPage = () => {
     (() => {
         AdvertisementService.getAdvertisementDetails(id)
             .then(response => {
-                setAdvertisementInfo(response.data)
+                setItemInfo(response.data)
                 console.log(response)
             })
             .catch(err => console.log(err))
@@ -76,35 +74,37 @@ const AdvertisementPage = () => {
                         </Carousel.Item>
                     </Carousel>
                 </Col>
-                <Col className={'d-flex col-12 col-lg-4 shadow-lg offset-1 my-lg-0 my-4 p-2'}>
-                    <Row className={'h-100 d-flex col-12 mx-auto justify-content-center align-items-start'}>
-                        {
-
-                            <Col className={'col-12 d-flex align-self-end justify-content-center mx-auto my-auto'}>
-                                <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
-                                    online</Button>
-                            </Col>
-                        }
+                <Col className={'d-flex col-12 col-lg-5 shadow-lg my-lg-0 my-3 p-2'}>
+                    <Row className={'h-100 d-flex col-12 mx-auto justify-content-center align-items-center'}>
+                        <Col className={'col-12 align-items-center justify-content-center d-flex'}>
+                            <Image src={locationImage} width={'40px'} height={'40px'}/>
+                            <p className={'h4'}>{itemInfo.city}</p>
+                        </Col>
+                        <Col className={'col-12 d-flex align-items-center justify-content-center mx-auto my-auto'}>
+                            <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
+                                online</Button>
+                        </Col>
                     </Row>
                 </Col>
-                <Col className={'d-flex col-12 shadow-lg mx-auto my-5 p-2'}>
+                <Col className={'d-flex col-12 shadow-lg mx-auto my-4 p-2'}>
                     <Row className={'d-flex row-flex p-2'}>
                         <Col className={'col-12 d-flex justify-content-start align-self-start'}>
-                            <p className={'h2'}>{advertisementInfo.title}</p>
+                            <p className={'h2'}>{itemInfo.title}</p>
                         </Col>
                         <Col className={'col-12 d-flex justify-content-start align-items-start'}>
                             <Figure>
-                                <Figure.Caption>Created at: {advertisementInfo.createdAt.substring(0, 10)} {advertisementInfo.createdAt.substring(11, 19)}</Figure.Caption>
+                                <Figure.Caption>Created
+                                    at: {itemInfo.createdAt.substring(0, 10)} {itemInfo.createdAt.substring(11, 19)}</Figure.Caption>
                             </Figure>
                         </Col>
                         <Col className={'col-12 d-flex justify-content-start align-self-start'}>
-                            <p>{advertisementInfo.description}</p>
+                            <p>{itemInfo.description}</p>
                         </Col>
                     </Row>
                 </Col>
+                <CreatorInfo creatorInfo={itemInfo.userResponseModel}/>
+                <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
             </Row>
-            <CreatorInfo creatorInfo={advertisementInfo.userResponseModel}/>
-            <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
         </Container>
     );
 };

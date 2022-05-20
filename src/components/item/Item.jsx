@@ -17,7 +17,7 @@ const Item = ({item, key}) => {
 
     const handleViewMore = () => {
         dispatch({type: 'TO_ADVERTISEMENT', payload: id})
-        navigate('/items/item')
+        navigate('/advertisements/advertisement')
     }
 
     const style = {

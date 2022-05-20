@@ -22,9 +22,7 @@ const Router = () => {
                 <Route path={'/about'} element={<AboutPage />}/>
                 <Route path={'/my-orders'}/>
                 <Route path={'/my-sales'}/>
-                <Route path={'/items/item'} element={<AdvertisementPage />}/>
-                <Route path={'/houses/house'}/>
-                <Route path={'/services/service'} element={<ServicePage />}/>
+                <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
                 <Route path={'/order/details'} element={<OrderDetailsPage />}/>
                 <Route path={'*'}/>
             </Routes>
@@ -37,9 +35,7 @@ const Router = () => {
             <Route path={'/sign-in'} element={<SignInPage />}/>
             <Route path={'/sign-up'} element={<SignUpPage />}/>
             <Route path={'/about'} element={<AboutPage />}/>
-            <Route path={'/houses/house'}/>
-            <Route path={'/services/service'} element={<ServicePage />}/>
-            <Route path={'/items/item'} element={<AdvertisementPage />}/>
+            <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
             <Route path={'*'}/>
         </Routes>
     );

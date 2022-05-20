@@ -2,8 +2,9 @@ import React from 'react';
 import {Col, Container, Row, Tabs} from "react-bootstrap";
 import Items from "../item/Items";
 import Services from "../service/Services";
+import HouseAdvertisements from "../houseAdv/HouseAdvertisements";
 
-const TabHome = ({services}) => {
+const TabHome = () => {
 
     return (
         <Container>
@@ -15,10 +16,10 @@ const TabHome = ({services}) => {
                             <Items />
                         </TabHome>
                         <TabHome eventKey="services" title="Services">
-                            <Services services={services}/>
+                            <Services />
                         </TabHome>
                         <TabHome eventKey="houses" title="Houses">
-
+                            <HouseAdvertisements />
                         </TabHome>
                     </Tabs>
                 </Col>

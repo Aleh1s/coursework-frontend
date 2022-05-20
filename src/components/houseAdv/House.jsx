@@ -1,11 +1,11 @@
 import React from 'react';
-import {Card, Col} from "react-bootstrap";
-import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
+import {Card, Col} from "react-bootstrap";
 
-const Service = ({service}) => {
-
-    const id = service.id
+const House = ({house}) => {
+    
+    const id = house.id
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const defaultImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
@@ -28,11 +28,11 @@ const Service = ({service}) => {
         <Col className={'col-lg-3 my-3'}>
             <Card border={'primary'} style={style}>
                 <Card.Img variant="top"
-                          src={service.image ? service.image : defaultImage} alt={defaultImage}/>
+                          src={house.image ? house.image : defaultImage} alt={defaultImage}/>
                 <Card.Body>
-                    <Card.Title>{service.title}</Card.Title>
+                    <Card.Title>{house.title}</Card.Title>
                     <Card.Text>
-                        {service.description}
+                        {house.description}
                     </Card.Text>
                     <a className={'link-info'} onClick={handleViewMore}>View more</a>
                 </Card.Body>
@@ -41,4 +41,4 @@ const Service = ({service}) => {
     );
 };
 
-export default Service;
+export default House;
