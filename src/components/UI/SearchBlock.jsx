@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Col, FormControl, InputGroup, Row} from "react-bootstrap";
 
-const SearchBlock = ({placeHolderText, handleShowCreateModal}) => {
+const SearchBlock = ({placeHolderText, handleShowCreateModal, handleSearch, setQuery}) => {
     return (
         <Row>
             <Col className={'mx-auto my-2'}>
@@ -10,8 +10,9 @@ const SearchBlock = ({placeHolderText, handleShowCreateModal}) => {
                         placeholder={placeHolderText}
                         aria-label="Recipient's username"
                         aria-describedby="basic-addon2"
+                        onChange={event => setQuery(event.target.value)}
                     />
-                    <Button variant="outline-primary" id="button-addon2">
+                    <Button variant="outline-primary" id="button-addon2" onClick={handleSearch}>
                         Search
                     </Button>
                     <Button variant="primary" id="button-addon2" onClick={handleShowCreateModal}>

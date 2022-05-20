@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
+import FeedbackService from "../../service/FeedbackService";
 
 const FeedbackForm = () => {
 
+    const [show, setShow] = useState(false)
     const [feedback, setFeedback] = useState({
         email: '',
         text: ''
@@ -10,11 +12,22 @@ const FeedbackForm = () => {
 
     const submit = (e) => {
         e.preventDefault()
+        FeedbackService.create(feedback)
+            .then(() => setShow(true))
+            .catch(err => console.log(err))
     }
 
     return (
         <Container>
             <Row>
+                <Col className={'col-12'}>
+                    <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
+                        <Alert.Heading>Thanks for submitting :)</Alert.Heading>
+                        <p>
+                            We appreciate it !!!
+                        </p>
+                    </Alert>
+                </Col>
                 <Col className={'mx-auto my-4 col-8 rounded'} >
                     <p className={'h2 p-2'} align={'center'}>Feedback</p>
                     <Form className={'p-3'} onSubmit={submit}>

@@ -36,6 +36,16 @@ const HouseAdvertisements = () => {
             .catch(err => console.log(err))
     }
 
+    // const fetchAdvertisementsByQuery = () => {
+    //     setShowSpinner(true)
+    //     AdvertisementService.getAdvertisementByQuery(query, 0, 12, 'HOUSE', 'createdAt')
+    //         .then(response => {
+    //             setItems(response.data)
+    //             setShowSpinner(false)
+    //         })
+    //         .catch(err => console.log(err))
+    // }
+
     const onCreate = () => {
         fetchAdvertisements()
     }
@@ -55,7 +65,7 @@ const HouseAdvertisements = () => {
 
     return (
         <Container>
-            <SearchBlock placeHolderText={'Search item'} handleShowCreateModal={handleShowCreateModal}/>
+            <SearchBlock placeHolderText={'Search house'} handleShowCreateModal={handleShowCreateModal}/>
             {showSpinner ?
                 <Row className={'d-flex justify-content-center align-items-center my-4'}>
                     <Col className={'d-flex justify-content-center align-items-center'}>

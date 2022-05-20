@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Card, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -8,6 +8,7 @@ const Service = ({service}) => {
     const id = service.id
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [hover, setHover] = useState(false)
     const defaultImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
         '2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E' +
         '%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18085cd478e%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont' +
@@ -21,20 +22,26 @@ const Service = ({service}) => {
     }
 
     const style = {
-        width: '18rem'
+        width: '18rem',
+        height: '23rem'
+    }
+
+    const onHover = {
+        width: '18.5rem',
+        height: '23rem'
     }
 
     return (
         <Col className={'col-lg-3 my-3'}>
-            <Card border={'primary'} style={style}>
+            <Card border={'primary'} style={hover ? onHover : style} onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)} onClick={() => handleViewMore()}>
                 <Card.Img variant="top"
                           src={service.image ? service.image : defaultImage} alt={defaultImage}/>
                 <Card.Body>
                     <Card.Title>{service.title}</Card.Title>
                     <Card.Text>
-                        {service.description}
+                        {service.description.length > 150 ? service.description.substring(0, 151) + '...' : service.description}
                     </Card.Text>
-                    <a className={'link-info'} onClick={handleViewMore}>View more</a>
                 </Card.Body>
             </Card>
         </Col>
