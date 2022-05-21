@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Button, Col, Container, Pagination, Row} from "react-bootstrap";
+import React from 'react';
+import {Col, Container, Row} from "react-bootstrap";
 import TabHome from "../components/UI/TabHome";
-import {Context} from "../index";
 
 const HomePage = () => {
 

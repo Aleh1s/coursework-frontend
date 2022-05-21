@@ -1,17 +1,21 @@
 import React, {useState} from 'react';
-import {Button, Col, Form, Modal, Row} from "react-bootstrap";
+import {Alert, Button, Col, Form, Modal, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import OrdersService from "../../service/OrdersService";
 
-const ModalItemForm = (props) => {
+const ModalCreateItemOrderForm = (props) => {
 
     const id = useSelector(state => state.advertisementId)
     const user = useSelector(state => state.user)
+    const [error, setError] = useState({
+        showAlert: false,
+        message: ''
+    })
     const [orderData, setOrderData] = useState({
         advertisementId: id,
-        deliveryCity: '',
-        deliveryAddress: '',
-        deliveryPostOffice: '',
+        city: '',
+        address: '',
+        postOffice: '',
         wishes: ''
     })
 
@@ -19,7 +23,11 @@ const ModalItemForm = (props) => {
         e.preventDefault()
         OrdersService.makeOrder(orderData)
             .then(() => props.onHide())
-            .catch(err => console.log(err))
+            .catch(err => onError(err.response.data.message))
+    }
+
+    const onError = (message) => {
+        setError({...error, showAlert: true, message: message})
     }
 
     return (
@@ -36,6 +44,13 @@ const ModalItemForm = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <Row className={'d-flex justify-content-start align-items-start'}>
+                    <Col className={'col-12'}>
+                        <Col className={'col-12'}>
+                            <Alert show={error.showAlert} key={'danger'} variant={'danger'}>
+                                {error.message}
+                            </Alert>
+                        </Col>
+                    </Col>
                     <Col className={'d-flex justify-content-start align-items-start col-12'}>
                         <p>First name: <strong>{user.firstName}</strong></p>
                     </Col>
@@ -50,14 +65,14 @@ const ModalItemForm = (props) => {
                     <Form.Group className="mb-3" controlId="formBasicCity">
                         <Form.Label>City</Form.Label>
                         <Form.Control type="text" placeholder="Enter city" onChange={
-                            event => setOrderData({...orderData, deliveryCity: event.target.value})
+                            event => setOrderData({...orderData, city: event.target.value})
                         }/>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Address</Form.Label>
                         <Form.Control type="text" placeholder="Enter address" onChange={
-                            event => setOrderData({...orderData, deliveryAddress: event.target.value})
+                            event => setOrderData({...orderData, address: event.target.value})
                         }/>
                         <Form.Text className="text-muted">
                             We'll never share your address with anyone else.
@@ -65,9 +80,9 @@ const ModalItemForm = (props) => {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPost">
-                        <Form.Label>Post number</Form.Label>
+                        <Form.Label>Post office</Form.Label>
                         <Form.Control type="text" placeholder="Enter post number" onChange={
-                            event => setOrderData({...orderData, deliveryPostOffice: event.target.value})
+                            event => setOrderData({...orderData, postOffice: event.target.value})
                         }/>
                     </Form.Group>
 
@@ -93,4 +108,4 @@ const ModalItemForm = (props) => {
     );
 };
 
-export default ModalItemForm;
+export default ModalCreateItemOrderForm;

@@ -18,7 +18,7 @@ const Items = () => {
     const [showSpinner, setShowSpinner] = useState(false)
     const [query, setQuery] = useState('')
     const [queryFlag, setQueryFlag] = useState(false)
-
+    const [currentQuery, setCurrentQuery] = useState('')
     const handleShowCreateModal = () => {
         if (isAuthenticated) {
             setShowCreateModal(!showCreateModal)
@@ -37,6 +37,22 @@ const Items = () => {
                 setShowSpinner(false)
             })
             .catch(err => console.log(err))
+        setCurrentQuery(query)
+    }
+
+    const handleFetchAdvertisementsByQuery = () => {
+        switch (query) {
+            case currentQuery:
+                fetchAdvertisementsByQuery()
+                break
+            case '':
+                fetchAdvertisements()
+                break
+            default:
+                setActivePage(1)
+                fetchAdvertisementsByQuery()
+                break
+        }
     }
 
     const fetchAdvertisements = () => {
@@ -75,7 +91,7 @@ const Items = () => {
     return (
         <Container>
             <SearchBlock placeHolderText={'Search item'} handleShowCreateModal={handleShowCreateModal}
-                         handleSearch={fetchAdvertisementsByQuery} setQuery={setQuery}/>
+                         handleSearch={handleFetchAdvertisementsByQuery} setQuery={setQuery}/>
             {showSpinner ?
                 <Row className={'d-flex justify-content-center align-items-center my-4 mx-auto'}>
                     <Col className={'d-flex justify-content-center align-items-center my-auto'}>

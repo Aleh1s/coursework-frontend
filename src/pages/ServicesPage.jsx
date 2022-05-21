@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
 import CreatorInfo from "../components/UI/CreatorInfo";
-import ModalItemForm from "../components/modals/ModalItemForm";
+import ModalCreateItemOrderForm from "../components/modals/ModalCreateItemOrderForm";
 
 const ServicePage = () => {
 

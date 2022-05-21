@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
-import ModalItemForm from "../components/modals/ModalItemForm";
+import {Alert, Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
+import ModalCreateItemOrderForm from "../components/modals/ModalCreateItemOrderForm";
 import {useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import CreatorInfo from "../components/UI/CreatorInfo";
@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 
 const AdvertisementPage = () => {
 
+    const user = useSelector(state => state.user)
     const id = useSelector(state => state.advertisementId)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
     const navigate = useNavigate()
@@ -23,10 +24,12 @@ const AdvertisementPage = () => {
     }
 
     const handleCloseModalForm = () => setShowModalForm(false)
+
     const [itemInfo, setItemInfo] = useState({
         title: '',
         description: '',
         city: '',
+        category: '',
         createdAt: '',
         userResponseModel: {
             email: '',
@@ -80,10 +83,15 @@ const AdvertisementPage = () => {
                             <Image src={locationImage} width={'40px'} height={'40px'}/>
                             <p className={'h4'}>{itemInfo.city}</p>
                         </Col>
-                        <Col className={'col-12 d-flex align-items-center justify-content-center mx-auto my-auto'}>
-                            <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
-                                online</Button>
-                        </Col>
+                        {itemInfo.category === 'ITEM' && itemInfo.userResponseModel.email !== user.email ?
+                            <Col className={'col-12 d-flex align-items-center justify-content-center mx-auto my-auto'}>
+                                <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
+                                    online</Button>
+                            </Col>
+                            :
+                            <></>
+                        }
+
                     </Row>
                 </Col>
                 <Col className={'d-flex col-12 shadow-lg mx-auto my-4 p-2'}>
@@ -103,7 +111,8 @@ const AdvertisementPage = () => {
                     </Row>
                 </Col>
                 <CreatorInfo creatorInfo={itemInfo.userResponseModel}/>
-                <ModalItemForm show={showModalForm} onHide={handleCloseModalForm}/>
+                <ModalCreateItemOrderForm show={showModalForm} onHide={handleCloseModalForm}
+                                          category={itemInfo.category}/>
             </Row>
         </Container>
     );
