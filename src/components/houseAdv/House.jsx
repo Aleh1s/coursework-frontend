@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {Card, Col} from "react-bootstrap";
+import {API_URL} from "../../http";
 
 const House = ({house}) => {
     
@@ -36,7 +37,11 @@ const House = ({house}) => {
             <Card border={'primary'} style={hover ? onHover : style} onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)} onClick={() => handleViewMore()}>
                 <Card.Img variant="top"
-                          src={house.image ? house.image : defaultImage} alt={defaultImage}/>
+                          src={`${API_URL}/v1/advertisements/image?_id=${id}`}
+                          width={'286px'}
+                          height={'180px'}
+                          alt={defaultImage}
+                />
                 <Card.Body>
                     <Card.Title>{house.title}</Card.Title>
                     <Card.Text>

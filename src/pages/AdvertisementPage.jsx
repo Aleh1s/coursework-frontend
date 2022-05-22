@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
+import {Button, Col, Container, Figure, Image, Row} from "react-bootstrap";
 import ModalCreateItemOrderForm from "../components/modals/ModalCreateItemOrderForm";
 import {useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import CreatorInfo from "../components/UI/CreatorInfo";
 import {useNavigate} from "react-router-dom";
+import {API_URL} from "../http";
 
 const AdvertisementPage = () => {
 
@@ -52,32 +53,10 @@ const AdvertisementPage = () => {
     return (
         <Container className={'p-2'}>
             <Row className={'my-3'}>
-                <Col className={'col-lg-7 col-12 p-2 shadow-lg my-auto'}>
-                    <Carousel>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src={image}
-                                alt="First slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src={image}
-                                alt="Second slide"
-                            />
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                                className="d-block w-100"
-                                src={image}
-                                alt="Third slide"
-                            />
-                        </Carousel.Item>
-                    </Carousel>
+                <Col className={'col-lg-7 col-12 p-2 shadow my-auto d-flex'}>
+                    <Image src={`${API_URL}/v1/advertisements/image?_id=${id}`} className={'img-fluid'}/>
                 </Col>
-                <Col className={'d-flex col-12 col-lg-5 shadow-lg my-lg-0 my-3 p-2'}>
+                <Col className={'d-flex col-12 col-lg-5 shadow my-lg-0 my-3 p-2'}>
                     <Row className={'h-100 d-flex col-12 mx-auto justify-content-center align-items-center'}>
                         <Col className={'col-12 align-items-center justify-content-center d-flex'}>
                             <Image src={locationImage} width={'40px'} height={'40px'}/>

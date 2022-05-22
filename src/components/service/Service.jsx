@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Card, Col} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
+import {API_URL} from "../../http";
 
 const Service = ({service}) => {
 
@@ -36,7 +37,11 @@ const Service = ({service}) => {
             <Card border={'primary'} style={hover ? onHover : style} onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)} onClick={() => handleViewMore()}>
                 <Card.Img variant="top"
-                          src={service.image ? service.image : defaultImage} alt={defaultImage}/>
+                          src={`${API_URL}/v1/advertisements/image?_id=${id}`}
+                          width={'286px'}
+                          height={'180px'}
+                          alt={defaultImage}
+                />
                 <Card.Body>
                     <Card.Title>{service.title}</Card.Title>
                     <Card.Text>

@@ -3,8 +3,8 @@ import axios from "axios";
 
 export default class AdvertisementService {
 
-    static async createAdvertisement(advertisementData) {
-        return await $api.post('/v1/advertisements', advertisementData)
+    static async createAdvertisement(formData) {
+        return await $api.post(`/v1/advertisements`, formData)
     }
 
     static async getAdvertisementDetails(id) {

@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import ModalOrders from "../components/modals/ModalOrders";
 import ProfileModal from "../components/modals/ProfileModal";
+import AddProfileImageModal from "../components/modals/AddProfileImageModal";
 
 const ProfilePage = () => {
 
@@ -21,6 +22,7 @@ const ProfilePage = () => {
     const [showSentModal, setShowSentModal] = useState(false)
     const [showDeclineModal, setShowDeclineModal] = useState(false)
     const [myAdvertisements, setMyAdvertisements] = useState([])
+    const [showAddProfileImage, setShowAddProfileImage] = useState(false)
     const [advertisementsOrder, setAdvertisementsOrder] = useState([{
         uniqueId: '',
         createdAt: '',
@@ -117,12 +119,14 @@ const ProfilePage = () => {
     return (
         <Container>
             <Row>
-                <UserInfoTab user={user}/>
+                <UserInfoTab setAddProfileImageModal={setShowAddProfileImage} user={user}/>
                 <TabProfile handleOrder={handleOrder} setShowOrdersModal={setShowOrders} showOrdersModal={showOrders}
                             setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
                             setShowCancelOrderModal={setShowCancelOrderModal} myOrders={myOrders}
                             sales={myAdvertisements}/>
             </Row>
+
+            <AddProfileImageModal show={showAddProfileImage} setShow={setShowAddProfileImage} />
             <ProfileModal title={'Cancel order ?'} body={'Do you want to cancel order ?'} action={handleCancelOrder}
                           show={showCancelOrderModal}
                           setShow={setShowCancelOrderModal}/>

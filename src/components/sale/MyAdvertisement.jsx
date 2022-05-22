@@ -1,15 +1,23 @@
 import React from 'react';
-import {Accordion, Col, Figure, Row} from "react-bootstrap";
-import {useDispatch} from "react-redux";
+import {Accordion, Col, Figure, Image, Row} from "react-bootstrap";
+import {API_URL} from "../../http";
 
-const Sale = ({sale, show, handleOrder}) => {
+const MyAdvertisement = ({sale, handleOrder}) => {
 
     const id = sale.uniqueId
-    const dispatch = useDispatch()
 
     return (
         <Accordion.Item eventKey={sale.uniqueId}>
-            <Accordion.Header>{sale.category} - {sale.title}</Accordion.Header>
+            <Accordion.Header>
+                <Row className={'d-flex justify-content-between align-items-center'}>
+                    <Col className={'col-3'}>
+                        <Image className={'img-thumbnail'} src={`${API_URL}/v1/advertisements/image?_id=${sale.uniqueId}`}/>
+                    </Col>
+                    <Col className={'col-9'}>
+                        {sale.category} - {sale.title}
+                    </Col>
+                </Row>
+            </Accordion.Header>
             <Accordion.Body>
                 <Row className={'d-flex justify-content-start align-items-start'}>
                     <Row>
@@ -45,4 +53,4 @@ const Sale = ({sale, show, handleOrder}) => {
     );
 };
 
-export default Sale;
+export default MyAdvertisement;

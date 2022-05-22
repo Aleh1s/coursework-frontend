@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Card, Col} from "react-bootstrap";
 import {useNavigate} from 'react-router-dom'
 import {useDispatch} from "react-redux";
+import {API_URL} from "../../http";
 
 const Item = ({item}) => {
 
@@ -28,15 +29,19 @@ const Item = ({item}) => {
 
     const onHover = {
         width: '18.5rem',
-        height: '23rem'
+        height: '23.5rem'
     }
 
     return (
         <Col className={'col-lg-3 my-3'}>
             <Card border={'primary'} style={hover ? onHover : style} onMouseEnter={() => setHover(true)}
                   onMouseLeave={() => setHover(false)} onClick={() => handleViewMore()}>
-                < Card.Img variant="top"
-                           src={item.image ? item.image : defaultImage} alt={defaultImage}/>
+                <Card.Img variant="top"
+                          src={`${API_URL}/v1/advertisements/image?_id=${id}`}
+                          width={'286px'}
+                          height={'180px'}
+                          alt={defaultImage}
+                />
                 <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
                     <Card.Text>

@@ -1,17 +1,35 @@
-import React from 'react';
-import {Col, Image} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Col, Image, Row} from "react-bootstrap";
+import {API_URL} from "../../http";
+import UserService from "../../service/UserService";
 
-const UserInfoTab = ({user}) => {
+const UserInfoTab = ({user, setAddProfileImageModal}) => {
+
+    const [imageExists, setImageExists] = useState(false)
+    const defaultImage = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
+
+    const checkImage = () => {
+        UserService.checkImage(user.email)
+            .then(response => setImageExists(response.data))
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        checkImage()
+    }, [])
 
     return (
-        <Col className={'col-lg-4 col-10 mx-auto my-4 shadow'} >
-            <div className={'p-4'}>
-                <Image className={'img-fluid mx-auto d-block my-auto rounded-circle'}
-                       src={'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18085cd478e%20text%20%7B%20fill%3A%23999%3Bfont-weight%3Anormal%3Bfont-family%3Avar(--bs-font-sans-serif)%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18085cd478e%22%3E%3Crect%20width%3D%22286%22%20height%3D%22180%22%20fill%3D%22%23373940%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22108.53125%22%20y%3D%2297.44000034332275%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'}
-                       height={'300px'}
-                       width={'300px'}
-                />
-                <div className={'my-4'}>
+        <Col className={'col-lg-4 col-10 mx-auto my-4 shadow'}>
+            <Row>
+                <Col className={'col-12 d-flex justify-content-center align-items-center'}>
+                    <Image className={'mx-auto my-4 rounded-circle'}
+                           src={imageExists ? `${API_URL}/v1/users/image?_email=${user.email}` : defaultImage}
+                           height={'200px'}
+                           width={'200px'}
+                           onClick={() => setAddProfileImageModal(true)}
+                    />
+                </Col>
+                <Col className={'col-12 mx-auto my-4'}>
                     <p className={'h6'} align={'center'}>{`${user.firstName} ${user.lastName}`}</p>
                     <hr/>
                     <p>Email: {user.email}</p>
@@ -19,8 +37,8 @@ const UserInfoTab = ({user}) => {
                     <p>Phone number: {
                         user.phoneNumber.includes('+38') ?
                             user.phoneNumber : `+38${user.phoneNumber}`}</p>
-                </div>
-            </div>
+                </Col>
+            </Row>
         </Col>
     );
 };

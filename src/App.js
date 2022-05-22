@@ -32,12 +32,17 @@ function App() {
     }
 
     return (
-        <div>
+        <div style={{minHeight: '100%'}}>
             <header>
                 <NavBar/>
                 <Router/>
             </header>
-            <footer style={{backgroundColor: '#212529', height: '80px'}}/>
+            <main>
+
+            </main>
+            <footer style={{backgroundColor: '#212529', height: '80px'}}>
+
+            </footer>
         </div>
     );
 }

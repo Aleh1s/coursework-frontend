@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Tab, Tabs} from "react-bootstrap";
 import MyOrdersTable from "../order/MyOrdersTable";
-import MySalesTable from "../sale/MySalesTable";
+import MyAdvertisementsTable from "../sale/MyAdvertisementsTable";
 
 const TabProfile = ({
                         myOrders,
@@ -22,7 +22,7 @@ const TabProfile = ({
                         myOrders={myOrders}/>
                 </Tab>
                 <Tab eventKey="my-sales" title="My advertisements">
-                    <MySalesTable handleOrder={handleOrder} sales={sales} show={showOrdersModal} setShow={setShowOrdersModal}/>
+                    <MyAdvertisementsTable handleOrder={handleOrder} sales={sales} show={showOrdersModal} setShow={setShowOrdersModal}/>
                 </Tab>
             </Tabs>
         </Col>

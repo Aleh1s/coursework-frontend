@@ -5,6 +5,7 @@ import AdvertisementService from "../../service/AdvertisementService";
 const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
 
     const [creationData, setCreationData] = useState({
+        image: null,
         title: '',
         description: '',
         city: '',
@@ -12,7 +13,13 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
     })
 
     const handleSubmit = () => {
-        AdvertisementService.createAdvertisement(creationData)
+        const data = new FormData()
+        data.append("_image", creationData.image)
+        data.append("_title", creationData.title)
+        data.append("_description", creationData.description)
+        data.append("_city", creationData.city)
+        data.append("_category", creationData.category)
+        AdvertisementService.createAdvertisement(data)
             .then(() => {
                 handleClose()
                 onCreate()
@@ -21,7 +28,6 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 console.log(err)
                 handleClose()
             })
-
     }
 
     return (
@@ -34,7 +40,9 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                     <Form>
                         <Form.Group controlId="formFileMultiple" className="mb-3">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control type="file" multiple/>
+                            <Form.Control type="file" multiple onChange={event => setCreationData({
+                                ...creationData,
+                                image: event.target.files[0]})}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">

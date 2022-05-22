@@ -1,6 +1,7 @@
 import React from 'react';
-import {Accordion, Badge, Button, Col, Figure, Row} from "react-bootstrap";
+import {Accordion, Badge, Button, Col, Figure, Image, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
+import {API_URL} from "../../http";
 
 const MyOrder = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) => {
 
@@ -9,7 +10,16 @@ const MyOrder = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) 
     const checkOrderStatus = () => {
         switch (order.orderStatus) {
             case 'UNCONFIRMED':
-                return <Badge bg={'secondary'}>UNCONFIRMED</Badge>
+                return (
+                    <Row className={'d-flex justify-content-start align-items-center'}>
+                        <Col className={'col-6'}>
+                            <Badge bg={'secondary'}>UNCONFIRMED</Badge>
+                        </Col>
+                        <Col className={'col-6'}>
+                            <Badge bg={'secondary'}>IN PROCESS</Badge>
+                        </Col>
+                    </Row>
+                )
             case 'DECLINED':
                 return <Badge bg={'danger'}>DECLINED</Badge>
             case 'CANCELED':
@@ -17,8 +27,28 @@ const MyOrder = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) 
             case 'CONFIRMED':
                 if (order.deliveryEntity.deliveryStatus === 'DELIVERED') {
                     return;
-                } else {
-                    return <Badge bg={'success'}>CONFIRMED</Badge>
+                } else if(order.deliveryEntity.deliveryStatus === 'IN_PROCESS'){
+                    return (
+                        <Row className={'d-flex justify-content-start align-items-center'}>
+                            <Col className={'col-6'}>
+                                <Badge bg={'success'}>CONFIRMED</Badge>
+                            </Col>
+                            <Col className={'col-6'}>
+                                <Badge bg={'secondary'}>IN PROCESS</Badge>
+                            </Col>
+                        </Row>
+                    )
+                } else if(order.deliveryEntity.deliveryStatus === 'IN_ROAD') {
+                    return (
+                        <Row className={'d-flex justify-content-start align-items-center'}>
+                            <Col className={'col-6'}>
+                                <Badge bg={'success'}>CONFIRMED</Badge>
+                            </Col>
+                            <Col className={'col-6'}>
+                                <Badge bg={'primary'}>IN ROAD</Badge>
+                            </Col>
+                        </Row>
+                    )
                 }
             default:
                 throw new Error('Unknown status')
@@ -87,9 +117,11 @@ const MyOrder = ({order, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) 
         <Accordion.Item eventKey={order.uniqueId}>
             <Accordion.Header>
                 <Row className={'d-flex justify-content-start align-items-center'}>
-                    <Col className={'d-flex justify-content-start align-items-center col-12 mx-auto my-auto'}>
+                    <Col className={'col-3'}>
+                        <Image src={`${API_URL}/v1/advertisements/image?_id=${order.product.id}`} className={'img-thumbnail'}/>
+                    </Col>
+                    <Col className={'d-flex justify-content-start align-items-center col-9 mx-auto my-auto'}>
                         <p className={'mx-auto my-auto'}>{onCompleted()} {order.product.category} - {order.product.title} {checkOrderStatus()}</p>
-
                     </Col>
                 </Row>
             </Accordion.Header>
