@@ -77,10 +77,10 @@ const HouseAdvertisements = () => {
                 :
                 <Row>
                     {
-                        houses ? houses.map(
+                        houses.length !== 0 ? houses.map(
                             house =>
                                 <House house={house}/>
-                        ) : <p>No items</p>
+                        ) : <p align={'center'} className={'h3 mx-auto my-4'}>No houses :(</p>
                     }
 
                     <Row>

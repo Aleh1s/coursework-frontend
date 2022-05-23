@@ -68,10 +68,10 @@ const Services = () => {
                     :
                     <Row>
                         {
-                            services ? services.map(
+                            services.length !== 0 ? services.map(
                                 service =>
                                     <Service service={service}/>
-                            ) : <p>No items</p>
+                            ) : <p align={'center'} className={'h3 mx-auto my-4'}>No services :(</p>
                         }
 
                         <Row>

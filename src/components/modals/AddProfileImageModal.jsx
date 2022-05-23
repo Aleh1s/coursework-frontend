@@ -1,17 +1,12 @@
 import React, {useState} from 'react';
 import {Button, Form, Modal} from "react-bootstrap";
-import UserService from "../../service/UserService";
 
-const AddProfileImageModal = ({show, setShow}) => {
+const AddProfileImageModal = ({show, setShow, addImage}) => {
 
     const [image, setImage] = useState({})
 
-    const handleAddImage = () => {
-        const data = new FormData()
-        data.append('_image', image)
-        UserService.addImage(data)
-            .then(() => setShow(false))
-            .catch(err => console.log(err))
+    const handleAdd = () => {
+        addImage(image)
     }
 
     return (
@@ -29,7 +24,7 @@ const AddProfileImageModal = ({show, setShow}) => {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={() => handleAddImage()}>
+                    <Button variant="primary" onClick={() => handleAdd()}>
                         Add
                     </Button>
                     <Button variant="danger" onClick={() => setShow(false)}>

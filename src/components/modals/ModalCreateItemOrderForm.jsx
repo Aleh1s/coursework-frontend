@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Alert, Button, Col, Form, Modal, Row} from "react-bootstrap";
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, Col, Form, Modal, OverlayTrigger, Popover, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import OrdersService from "../../service/OrdersService";
 
@@ -11,6 +11,7 @@ const ModalCreateItemOrderForm = (props) => {
         showAlert: false,
         message: ''
     })
+
     const [orderData, setOrderData] = useState({
         advertisementId: id,
         city: '',
@@ -18,6 +19,98 @@ const ModalCreateItemOrderForm = (props) => {
         postOffice: '',
         wishes: ''
     })
+
+    const [orderDataDirty, setOrderDataDirty] = useState({
+        city: false,
+        address: false,
+        postOffice: false
+    })
+
+    const [orderDataError, setOrderDataError] = useState({
+        city: 'City can not be empty',
+        address: 'Address can not be empty',
+        postOffice: 'Post office can not be empty'
+    })
+
+    const blurHandler = (e) => {
+        switch (e.target.name) {
+            case 'city':
+                setOrderDataDirty({...orderDataDirty, city: true})
+                break
+            case 'address':
+                setOrderDataDirty({...orderDataDirty, address: true})
+                break
+            case 'postOffice':
+                setOrderDataDirty({...orderDataDirty, postOffice: true})
+                break
+        }
+    }
+
+    const addressPopover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">Writing rules</Popover.Header>
+            <Popover.Body>
+                The correct format is: <strong>S StreetName 10 - HN 2 - FN 10</strong>, where S - street, HN - house
+                number
+                FN - flat number. <strong style={{color: "red"}}>All spaces and dashes are necessary !!!</strong>
+            </Popover.Body>
+        </Popover>
+    );
+
+    const postOfficePopover = (
+        <Popover id="popover-basic">
+            <Popover.Header as="h3">Writing rules</Popover.Header>
+            <Popover.Body>
+                The correct format is: <strong>N name - ON 10</strong>, where N - name, ON - office number. <strong
+                style={{color: "red"}}>All spaces and dashes are necessary !!!</strong>
+            </Popover.Body>
+        </Popover>
+    );
+
+
+    const dataValidator = (e) => {
+        switch (e.target.name) {
+            case 'city':
+                setOrderData({...orderData, city: e.target.value})
+                if (e.target.value.length < 3) {
+                    setOrderDataError({...orderDataError, city: 'City can not be less than 3 symbols'})
+                } else {
+                    setOrderDataDirty({...orderDataDirty, city: false})
+                    setOrderDataError({...orderDataError, city: ''})
+                }
+                break
+            case 'address':
+                setOrderData({...orderData, address: e.target.value})
+                const rexExpAddress = /S [A-Za-z]+ \d+? - HN \d+ - FN \d+/
+                if (!rexExpAddress.test(String(e.target.value))) {
+                    setOrderDataError({...orderDataError, address: 'Invalid address'})
+                } else {
+                    setOrderDataDirty({...orderDataDirty, address: false})
+                    setOrderDataError({...orderDataError, address: ''})
+                }
+                break
+            case 'postOffice':
+                setOrderData({...orderData, postOffice: e.target.value})
+                const rexExpPostOffice = /N [A-Za-z ]+ - ON \d+/
+                if (!rexExpPostOffice.test(String(e.target.value))) {
+                    setOrderDataError({...orderDataError, postOffice: 'Invalid post office'})
+                } else {
+                    setOrderDataDirty({...orderDataDirty, postOffice: false})
+                    setOrderDataError({...orderDataError, postOffice: ''})
+                }
+                break
+        }
+    }
+
+    const [formValid, setFormValid] = useState(false)
+
+    useEffect(() => {
+        if (orderDataError.city || orderDataError.address || orderDataError.postOffice) {
+            setFormValid(false)
+        } else {
+            setFormValid(true)
+        }
+    }, [orderDataError])
 
     const submitForm = (e) => {
         e.preventDefault()
@@ -64,26 +157,41 @@ const ModalCreateItemOrderForm = (props) => {
                 <Form onSubmit={submitForm}>
                     <Form.Group className="mb-3" controlId="formBasicCity">
                         <Form.Label>City</Form.Label>
-                        <Form.Control type="text" placeholder="Enter city" onChange={
-                            event => setOrderData({...orderData, city: event.target.value})
+                        <Form.Control value={orderData.city} name={'city'} onBlur={event => blurHandler(event)}
+                                      type="text" placeholder="Enter city" onChange={
+                            event => dataValidator(event)
                         }/>
+                        <Form.Text className={'text-danger'}
+                                   hidden={!orderDataDirty.city}>{orderDataError.city}</Form.Text>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control type="text" placeholder="Enter address" onChange={
-                            event => setOrderData({...orderData, address: event.target.value})
-                        }/>
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={addressPopover}>
+                            <Form.Control value={orderData.address} name={'address'}
+                                          onBlur={event => blurHandler(event)}
+                                          type="text" placeholder="Enter address" onChange={
+                                event => dataValidator(event)
+                            }/>
+                        </OverlayTrigger>
                         <Form.Text className="text-muted">
                             We'll never share your address with anyone else.
                         </Form.Text>
+                        <Form.Text className={'text-danger'}
+                                   hidden={!orderDataDirty.address}>{orderDataError.address}</Form.Text>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPost">
                         <Form.Label>Post office</Form.Label>
-                        <Form.Control type="text" placeholder="Enter post number" onChange={
-                            event => setOrderData({...orderData, postOffice: event.target.value})
-                        }/>
+                        <OverlayTrigger trigger="click" placement="bottom" overlay={postOfficePopover}>
+                        <Form.Control value={orderData.postOffice} name={'postOffice'}
+                                      onBlur={event => blurHandler(event)} type="text" placeholder="Enter post number"
+                                      onChange={
+                                          event => dataValidator(event)
+                                      }/>
+                        </OverlayTrigger>
+                        <Form.Text className={'text-danger'}
+                                   hidden={!orderDataDirty.postOffice}>{orderDataError.postOffice}</Form.Text>
                     </Form.Group>
 
                     <Form.Group
@@ -91,12 +199,13 @@ const ModalCreateItemOrderForm = (props) => {
                         controlId="exampleForm.ControlTextarea1"
                     >
                         <Form.Label>Wishes</Form.Label>
-                        <Form.Control as="textarea" placeholder={'Enter some extra wishes'} rows={3} onChange={
+                        <Form.Control value={orderData.wishes} as="textarea" placeholder={'Enter some extra wishes'}
+                                      rows={3} onChange={
                             event => setOrderData({...orderData, wishes: event.target.value})
                         }/>
                     </Form.Group>
 
-                    <Button variant="success" type="submit">
+                    <Button variant="success" type="submit" disabled={!formValid}>
                         Submit
                     </Button>
                 </Form>

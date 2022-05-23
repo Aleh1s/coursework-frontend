@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from "react-router-dom";
@@ -19,24 +19,126 @@ const SignUpPage = () => {
         lastName: '',
         phoneNumber: '',
     })
+
+    const [signUpDataDirty, setSignUpDataDirty] = useState({
+        email: false,
+        password: false,
+        firstName: false,
+        lastName: false,
+        phoneNumber: false,
+    })
+
+    const [signUpDataError, setSignUpDataError] = useState({
+        email: 'Email shouldn\'t be empty',
+        password: 'Password shouldn\'t be empty',
+        firstName: 'First name shouldn\'t be empty',
+        lastName: 'Last name shouldn\'t be empty',
+        phoneNumber: 'Phone number shouldn\'t be empty',
+    })
+
+    const [formValid, setFormValid] = useState(false)
+
+    useEffect(() => {
+        if (signUpDataError.email || signUpDataError.password || signUpDataError.firstName || signUpDataError.lastName || signUpDataError.phoneNumber) {
+            setFormValid(false)
+        } else {
+            setFormValid(true)
+        }
+    }, [signUpDataError])
+
     const signUp = (e) => {
         e.preventDefault()
         AuthService.register(signUpData)
             .then(response => response.status === 201 ? navigate('/sign-in') : handleShowServerErrorAlert('Unknown exception'))
             .catch(err => {
                 handleShowServerErrorAlert(err.response.data.message)
-                window.scrollTo(0,0)
+                window.scrollTo(0, 0)
             })
     }
 
     const handleShowServerErrorAlert = (message) => setServerError({...serverError, show: true, message: message})
     const handleCloseServerErrorAlert = () => setServerError({...serverError, show: false, message: ''})
 
+    const blurHandler = (e) => {
+        switch (e.target.name) {
+            case "email":
+                setSignUpDataDirty({...signUpDataDirty, email: true})
+                break
+            case "password":
+                setSignUpDataDirty({...signUpDataDirty, password: true})
+                break
+            case "firstName":
+                setSignUpDataDirty({...signUpDataDirty, firstName: true})
+                break
+            case "lastName":
+                setSignUpDataDirty({...signUpDataDirty, lastName: true})
+                break
+            case "phoneNumber":
+                setSignUpDataDirty({...signUpDataDirty, phoneNumber: true})
+                break
+        }
+    }
+
+    const dataValidator = (e) => {
+        switch (e.target.name) {
+            case "email":
+                setSignUpData({...signUpData, email: e.target.value})
+                const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                if (!regExpEmail.test(String(e.target.value).toLowerCase())) {
+                    setSignUpDataError({...signUpDataError, email: 'Email is invalid'})
+                } else {
+                    setSignUpDataDirty({...signUpDataDirty, email: false})
+                    setSignUpDataError({...signUpDataError, email: ''})
+                }
+                break
+            case "password":
+                setSignUpData({...signUpData, password: e.target.value})
+                if (e.target.value.length < 5 || e.target.value.length > 30) {
+                    setSignUpDataError({...signUpDataError, password: 'Password is invalid'})
+                } else {
+                    setSignUpDataDirty({...signUpDataDirty, password: false})
+                    setSignUpDataError({...signUpDataError, password: ''})
+                }
+                break
+            case "firstName":
+                setSignUpData({...signUpData, firstName: e.target.value})
+                const regExpFirstName = /[A-Z][a-z]+/
+                if (!regExpFirstName.test(String(e.target.value))) {
+                    setSignUpDataError({...signUpDataError, firstName: 'First name is invalid'})
+                } else {
+                    setSignUpDataDirty({...signUpDataDirty, firstName: false})
+                    setSignUpDataError({...signUpDataError, firstName: ''})
+                }
+                break
+            case "lastName":
+                setSignUpData({...signUpData, lastName: e.target.value})
+                const regExpLastName = /[A-Z][a-z]+/
+                if (!regExpLastName.test(String(e.target.value))) {
+                    setSignUpDataError({...signUpDataError, lastName: 'Last name is invalid'})
+                } else {
+                    setSignUpDataDirty({...signUpDataDirty, lastName: false})
+                    setSignUpDataError({...signUpDataError, lastName: ''})
+                }
+                break
+            case "phoneNumber":
+                setSignUpData({...signUpData, phoneNumber: e.target.value})
+                const regExpPhoneNumber = /^(\+38)?0\d{9}/
+                if (!regExpPhoneNumber.test(String(e.target.value))) {
+                    setSignUpDataError({...signUpDataError, phoneNumber: 'Phone number is invalid'})
+                } else {
+                    setSignUpDataDirty({...signUpDataDirty, phoneNumber: false})
+                    setSignUpDataError({...signUpDataError, phoneNumber: ''})
+                }
+                break
+        }
+    }
+
     return (
         <div>
             <Container>
                 <Row>
-                    <ServerErrorAlert show={serverError.show} onHide={handleCloseServerErrorAlert} message={serverError.message}/>
+                    <ServerErrorAlert show={serverError.show} onHide={handleCloseServerErrorAlert}
+                                      message={serverError.message}/>
                 </Row>
                 <Row>
                     <Col className={'col-lg-5 mx-auto my-5 shadow'}>
@@ -45,32 +147,44 @@ const SignUpPage = () => {
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridEmail">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="email" placeholder="Enter email" value={signUpData.email} onChange={
-                                        event => setSignUpData({...signUpData, email: event.target.value})
+                                    <Form.Control name={'email'} onBlur={e => blurHandler(e)} type="email"
+                                                  placeholder="Enter email" value={signUpData.email} onChange={
+                                        event => dataValidator(event)
                                     }/>
+                                    <Form.Text className={'text-danger'}
+                                               hidden={!signUpDataDirty.email}>{signUpDataError.email}</Form.Text>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Enter password" value={signUpData.password} onChange={
-                                        event => setSignUpData({...signUpData, password: event.target.value})
+                                    <Form.Control name={'password'} onBlur={e => blurHandler(e)} type="password"
+                                                  placeholder="Enter password" value={signUpData.password} onChange={
+                                        event => dataValidator(event)
                                     }/>
+                                    <Form.Text className={'text-danger'}
+                                               hidden={!signUpDataDirty.password}>{signUpDataError.password}</Form.Text>
                                 </Form.Group>
                             </Row>
 
                             <Row className="mb-3">
                                 <Form.Group as={Col} className="mb-3" controlId="formGridFirstName">
                                     <Form.Label>First name</Form.Label>
-                                    <Form.Control placeholder="Enter first name" value={signUpData.firstName} onChange={
-                                        event => setSignUpData({...signUpData, firstName: event.target.value})
+                                    <Form.Control name={'firstName'} onBlur={e => blurHandler(e)}
+                                                  placeholder="Enter first name" value={signUpData.firstName} onChange={
+                                        event => dataValidator(event)
                                     }/>
+                                    <Form.Text className={'text-danger'}
+                                               hidden={!signUpDataDirty.firstName}>{signUpDataError.firstName}</Form.Text>
                                 </Form.Group>
 
                                 <Form.Group as={Col} className="mb-3" controlId="formGridLastName">
                                     <Form.Label>Last name</Form.Label>
-                                    <Form.Control placeholder="Enter last name" value={signUpData.lastName} onChange={
-                                        event => setSignUpData({...signUpData, lastName: event.target.value})
+                                    <Form.Control name={'lastName'} onBlur={e => blurHandler(e)}
+                                                  placeholder="Enter last name" value={signUpData.lastName} onChange={
+                                        event => dataValidator(event)
                                     }/>
+                                    <Form.Text className={'text-danger'}
+                                               hidden={!signUpDataDirty.lastName}>{signUpDataError.lastName}</Form.Text>
                                 </Form.Group>
                             </Row>
 
@@ -78,14 +192,17 @@ const SignUpPage = () => {
 
                                 <Form.Group as={Col} controlId="formGridZip">
                                     <Form.Label>Phone number</Form.Label>
-                                    <Form.Control placeholder={'+380XXXXXXXXX'} value={signUpData.phoneNumber} onChange={
-                                        event => setSignUpData({...signUpData, phoneNumber: event.target.value})
-                                    }/>
+                                    <Form.Control name={'phoneNumber'} onBlur={e => blurHandler(e)}
+                                                  placeholder={'+380XXXXXXXXX'} value={signUpData.phoneNumber}
+                                                  onChange={
+                                                      event => dataValidator(event)}/>
+                                    <Form.Text className={'text-danger'}
+                                               hidden={!signUpDataDirty.phoneNumber}>{signUpDataError.phoneNumber}</Form.Text>
                                 </Form.Group>
                             </Row>
 
                             <Row className={'my-4 mx-auto'}>
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" disabled={!formValid}>
                                     Sign up
                                 </Button>
                             </Row>
