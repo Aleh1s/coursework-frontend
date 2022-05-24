@@ -122,7 +122,7 @@ const SignUpPage = () => {
                 break
             case "phoneNumber":
                 setSignUpData({...signUpData, phoneNumber: e.target.value})
-                const regExpPhoneNumber = /^(\+38)?0\d{9}/
+                const regExpPhoneNumber = /^(\+38)?0\d{9}$/im
                 if (!regExpPhoneNumber.test(String(e.target.value))) {
                     setSignUpDataError({...signUpDataError, phoneNumber: 'Phone number is invalid'})
                 } else {

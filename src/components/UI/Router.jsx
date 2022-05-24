@@ -9,6 +9,7 @@ import AboutPage from "../../pages/AboutPage";
 import ProfilePage from "../../pages/ProfilePage";
 import {useSelector} from "react-redux";
 import OrderDetailsPage from "../../pages/OrderDetailsPage";
+import NotFound from "../../pages/NotFound";
 
 const Router = () => {
 
@@ -24,7 +25,7 @@ const Router = () => {
                 <Route path={'/my-sales'}/>
                 <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
                 <Route path={'/order/details'} element={<OrderDetailsPage />}/>
-                <Route path={'*'}/>
+                <Route path={'*'} element={<NotFound />}/>
             </Routes>
         );
     }
@@ -36,7 +37,7 @@ const Router = () => {
             <Route path={'/sign-up'} element={<SignUpPage />}/>
             <Route path={'/about'} element={<AboutPage />}/>
             <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
-            <Route path={'*'}/>
+            <Route path={'*'} element={<NotFound />}/>
         </Routes>
     );
 };

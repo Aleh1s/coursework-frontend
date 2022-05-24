@@ -1,7 +1,6 @@
 import React from 'react';
-import {Accordion, Badge, Button, Col, Figure, Image, Row} from "react-bootstrap";
+import {Accordion, Badge, Button, Col, Figure, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
-import {API_URL} from "../../http";
 
 const AdvertisementOrderItem = ({setShowOrders, order, setShowConfirmModal, setShowDeclineModal, setShowSentModal}) => {
 

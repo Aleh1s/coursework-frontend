@@ -10,4 +10,7 @@ export default class UserService {
         return await $api.post(`/v1/users`, formData)
     }
 
+    static async update(data) {
+        return await $api.put('/v1/users', data)
+    }
 }

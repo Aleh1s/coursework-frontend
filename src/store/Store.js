@@ -10,7 +10,8 @@ const initialState = {
     },
     advertisementId: '',
     myOrderId: '',
-    myAdvertisementOrderId: ''
+    myAdvertisementOrderId: '',
+    advertisementToRemove: ''
 }
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +28,8 @@ const reducer = (state = initialState, action) => {
             return {...state, myOrderId: action.payload}
         case 'MY_ADVERTISEMENT_ORDER_ID':
             return {...state, myAdvertisementOrderId: action.payload}
+        case 'ADVERTISEMENT_ID_TO_REMOVE':
+            return {...state, advertisementToRemove: action.payload}
         default:
             return state
     }

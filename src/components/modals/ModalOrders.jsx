@@ -1,8 +1,10 @@
 import React from 'react';
-import {Accordion, Modal} from "react-bootstrap";
+import {Accordion, Col, Image, Modal, Row} from "react-bootstrap";
 import AdvertisementOrderItem from "../order/AdvertisementOrderItem";
 
 const ModalOrders = ({show, setShow, orders, setShowConfirmModal, setShowDeclineModal, setShowSentModal}) => {
+
+    const noResultImage = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
 
     return (
         <Modal
@@ -19,10 +21,16 @@ const ModalOrders = ({show, setShow, orders, setShowConfirmModal, setShowDecline
             <Modal.Body>
                 <Accordion>
                     {
-                        orders ? orders.map(order => <AdvertisementOrderItem setShowOrders={setShow} setShowConfirmModal={setShowConfirmModal}
-                                                                             setShowDeclineModal={setShowDeclineModal}
-                                                                             setShowSentModal={setShowSentModal}
-                                                                             order={order}/>) : <h1>No orders</h1>
+                        orders.length !== 0 ? orders.map(order => <AdvertisementOrderItem setShowOrders={setShow}
+                                                                                          setShowConfirmModal={setShowConfirmModal}
+                                                                                          setShowDeclineModal={setShowDeclineModal}
+                                                                                          setShowSentModal={setShowSentModal}
+                                                                                          order={order}/>) :
+                            <Row className={'d-flex justify-content-center'}>
+                                <Col className={'cow-12 d-flex justify-content-center'}>
+                                    <Image src={noResultImage} className={'img-fluid'}/>
+                                </Col>
+                            </Row>
                     }
                 </Accordion>
             </Modal.Body>

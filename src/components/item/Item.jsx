@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Card, Col} from "react-bootstrap";
+import {Card, Col, Row} from "react-bootstrap";
 import {useNavigate} from 'react-router-dom'
 import {useDispatch} from "react-redux";
 import {API_URL} from "../../http";
@@ -9,6 +9,7 @@ const Item = ({item}) => {
     const id = item.id
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [overlay, setOverlay] = useState(false)
     const [hover, setHover] = useState(false)
     const defaultImage = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
         '2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E' +
@@ -27,15 +28,10 @@ const Item = ({item}) => {
         height: '23rem'
     }
 
-    const onHover = {
-        width: '18.5rem',
-        height: '23.5rem'
-    }
-
     return (
         <Col className={'col-lg-3 my-3'}>
-            <Card border={'primary'} style={hover ? onHover : style} onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)} onClick={() => handleViewMore()}>
+            <Card border={'primary'} style={style} onMouseEnter={() => setOverlay(true)}
+                  onMouseLeave={() => setOverlay(false)} onClick={() => handleViewMore()}>
                 <Card.Img variant="top"
                           src={`${API_URL}/v1/advertisements/image?_id=${id}`}
                           width={'286px'}
@@ -48,6 +44,13 @@ const Item = ({item}) => {
                         {item.description.length > 150 ? item.description.substring(0, 151) + '...' : item.description}
                     </Card.Text>
                 </Card.Body>
+                <Col className={'card-img-overlay'} hidden={!overlay} style={{backgroundColor: 'rgba(0, 0, 0, 0.4)'}}>
+                    <Row className={'d-flex justify-content-center align-items-center h-100'}>
+                        <Col className={'col-12 d-flex justify-content-center align-items-center h-100'}>
+                            <p style={{color: 'white', fontSize: '15px'}}>Show details</p>
+                        </Col>
+                    </Row>
+                </Col>
             </Card>
         </Col>
     );

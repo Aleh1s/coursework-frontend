@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Pagination, Row, Spinner} from "react-bootstrap";
+import {Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
 import Item from "./Item";
 import SearchBlock from "../UI/SearchBlock";
 import ModalCreateAdvertisement from "../modals/ModalCreateAdvertisement";
@@ -19,6 +19,7 @@ const Items = () => {
     const [query, setQuery] = useState('')
     const [queryFlag, setQueryFlag] = useState(false)
     const [currentQuery, setCurrentQuery] = useState('')
+    const noResultImage = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
     const handleShowCreateModal = () => {
         if (isAuthenticated) {
             setShowCreateModal(!showCreateModal)
@@ -33,7 +34,7 @@ const Items = () => {
             .then(response => {
                 setQueryFlag(true)
                 setItems(response.data.advertisements)
-                setTotalPageCount(response.data.totalCount) // todo: Parameter value [\] did not match expected type
+                setTotalPageCount(response.data.totalCount)
                 setShowSpinner(false)
             })
             .catch(err => console.log(err))
@@ -104,18 +105,18 @@ const Items = () => {
                 <Row className={'d-flex justify-content-lg-start mx-auto justify-content-center'}>
                     {
                         items.length !== 0 ? items.map(
-                            (item, index) =>
-                                <Item key={index} item={item}/>
-                        ) : <p align={'center'} className={'h3 mx-auto my-4'}>No items :(</p>
+                                item =>
+                                    <Item item={item}/>
+                            ) :
+                            <Row className={'d-flex justify-content-center'}>
+                                <Col className={'cow-12 d-flex justify-content-center'}>
+                                    <Image src={noResultImage} className={'img-fluid'}/>
+                                </Col>
+                            </Row>
                     }
-
                     <Row>
                         <Col>
-                            {numbers.length !== 0 ?
-                                <Pagination className={'mx-auto'}>{numbers}</Pagination>
-                                :
-                                <></>
-                            }
+                            <Pagination className={'mx-auto'}>{numbers}</Pagination>
                         </Col>
                     </Row>
                 </Row>

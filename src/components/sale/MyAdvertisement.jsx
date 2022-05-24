@@ -1,8 +1,8 @@
 import React from 'react';
-import {Accordion, Col, Figure, Image, Row} from "react-bootstrap";
+import {Accordion, Button, Col, Figure, Image, Row} from "react-bootstrap";
 import {API_URL} from "../../http";
 
-const MyAdvertisement = ({sale, handleOrder}) => {
+const MyAdvertisement = ({sale, handleOrder, handleRemove}) => {
 
     const id = sale.uniqueId
 
@@ -42,9 +42,10 @@ const MyAdvertisement = ({sale, handleOrder}) => {
                             <p style={{fontSize: '14px'}}>{sale.userResponseModel.firstName} {sale.userResponseModel.lastName}</p>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
+                    <Row className={'d-flex justify-content-center align-items-center'}>
+                        <Col className={'d-flex justify-content-between align-items-center'}>
                             <a className={'link-info'} onClick={() => handleOrder(id)}>Show orders</a>
+                            <Button variant={'danger'} onClick={() => handleRemove(id)}>Remove</Button>
                         </Col>
                     </Row>
                 </Row>
