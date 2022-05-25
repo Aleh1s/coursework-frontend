@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
+import {Alert, Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
 import Item from "./Item";
 import SearchBlock from "../UI/SearchBlock";
 import ModalCreateAdvertisement from "../modals/ModalCreateAdvertisement";
@@ -11,6 +11,10 @@ const Items = () => {
 
     const navigate = useNavigate()
     const [items, setItems] = useState([])
+    const [notification, setNotification] = useState({
+        show: false,
+        message: ''
+    })
     const [totalPagesCount, setTotalPageCount] = useState(0)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -68,7 +72,8 @@ const Items = () => {
     }
 
     const onCreate = () => {
-        fetchAdvertisements()
+        setNotification({show: true, message: 'Advertisement was successfully created'})
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -93,6 +98,14 @@ const Items = () => {
         <Container>
             <SearchBlock placeHolderText={'Search item'} handleShowCreateModal={handleShowCreateModal}
                          handleSearch={handleFetchAdvertisementsByQuery} setQuery={setQuery}/>
+            {
+                notification.show ?
+                    <Alert key={'notification'} variant={'success'}>
+                        {notification.message}
+                    </Alert>
+                    :
+                    <></>
+            }
             {showSpinner ?
                 <Row className={'d-flex justify-content-center align-items-center my-4 mx-auto'}>
                     <Col className={'d-flex justify-content-center align-items-center my-auto'}>

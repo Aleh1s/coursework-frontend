@@ -3,7 +3,7 @@ import {Alert, Button, Col, Form, Modal, OverlayTrigger, Popover, Row} from "rea
 import {useSelector} from "react-redux";
 import OrdersService from "../../service/OrdersService";
 
-const ModalCreateItemOrderForm = (props) => {
+const ModalMakeOrder = ({show, onHide, setNotification}) => {
 
     const id = useSelector(state => state.advertisementId)
     const user = useSelector(state => state.user)
@@ -115,7 +115,11 @@ const ModalCreateItemOrderForm = (props) => {
     const submitForm = (e) => {
         e.preventDefault()
         OrdersService.makeOrder(orderData)
-            .then(() => props.onHide())
+            .then(() => {
+                setNotification({show: true, message: 'Order was added to your orders'})
+                window.scrollTo(0, 0)
+                onHide()
+            })
             .catch(err => onError(err.response.data.message))
     }
 
@@ -125,7 +129,8 @@ const ModalCreateItemOrderForm = (props) => {
 
     return (
         <Modal
-            {...props}
+            show={show}
+            onHide={onHide}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -211,10 +216,10 @@ const ModalCreateItemOrderForm = (props) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={'danger'} onClick={props.onHide}>Close</Button>
+                <Button variant={'danger'} onClick={onHide}>Close</Button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default ModalCreateItemOrderForm;
+export default ModalMakeOrder;

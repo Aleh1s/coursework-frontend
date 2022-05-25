@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import AuthService from "../service/AuthService";
@@ -10,6 +10,10 @@ const SignInPage = () => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const [error, setError] = useState({
+        show: false,
+        message: ''
+    })
     const [signInData, setSignInData] = useState({
         email: '',
         password: ''
@@ -60,7 +64,7 @@ const SignInPage = () => {
             case "password":
                 setSignInData({...signInData, password: e.target.value})
                 if (e.target.value.length < 5 || e.target.value.length > 30) {
-                    setSignInDataError({...signInDataError, password: 'Password is invalid'})
+                    setSignInDataError({...signInDataError, password: 'Password should be more than 5 symbols'})
                 } else {
                     setSignInDataDirty({...signInDataDirty, password: false})
                     setSignInDataError({...signInDataError, password: ''})
@@ -78,12 +82,23 @@ const SignInPage = () => {
                 dispatch({type: 'AUTHENTICATE', payload: response.data.userResponseModel})
                 navigate('/')
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setError({show: true, message: err.response.data.message})
+                window.scrollTo(0, 0)
+            })
     }
 
     return (
         <div>
             <Container>
+                {
+                    error.show ?
+                        <Alert key={'error'} variant={'danger'}>
+                            {error.message}
+                        </Alert>
+                        :
+                        <></>
+                }
                 <Row>
                     <Col className={'col-lg-5 mx-auto my-5 shadow'}>
                         <p align={'center'} className={'h1 mx-auto my-3'}>Sign in</p>

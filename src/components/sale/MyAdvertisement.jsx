@@ -11,7 +11,8 @@ const MyAdvertisement = ({sale, handleOrder, handleRemove}) => {
             <Accordion.Header>
                 <Row className={'d-flex justify-content-between align-items-center'}>
                     <Col className={'col-3'}>
-                        <Image className={'img-thumbnail'} src={`${API_URL}/v1/advertisements/image?_id=${sale.uniqueId}`}/>
+                        <Image className={'img-thumbnail'}
+                               src={`${API_URL}/v1/advertisements/image?_id=${sale.uniqueId}`}/>
                     </Col>
                     <Col className={'col-9'}>
                         {sale.category} - {sale.title}
@@ -44,7 +45,12 @@ const MyAdvertisement = ({sale, handleOrder, handleRemove}) => {
                     </Row>
                     <Row className={'d-flex justify-content-center align-items-center'}>
                         <Col className={'d-flex justify-content-between align-items-center'}>
-                            <a className={'link-info'} onClick={() => handleOrder(id)}>Show orders</a>
+                            {
+                                sale.category === 'ITEM' ?
+                                    <a className={'link-info'} onClick={() => handleOrder(id)}>Show orders</a>
+                                    :
+                                    <></>
+                            }
                             <Button variant={'danger'} onClick={() => handleRemove(id)}>Remove</Button>
                         </Col>
                     </Row>

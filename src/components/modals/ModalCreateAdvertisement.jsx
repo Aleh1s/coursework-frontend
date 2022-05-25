@@ -108,6 +108,11 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
         data.append("_category", creationData.category)
         AdvertisementService.createAdvertisement(data)
             .then(() => {
+                setCreationData({
+                    city: '',
+                    description: '',
+                    title: ''
+                })
                 handleClose()
                 onCreate()
             })

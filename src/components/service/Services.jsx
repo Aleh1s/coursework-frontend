@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
+import {Alert, Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
 import Service from "./Service";
 import SearchBlock from "../UI/SearchBlock";
 import AdvertisementService from "../../service/AdvertisementService";
@@ -19,6 +19,10 @@ const Services = () => {
     const [queryFlag, setQueryFlag] = useState(false)
     const noResultImage = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
     const [currentQuery, setCurrentQuery] = useState('')
+    const [notification, setNotification] = useState({
+        show: false,
+        message: ''
+    })
     const navigate = useNavigate()
 
     const handleShowCreateModal = () => {
@@ -78,7 +82,8 @@ const Services = () => {
     }
 
     const onCreate = () => {
-        fetchAdvertisements()
+        setNotification({show: true, message: 'Advertisement was successfully created'})
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -95,7 +100,16 @@ const Services = () => {
 
     return (
         <Container>
-            <SearchBlock placeHolderText={'Search service'} setQuery={setQuery} handleSearch={handleFetchAdvertisementsByQuery} handleShowCreateModal={handleShowCreateModal}/>
+            <SearchBlock placeHolderText={'Search service'} setQuery={setQuery}
+                         handleSearch={handleFetchAdvertisementsByQuery} handleShowCreateModal={handleShowCreateModal}/>
+            {
+                notification.show ?
+                    <Alert key={'notification'} variant={'success'}>
+                        {notification.message}
+                    </Alert>
+                    :
+                    <></>
+            }
             {
                 showSpinner ?
                     <Row className={'d-flex justify-content-center align-items-center my-4'}>
@@ -109,9 +123,9 @@ const Services = () => {
                     <Row>
                         {
                             services.length !== 0 ? services.map(
-                                service =>
-                                    <Service service={service}/>
-                            ) :
+                                    service =>
+                                        <Service service={service}/>
+                                ) :
                                 <Row className={'d-flex justify-content-center'}>
                                     <Col className={'cow-12 d-flex justify-content-center'}>
                                         <Image src={noResultImage} className={'img-fluid'}/>

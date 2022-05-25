@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import AdvertisementService from "../../service/AdvertisementService";
-import {Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
+import {Alert, Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
 import SearchBlock from "../UI/SearchBlock";
 import ModalCreateAdvertisement from "../modals/ModalCreateAdvertisement";
 import House from "./House";
@@ -11,6 +11,10 @@ const HouseAdvertisements = () => {
 
     const navigate = useNavigate()
     const [houses, setHouses] = useState([])
+    const [notification, setNotification] = useState({
+        show: false,
+        message: ''
+    })
     const [totalPagesCount, setTotalPageCount] = useState(0)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
     const [showCreateModal, setShowCreateModal] = useState(false)
@@ -41,7 +45,8 @@ const HouseAdvertisements = () => {
     }
 
     const onCreate = () => {
-        fetchAdvertisements()
+        setNotification({show: true, message: 'Advertisement was successfully created'})
+        window.location.reload()
     }
 
     useEffect(() => {
@@ -97,6 +102,14 @@ const HouseAdvertisements = () => {
         <Container>
             <SearchBlock placeHolderText={'Search house'} handleSearch={handleFetchAdvertisementsByQuery}
                          setQuery={setQuery} handleShowCreateModal={handleShowCreateModal}/>
+            {
+                notification.show ?
+                    <Alert key={'notification'} variant={'success'}>
+                        {notification.message}
+                    </Alert>
+                    :
+                    <></>
+            }
             {showSpinner ?
                 <Row className={'d-flex justify-content-center align-items-center my-4'}>
                     <Col className={'d-flex justify-content-center align-items-center'}>

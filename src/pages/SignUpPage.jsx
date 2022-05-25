@@ -49,7 +49,9 @@ const SignUpPage = () => {
     const signUp = (e) => {
         e.preventDefault()
         AuthService.register(signUpData)
-            .then(response => response.status === 201 ? navigate('/sign-in') : handleShowServerErrorAlert('Unknown exception'))
+            .then(() => {
+                navigate('/sign-in')
+            })
             .catch(err => {
                 handleShowServerErrorAlert(err.response.data.message)
                 window.scrollTo(0, 0)
@@ -94,7 +96,7 @@ const SignUpPage = () => {
             case "password":
                 setSignUpData({...signUpData, password: e.target.value})
                 if (e.target.value.length < 5 || e.target.value.length > 30) {
-                    setSignUpDataError({...signUpDataError, password: 'Password is invalid'})
+                    setSignUpDataError({...signUpDataError, password: 'Password should be more than 5 symbols'})
                 } else {
                     setSignUpDataDirty({...signUpDataDirty, password: false})
                     setSignUpDataError({...signUpDataError, password: ''})
@@ -102,9 +104,9 @@ const SignUpPage = () => {
                 break
             case "firstName":
                 setSignUpData({...signUpData, firstName: e.target.value})
-                const regExpFirstName = /[A-Z][a-z]+/
+                const regExpFirstName = /^[A-Za-z][A-Za-z ]+?$/
                 if (!regExpFirstName.test(String(e.target.value))) {
-                    setSignUpDataError({...signUpDataError, firstName: 'First name is invalid'})
+                    setSignUpDataError({...signUpDataError, firstName: 'First name should contains only latin symbols'})
                 } else {
                     setSignUpDataDirty({...signUpDataDirty, firstName: false})
                     setSignUpDataError({...signUpDataError, firstName: ''})
@@ -112,9 +114,9 @@ const SignUpPage = () => {
                 break
             case "lastName":
                 setSignUpData({...signUpData, lastName: e.target.value})
-                const regExpLastName = /[A-Z][a-z]+/
+                const regExpLastName = /^[A-Za-z][A-Za-z ]+?$/
                 if (!regExpLastName.test(String(e.target.value))) {
-                    setSignUpDataError({...signUpDataError, lastName: 'Last name is invalid'})
+                    setSignUpDataError({...signUpDataError, lastName: 'Last name should contains only latin symbols'})
                 } else {
                     setSignUpDataDirty({...signUpDataDirty, lastName: false})
                     setSignUpDataError({...signUpDataError, lastName: ''})

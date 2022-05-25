@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Container, Row} from "react-bootstrap";
+import {Alert, Col, Container, Row} from "react-bootstrap";
 import TabProfile from "../components/UI/TabProfile";
 import UserInfoTab from "../components/UI/UserInfoTab";
 import OrdersService from "../service/OrdersService";
@@ -13,6 +13,10 @@ import UserService from "../service/UserService";
 const ProfilePage = () => {
 
     const dispatch = useDispatch()
+    const [error, setError] = useState({
+        show: false,
+        message: ''
+    })
     const advertisementToRemove = useSelector(state => state.advertisementToRemove)
     const user = useSelector(state => state.user)
     const myOrderId = useSelector(state => state.myOrderId)
@@ -149,25 +153,40 @@ const ProfilePage = () => {
 
     const removeAdvertisement = () => {
         AdvertisementService.removeAdvertisementById(advertisementToRemove)
-            .then(response => {
-                console.log(response)
+            .then(() => {
                 setShowRemoveAdvertisement(false)
                 fetchAdvertisements()
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setShowRemoveAdvertisement(false)
+                window.scrollTo(0, 0)
+                setError({show: true, message: err.response.data.message})
+            })
     }
 
     return (
         <Container>
             <Row>
+                {
+                    error.show ?
+                        <Col className={'col-12'}>
+                            <Alert key={'danger'} variant={'danger'}>
+                                {error.message}
+                            </Alert>
+                        </Col>
+                        :
+                        <></>
+                }
                 <UserInfoTab imageStatus={imageExists} setAddProfileImageModal={setShowAddProfileImage} user={user}/>
-                <TabProfile handleRemove={handleRemove} handleOrder={handleOrder} setShowOrdersModal={setShowOrders} showOrdersModal={showOrders}
+                <TabProfile handleRemove={handleRemove} handleOrder={handleOrder} setShowOrdersModal={setShowOrders}
+                            showOrdersModal={showOrders}
                             setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
                             setShowCancelOrderModal={setShowCancelOrderModal} myOrders={myOrders}
                             sales={myAdvertisements}/>
             </Row>
 
-            <AddProfileImageModal addImage={handleAddImage} show={showAddProfileImage} setShow={setShowAddProfileImage} />
+            <AddProfileImageModal addImage={handleAddImage} show={showAddProfileImage}
+                                  setShow={setShowAddProfileImage}/>
             <ProfileModal title={'Remove advertisement ?'} body={'Do you want to remove advertisement ?'}
                           action={removeAdvertisement}
                           show={showRemoveAdvertisement}
