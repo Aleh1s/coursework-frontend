@@ -1,97 +1,118 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Col, Container, Row} from "react-bootstrap";
-import TabProfile from "../components/UI/TabProfile";
+import {Alert, Col, Container, Row, Tab, Tabs} from "react-bootstrap";
 import UserInfoTab from "../components/UI/UserInfoTab";
 import OrdersService from "../service/OrdersService";
 import {useDispatch, useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import ModalOrders from "../components/modals/ModalOrders";
-import ProfileModal from "../components/modals/ProfileModal";
+import AcceptEventModal from "../components/modals/AcceptEventModal";
 import AddProfileImageModal from "../components/modals/AddProfileImageModal";
-import UserService from "../service/UserService";
+import ImageService from "../service/ImageService";
+import MyPurchases from "../components/order/MyPurchases";
+import MyAdvertisements from "../components/sale/MyAdvertisements";
 
 const ProfilePage = () => {
 
-    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
+    const [currentAdvertisementId, setCurrentAdvertisementId] = useState('')
+    const myOrderId = useSelector(state => state.id.myOrder)
+    const myPurchaseId = useSelector(state => state.id.myPurchase)
+    const advertisementToRemove = useSelector(state => state.id.advertisement)
+
+    const [showOrders, setShowOrders] = useState(false)
+    const [imageExists, setImageExists] = useState(false)
+    const [showSentModal, setShowSentModal] = useState(false)
+    const [showConfirmModal, setShowConfirmModal] = useState(false)
+    const [showDeclineModal, setShowDeclineModal] = useState(false)
+    const [showAddProfileImage, setShowAddProfileImage] = useState(false)
+    const [showCancelOrderModal, setShowCancelOrderModal] = useState(false)
+    const [showRemoveAdvertisement, setShowRemoveAdvertisement] = useState(false)
+    const [showMarkAsDeliveredModal, setShowMarkAsDeliveredModal] = useState(false)
+
+    const [myAdvertisements, setMyAdvertisements] = useState([])
+    const [totalMyAdvertisements, setTotalMyAdvertisements] = useState(0)
+    const [activeMyAdvertisementsPage, setActiveMyAdvertisementsPage] = useState(1)
+
+    const [myOrders, setMyOrders] = useState([])
+    const [totalMyOrders, setTotalMyOrders] = useState(0)
+    const [activeMyOrdersPage, setActiveMyOrdersPage] = useState(1)
+
+    const [myPurchases, setMyPurchases] = useState([])
+    const [totalMyPurchases, setTotalMyPurchases] = useState(0)
+    const [activeMyPurchasesPage, setActiveMyPurchasesPage] = useState(1)
+
     const [error, setError] = useState({
         show: false,
         message: ''
     })
-    const advertisementToRemove = useSelector(state => state.advertisementToRemove)
-    const user = useSelector(state => state.user)
-    const myOrderId = useSelector(state => state.myOrderId)
-    const advertisementOrderId = useSelector(state => state.myAdvertisementOrderId)
-    const [showOrders, setShowOrders] = useState(false)
-    const [showCancelOrderModal, setShowCancelOrderModal] = useState(false)
-    const [showMarkAsDeliveredModal, setShowMarkAsDeliveredModal] = useState(false)
-    const [myOrders, setMyOrders] = useState([])
-    const [showConfirmModal, setShowConfirmModal] = useState(false)
-    const [showSentModal, setShowSentModal] = useState(false)
-    const [showDeclineModal, setShowDeclineModal] = useState(false)
-    const [myAdvertisements, setMyAdvertisements] = useState([])
-    const [showAddProfileImage, setShowAddProfileImage] = useState(false)
-    const [imageExists, setImageExists] = useState(false)
-    const [showRemoveAdvertisement, setShowRemoveAdvertisement] = useState(false)
-    const [advertisementsOrder, setAdvertisementsOrder] = useState([{
-        uniqueId: '',
-        createdAt: '',
-        orderStatus: '',
-        wishes: '',
-        deliveryEntity: {
-            address: '',
-            city: '',
-            deliveryStatus: '',
-            id: '',
-            postOffice: ''
-        },
-        receiver: {
-            email: '',
-            firstName: '',
-            lastName: '',
-            phoneNumber: ''
-        }
-    }])
 
-    const handleOrder = (id) => {
-        OrdersService.getAllByAdvertisementId(id)
+    const fetchPurchases = () => {
+        OrdersService.getAllByUserEmail(user.email, 10, activeMyPurchasesPage - 1, 'createdAt')
             .then(response => {
-                setAdvertisementsOrder(response.data)
-                setShowOrders(true)
+                setMyPurchases(response.data.orders)
+                setTotalMyPurchases(response.data.totalCount)
             })
             .catch(err => console.log(err))
     }
 
-    useEffect(() => {
-        fetchOrders()
-        fetchAdvertisements()
-    }, [])
+    useState(() => {
+        fetchPurchases()
+    }, [activeMyPurchasesPage])
 
-    const fetchOrders = () => {
-        OrdersService.getAllByEmail()
-            .then(response => setMyOrders(response.data))
+    const handleShowOrders = (id) => {
+        setCurrentAdvertisementId(id)
+        fetchOrders(id)
+    }
+
+    const fetchOrders = (id) => {
+        if (id !== '') {
+            OrdersService.getAllByAdvertisementId(id, 10, activeMyOrdersPage - 1, 'createdAt')
+                .then(response => {
+                    setMyOrders(response.data.orderDetails)
+                    setTotalMyOrders(response.data.totalCount)
+                })
+                .catch(err => console.log(err))
+        }
+    }
+
+    useState(() => {
+        if (currentAdvertisementId !== '') {
+            fetchOrders(currentAdvertisementId)
+        }
+    }, [activeMyOrdersPage])
+
+    const fetchAdvertisements = () => {
+        AdvertisementService.getAdvertisementsByEmail(user.email, 10, 'createdAt', activeMyAdvertisementsPage - 1)
+            .then(response => {
+                setMyAdvertisements(response.data.advertisements)
+                setTotalMyAdvertisements(response.data.totalCount)
+            })
             .catch(err => console.log(err))
     }
 
-    const handleCancelOrder = () => {
-        OrdersService.cancelOrder(myOrderId)
+    useState(() => {
+        fetchAdvertisements()
+    }, [activeMyAdvertisementsPage])
+
+    const handleCancelPurchase = () => {
+        OrdersService.cancelOrder(myPurchaseId)
             .then(() => {
                 setShowCancelOrderModal(false)
-                fetchOrders()
+                fetchPurchases()
             })
             .catch(err => console.log(err))
     }
 
-    const handleChangeDeliveryStatusDelivered = () => {
-        OrdersService.changeDeliveryStatus(myOrderId, 'DELIVERED')
-            .then(() => {
-                setShowMarkAsDeliveredModal(false)
-                fetchOrders()
-            })
-            .catch(err => console.log(err))
+    const handleChangeDeliveryStatusOfPurchaseDelivered = () => {
+        changeDeliveryStatusOfPurchase(myPurchaseId, 'DELIVERED')
     }
 
-    const handleChangeDeliveryStatusInRoad = () => {
-        OrdersService.changeDeliveryStatus(advertisementOrderId, 'IN_ROAD')
+    const handleChangeDeliveryStatusOfMyOrderInRoad = () => {
+        changeDeliveryStatusOfPurchase(myOrderId, 'IN_ROAD')
+    }
+
+    const changeDeliveryStatusOfPurchase = (id, status) => {
+        OrdersService.changeDeliveryStatus(id, status)
             .then(() => {
                 setShowSentModal(false)
                 fetchAdvertisements()
@@ -99,34 +120,26 @@ const ProfilePage = () => {
             .catch(err => console.log(err))
     }
 
-    const fetchAdvertisements = () => {
-        AdvertisementService.getAdvertisementByEmail()
-            .then(response => {
-                setMyAdvertisements(response.data)
-            })
-            .catch(err => console.log(err))
-    }
-
     const handleConfirmOrder = () => {
-        OrdersService.confirmOrder(advertisementOrderId)
+        OrdersService.confirmOrder(myOrderId)
             .then(() => {
                 setShowConfirmModal(false)
-                fetchOrders()
+                fetchOrders(currentAdvertisementId)
             })
             .catch(err => console.log(err))
     }
 
     const handleDeclineOrder = () => {
-        OrdersService.declineOrder(advertisementOrderId)
+        OrdersService.declineOrder(myOrderId)
             .then(() => {
                 setShowDeclineModal(false)
-                fetchOrders()
+                fetchOrders(currentAdvertisementId)
             })
             .catch(err => console.log(err))
     }
 
     const checkImage = () => {
-        UserService.checkImage(user.email)
+        ImageService.userProfileImageExists(user.email)
             .then(response => setImageExists(response.data))
             .catch(err => console.log(err))
     }
@@ -138,17 +151,12 @@ const ProfilePage = () => {
     const handleAddImage = (image) => {
         const data = new FormData()
         data.append('_image', image)
-        UserService.addImage(data)
+        ImageService.addUserProfileImage(data)
             .then(() => {
                 setShowAddProfileImage(false)
                 checkImage()
             })
             .catch(err => console.log(err))
-    }
-
-    const handleRemove = (id) => {
-        dispatch({type: 'ADVERTISEMENT_ID_TO_REMOVE', payload: id})
-        setShowRemoveAdvertisement(true)
     }
 
     const removeAdvertisement = () => {
@@ -177,42 +185,68 @@ const ProfilePage = () => {
                         :
                         <></>
                 }
-                <UserInfoTab imageStatus={imageExists} setAddProfileImageModal={setShowAddProfileImage} user={user}/>
-                <TabProfile handleRemove={handleRemove} handleOrder={handleOrder} setShowOrdersModal={setShowOrders}
-                            showOrdersModal={showOrders}
-                            setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
-                            setShowCancelOrderModal={setShowCancelOrderModal} myOrders={myOrders}
-                            sales={myAdvertisements}/>
+                <UserInfoTab imageExists={imageExists} setAddProfileImageModal={setShowAddProfileImage} user={user}/>
+
+                <Col className={'col-lg-7 col-12 mx-auto my-4'}>
+                    <Tabs defaultActiveKey="my-orders" id="uncontrolled-tab-example"
+                          className="mb-3 justify-content-center">
+                        <Tab eventKey="my-purchases" title="My purchases">
+                            <MyPurchases setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
+                                         setShowCancelOrderModal={setShowCancelOrderModal}
+                                         activePage={activeMyPurchasesPage}
+                                         setActivePage={setActiveMyPurchasesPage} myPurchases={myPurchases}
+                                         totalCount={totalMyPurchases}
+                            />
+                        </Tab>
+                        <Tab eventKey="my-sales" title="My advertisements">
+                            <MyAdvertisements totalCount={totalMyAdvertisements} activePage={activeMyAdvertisementsPage}
+                                              setActivePage={setActiveMyAdvertisementsPage}
+                                              myAdvertisements={myAdvertisements}
+                                              setShowOrders={setShowOrders}
+                                              setShowRemove={setShowRemoveAdvertisement}
+                                              handleShowOrders={handleShowOrders}
+                            />
+                        </Tab>
+                    </Tabs>
+                </Col>
             </Row>
 
             <AddProfileImageModal addImage={handleAddImage} show={showAddProfileImage}
                                   setShow={setShowAddProfileImage}/>
-            <ProfileModal title={'Remove advertisement ?'} body={'Do you want to remove advertisement ?'}
-                          action={removeAdvertisement}
-                          show={showRemoveAdvertisement}
-                          setShow={setShowRemoveAdvertisement}/>
 
-            <ProfileModal title={'Cancel order ?'} body={'Do you want to cancel order ?'} action={handleCancelOrder}
-                          show={showCancelOrderModal}
-                          setShow={setShowCancelOrderModal}/>
+            <AcceptEventModal title={'Remove advertisement ?'} body={'Do you want to remove advertisement ?'}
+                              action={removeAdvertisement}
+                              show={showRemoveAdvertisement}
+                              setShow={setShowRemoveAdvertisement}/>
 
-            <ProfileModal title={'Mark as delivered?'} body={'Do you want to mark as delivered?'}
-                          action={handleChangeDeliveryStatusDelivered} setShow={setShowMarkAsDeliveredModal}
-                          show={showMarkAsDeliveredModal}/>
+            <AcceptEventModal title={'Cancel order ?'} body={'Do you want to cancel order ?'}
+                              action={handleCancelPurchase}
+                              show={showCancelOrderModal}
+                              setShow={setShowCancelOrderModal}/>
 
-            <ProfileModal title={'Was parcel sent ?'} body={'Have you sent parcel ?'}
-                          action={handleChangeDeliveryStatusInRoad}
-                          setShow={setShowSentModal} show={showSentModal}/>
+            <AcceptEventModal title={'Mark as delivered?'} body={'Do you want to mark as delivered?'}
+                              action={handleChangeDeliveryStatusOfPurchaseDelivered}
+                              setShow={setShowMarkAsDeliveredModal}
+                              show={showMarkAsDeliveredModal}/>
 
-            <ProfileModal title={'Decline order ?'} body={'Do you want to decline order ?'} action={handleDeclineOrder}
-                          setShow={setShowDeclineModal} show={showDeclineModal}/>
+            <AcceptEventModal title={'Was parcel sent ?'} body={'Have you sent parcel ?'}
+                              action={handleChangeDeliveryStatusOfMyOrderInRoad}
+                              setShow={setShowSentModal} show={showSentModal}/>
 
-            <ProfileModal title={'Confirm order ?'} body={'Do you want to confirm order ?'} action={handleConfirmOrder}
-                          setShow={setShowConfirmModal} show={showConfirmModal}/>
+            <AcceptEventModal title={'Decline order ?'} body={'Do you want to decline order ?'}
+                              action={handleDeclineOrder}
+                              setShow={setShowDeclineModal} show={showDeclineModal}/>
+
+            <AcceptEventModal title={'Confirm order ?'} body={'Do you want to confirm order ?'}
+                              action={handleConfirmOrder}
+                              setShow={setShowConfirmModal} show={showConfirmModal}/>
 
             <ModalOrders setShowSentModal={setShowSentModal} setShowDeclineModal={setShowDeclineModal}
-                         setShowConfirmModal={setShowConfirmModal} orders={advertisementsOrder}
-                         handleSetOrders={handleOrder} show={showOrders} setShow={setShowOrders}/>
+                         setShowConfirmModal={setShowConfirmModal}
+                         show={showOrders} setShow={setShowOrders}
+                         setActivePage={setActiveMyOrdersPage} activePage={activeMyOrdersPage}
+                         totalCount={totalMyOrders} myOrders={myOrders}
+            />
         </Container>
     );
 };

@@ -1,29 +1,28 @@
 import React, {useEffect, useState} from 'react';
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import AdvertisementService from "../../service/AdvertisementService";
 import {Alert, Col, Container, Image, Pagination, Row, Spinner} from "react-bootstrap";
-import Item from "./Item";
 import SearchBlock from "../UI/SearchBlock";
 import ModalCreateAdvertisement from "../modals/ModalCreateAdvertisement";
-import {useSelector} from "react-redux";
-import {useNavigate} from "react-router-dom";
-import AdvertisementService from "../../service/AdvertisementService";
+import Advertisement from "./Advertisement";
 
-const Items = () => {
+const Advertisements = ({category}) => {
 
     const navigate = useNavigate()
-    const [items, setItems] = useState([])
+    const isAuthenticated = useSelector(state => state.isAuthenticated)
+    const NO_RESULT_IMAGE = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
+    const [query, setQuery] = useState('')
+    const [activePage, setActivePage] = useState(1)
+    const [showSpinner, setShowSpinner] = useState(false)
+    const [advertisements, setAdvertisements] = useState([])
+    const [totalPagesCount, setTotalPageCount] = useState(0)
+    const [showCreateModal, setShowCreateModal] = useState(false)
     const [notification, setNotification] = useState({
         show: false,
         message: ''
     })
-    const [totalPagesCount, setTotalPageCount] = useState(0)
-    const isAuthenticated = useSelector(state => state.isAuthenticated)
-    const [showCreateModal, setShowCreateModal] = useState(false)
-    const [activePage, setActivePage] = useState(1)
-    const [showSpinner, setShowSpinner] = useState(false)
-    const [query, setQuery] = useState('')
-    const [queryFlag, setQueryFlag] = useState(false)
-    const [currentQuery, setCurrentQuery] = useState('')
-    const noResultImage = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
+
     const handleShowCreateModal = () => {
         if (isAuthenticated) {
             setShowCreateModal(!showCreateModal)
@@ -32,40 +31,13 @@ const Items = () => {
         }
     }
 
-    const fetchAdvertisementsByQuery = () => {
-        setShowSpinner(true)
-        AdvertisementService.getAdvertisementByQuery(query, activePage - 1, 12, 'ITEM', 'createdAt')
-            .then(response => {
-                setQueryFlag(true)
-                setItems(response.data.advertisements)
-                setTotalPageCount(response.data.totalCount)
-                setShowSpinner(false)
-            })
-            .catch(err => console.log(err))
-        setCurrentQuery(query)
-    }
-
-    const handleFetchAdvertisementsByQuery = () => {
-        switch (query) {
-            case currentQuery:
-                fetchAdvertisementsByQuery()
-                break
-            case '':
-                fetchAdvertisements()
-                break
-            default:
-                setActivePage(1)
-                fetchAdvertisementsByQuery()
-                break
-        }
-    }
-
     const fetchAdvertisements = () => {
         setShowSpinner(true)
-        AdvertisementService.getPageOfSortedAdvertisements(activePage - 1, 12, 'ITEM', 'createdAt')
+        AdvertisementService.getAll(activePage - 1, 12, category, 'createdAt', query)
             .then(response => {
-                setItems(response.data.advertisements)
+                setAdvertisements(response.data.advertisements)
                 setTotalPageCount(response.data.totalCount)
+                window.scrollTo(0, 0)
                 setShowSpinner(false)
             })
             .catch(err => console.log(err))
@@ -77,11 +49,7 @@ const Items = () => {
     }
 
     useEffect(() => {
-        if (queryFlag) {
-            fetchAdvertisementsByQuery()
-        } else {
-            fetchAdvertisements()
-        }
+        fetchAdvertisements()
     }, [activePage])
 
     let numbers = [];
@@ -89,15 +57,14 @@ const Items = () => {
         numbers.push(
             <Pagination.Item key={number} active={number === activePage} onClick={() => setActivePage(number)}>
                 {number}
-            </Pagination.Item>,
+            </Pagination.Item>
         );
     }
 
-
     return (
         <Container>
-            <SearchBlock placeHolderText={'Search item'} handleShowCreateModal={handleShowCreateModal}
-                         handleSearch={handleFetchAdvertisementsByQuery} setQuery={setQuery}/>
+            <SearchBlock placeHolderText={`Search ${category.toLowerCase()}`} handleShowCreateModal={handleShowCreateModal}
+                         handleSearch={fetchAdvertisements} setQuery={setQuery}/>
             {
                 notification.show ?
                     <Alert key={'notification'} variant={'success'}>
@@ -117,13 +84,13 @@ const Items = () => {
                 :
                 <Row className={'d-flex justify-content-lg-start mx-auto justify-content-center'}>
                     {
-                        items.length !== 0 ? items.map(
-                                item =>
-                                    <Item item={item}/>
+                        advertisements.length !== 0 ? advertisements.map(
+                                advertisement =>
+                                    <Advertisement advertisement={advertisement}/>
                             ) :
                             <Row className={'d-flex justify-content-center'}>
                                 <Col className={'cow-12 d-flex justify-content-center'}>
-                                    <Image src={noResultImage} className={'img-fluid'}/>
+                                    <Image src={NO_RESULT_IMAGE} className={'img-fluid'}/>
                                 </Col>
                             </Row>
                     }
@@ -135,9 +102,9 @@ const Items = () => {
                 </Row>
             }
             <ModalCreateAdvertisement onCreate={onCreate} show={showCreateModal} handleClose={handleShowCreateModal}
-                                      category={'ITEM'}/>
+                                      category={category}/>
         </Container>
     );
 };
 
-export default Items;
+export default Advertisements;

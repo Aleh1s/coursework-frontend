@@ -8,10 +8,11 @@ const initialState = {
         lastName: '',
         phoneNumber: ''
     },
-    advertisementId: '',
-    myOrderId: '',
-    myAdvertisementOrderId: '',
-    advertisementToRemove: ''
+    id: {
+        advertisement: '',
+        myOrder: '',
+        myPurchase: '',
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -22,14 +23,12 @@ const reducer = (state = initialState, action) => {
             return {...state, isAuthenticated: false, user: {}}
         case 'REFRESH':
             return {...state, isAuthenticated: true, user: action.payload}
-        case 'TO_ADVERTISEMENT':
-            return {...state, advertisementId: action.payload}
-        case 'MY_ORDER_ID':
-            return {...state, myOrderId: action.payload}
-        case 'MY_ADVERTISEMENT_ORDER_ID':
-            return {...state, myAdvertisementOrderId: action.payload}
-        case 'ADVERTISEMENT_ID_TO_REMOVE':
-            return {...state, advertisementToRemove: action.payload}
+        case 'SET_ADVERTISEMENT_ID':
+            return {...state, id: {...initialState.id, advertisement: action.payload}}
+        case 'SET_MY_ORDER_ID':
+            return {...state, id: {...initialState.id, myOrder: action.payload}}
+        case 'SET_MY_PURCHASE_ID':
+            return {...state, id: {...initialState.id, myPurchase: action.payload}}
         default:
             return state
     }

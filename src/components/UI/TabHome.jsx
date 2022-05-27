@@ -1,11 +1,8 @@
 import React from 'react';
 import {Col, Container, Row, Tabs} from "react-bootstrap";
-import Items from "../item/Items";
-import Services from "../service/Services";
-import HouseAdvertisements from "../houseAdv/HouseAdvertisements";
+import Advertisements from "../advertisements/Advertisements";
 
 const TabHome = () => {
-
     return (
         <Container>
             <Row>
@@ -13,13 +10,13 @@ const TabHome = () => {
                     <Tabs defaultActiveKey="items" id="uncontrolled-tab-example"
                           className="mb-3 justify-content-center ">
                         <TabHome eventKey="items" title="Items">
-                            <Items />
+                            <Advertisements category={'ITEM'}/>
                         </TabHome>
                         <TabHome eventKey="services" title="Services">
-                            <Services />
+                            <Advertisements category={'SERVICE'}/>
                         </TabHome>
                         <TabHome eventKey="houses" title="Houses">
-                            <HouseAdvertisements />
+                            <Advertisements category={'HOUSE'}/>
                         </TabHome>
                     </Tabs>
                 </Col>

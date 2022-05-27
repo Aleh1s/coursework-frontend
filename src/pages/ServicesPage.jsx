@@ -12,7 +12,7 @@ const ServicePage = () => {
         description: '',
         city: '',
         createdAt: '',
-        userResponseModel: {
+        userResponse: {
             email: '',
             firstName: '',
             lastName: '',
@@ -76,7 +76,7 @@ const ServicePage = () => {
                         </Col>
                     </Row>
                 </Col>
-                <CreatorInfo creatorInfo={serviceInfo.userResponseModel}/>
+                <CreatorInfo creatorInfo={serviceInfo.userResponse}/>
             </Row>
         </Container>
     );

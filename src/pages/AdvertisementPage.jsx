@@ -10,7 +10,7 @@ import {API_URL} from "../http";
 const AdvertisementPage = () => {
 
     const user = useSelector(state => state.user)
-    const id = useSelector(state => state.advertisementId)
+    const id = useSelector(state => state.id.advertisement)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
     const [notification, setNotification] = useState({
         show: false,
@@ -36,7 +36,7 @@ const AdvertisementPage = () => {
         city: '',
         category: '',
         createdAt: '',
-        userResponseModel: {
+        userResponse: {
             email: '',
             firstName: '',
             lastName: '',
@@ -66,7 +66,7 @@ const AdvertisementPage = () => {
             }
             <Row className={'my-3'}>
                 <Col className={'col-lg-7 col-12 p-2 shadow my-auto d-flex'}>
-                    <Image src={`${API_URL}/v1/advertisements/image?_id=${id}`} className={'img-fluid'}/>
+                    <Image src={`${API_URL}/v1/images/advertisements?_id=${id}`} className={'img-fluid'}/>
                 </Col>
                 <Col className={'d-flex col-12 col-lg-5 shadow my-lg-0 my-3 p-2'}>
                     <Row className={'h-100 d-flex col-12 mx-auto justify-content-center align-items-center'}>
@@ -74,7 +74,7 @@ const AdvertisementPage = () => {
                             <Image src={locationImage} width={'40px'} height={'40px'}/>
                             <p className={'h4'}>{itemInfo.city}</p>
                         </Col>
-                        {itemInfo.category === 'ITEM' && itemInfo.userResponseModel.email !== user.email ?
+                        {itemInfo.category === 'ITEM' && itemInfo.userResponse.email !== user.email ?
                             <Col className={'col-12 d-flex align-items-center justify-content-center mx-auto my-auto'}>
                                 <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
                                     online</Button>
@@ -101,7 +101,7 @@ const AdvertisementPage = () => {
                         </Col>
                     </Row>
                 </Col>
-                <CreatorInfo creatorInfo={itemInfo.userResponseModel}/>
+                <CreatorInfo creatorInfo={itemInfo.userResponse}/>
                 <ModalMakeOrder show={showModalForm} onHide={handleCloseModalForm}
                                 setNotification={setNotification}/>
             </Row>

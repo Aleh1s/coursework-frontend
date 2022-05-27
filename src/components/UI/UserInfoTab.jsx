@@ -3,7 +3,7 @@ import {Alert, Button, Col, Form, Image, Row} from "react-bootstrap";
 import {API_URL} from "../../http";
 import UserService from "../../service/UserService";
 
-const UserInfoTab = ({user, setAddProfileImageModal, imageStatus}) => {
+const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
 
     const [formValid, setFormValid] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
@@ -11,7 +11,7 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageStatus}) => {
         message: '',
         show: false
     })
-    const defaultImage = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
+    const DEFAULT_IMAGE = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png'
 
     const [updateData, setUpdateData] = useState({
         firstName: '',
@@ -84,7 +84,7 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageStatus}) => {
             <Row>
                 <Col className={'col-12 d-flex justify-content-center align-items-center'}>
                     <Image className={'mx-auto my-4 rounded-circle'}
-                           src={imageStatus ? `${API_URL}/v1/users/image?_email=${user.email}` : defaultImage}
+                           src={imageExists ? `${API_URL}/v1/images/users?_email=${user.email}` : DEFAULT_IMAGE}
                            height={'200px'}
                            width={'200px'}
                            onClick={() => setAddProfileImageModal(true)}

@@ -1,16 +1,15 @@
 import React from 'react';
 import {Accordion, Col, Image, Pagination, Row} from "react-bootstrap";
-import MyAdvertisement from "./MyAdvertisement";
+import MyPurchase from "./MyPurchase";
 
-const MyAdvertisements = ({
-                              myAdvertisements,
-                              setActivePage,
-                              activePage,
-                              totalCount,
-                              setShowOrders,
-                              setShowRemove,
-                              handleShowOrders
-                          }) => {
+const MyPurchases = ({
+                         myPurchases,
+                         setShowCancelOrderModal,
+                         activePage,
+                         setActivePage,
+                         totalCount,
+                         setShowMarkAsDeliveredModal
+                     }) => {
 
     const NO_RESULT_IMAGE = 'https://cdn.dribbble.com/users/1554526/screenshots/3399669/media/51c98501bc68499ed0220e1ba286eeaf.png?compress=1&resize=400x300'
 
@@ -27,10 +26,10 @@ const MyAdvertisements = ({
         <Row>
             <Accordion>
                 {
-                    myAdvertisements.length !== 0 ? myAdvertisements.map(advertisement =>
-                            <MyAdvertisement handleShowOrders={handleShowOrders} advertisement={advertisement}
-                                             setShowRemove={setShowRemove}
-                                             setShowOrders={setShowOrders}/>
+                    myPurchases.length !== 0 ? myPurchases.map(purchase =>
+                            <MyPurchase
+                                setShowCancelOrderModal={setShowCancelOrderModal}
+                                setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal} purchase={purchase}/>
                         ) :
                         <Row className={'d-flex justify-content-center'}>
                             <Col className={'cow-12 d-flex justify-content-center'}>
@@ -39,7 +38,7 @@ const MyAdvertisements = ({
                         </Row>
                 }
             </Accordion>
-            <Row className={'my-2'}>
+            <Row>
                 <Col>
                     <Pagination className={'mx-auto'}>{numbers}</Pagination>
                 </Col>
@@ -48,4 +47,4 @@ const MyAdvertisements = ({
     );
 };
 
-export default MyAdvertisements;
+export default MyPurchases;

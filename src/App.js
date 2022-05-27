@@ -3,12 +3,10 @@ import NavBar from "./components/UI/NavBar";
 import React, {useEffect} from 'react'
 import AuthService from "./service/AuthService";
 import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
 
 function App() {
 
     const dispatch = useDispatch()
-    const navigate = useNavigate()
 
     useEffect(() => {
         checkAuth()
@@ -17,14 +15,13 @@ function App() {
     const checkAuth = () => {
         AuthService.refresh()
             .then(response => {
-                localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
-                localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
+                localStorage.setItem('accessToken', `Bearer_${response.data.token}`)
                 dispatch({type: 'REFRESH', payload:
                         {
-                            email: response.data.userResponseModel.email,
-                            firstName: response.data.userResponseModel.firstName,
-                            lastName: response.data.userResponseModel.lastName,
-                            phoneNumber: response.data.userResponseModel.phoneNumber
+                            email: response.data.userResponse.email,
+                            firstName: response.data.userResponse.firstName,
+                            lastName: response.data.userResponse.lastName,
+                            phoneNumber: response.data.userResponse.phoneNumber
                         }
                 })
             })

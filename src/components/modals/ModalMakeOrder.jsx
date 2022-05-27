@@ -5,7 +5,7 @@ import OrdersService from "../../service/OrdersService";
 
 const ModalMakeOrder = ({show, onHide, setNotification}) => {
 
-    const id = useSelector(state => state.advertisementId)
+    const id = useSelector(state => state.id.advertisement)
     const user = useSelector(state => state.user)
     const [error, setError] = useState({
         showAlert: false,

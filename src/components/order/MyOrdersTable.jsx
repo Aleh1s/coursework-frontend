@@ -1,17 +1,18 @@
 import React from 'react';
 import {Container} from "react-bootstrap";
-import MyOrders from "./MyOrders";
+import MyPurchases from "./MyPurchases";
 
 const MyOrdersTable = ({
                            myOrders,
                            setShowCancelOrderModal,
-                           setShowMarkAsDeliveredModal
+                           setShowMarkAsDeliveredModal,
+                           numbers
                        }) => {
 
     return (
         <Container>
-            <MyOrders setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
-                      setShowCancelOrderModal={setShowCancelOrderModal} myOrders={myOrders}/>
+            <MyPurchases numbers={numbers} setShowMarkAsDeliveredModal={setShowMarkAsDeliveredModal}
+                         setShowCancelOrderModal={setShowCancelOrderModal} myOrders={myOrders}/>
         </Container>
     );
 };

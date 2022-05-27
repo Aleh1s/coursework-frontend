@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Modal} from "react-bootstrap";
 
-const ProfileModal = ({show, setShow, action, title, body}) => {
+const AcceptEventModal = ({show, setShow, action, title, body}) => {
     return (
         <Modal
             size="lg"
@@ -23,4 +23,4 @@ const ProfileModal = ({show, setShow, action, title, body}) => {
     );
 };
 
-export default ProfileModal;
+export default AcceptEventModal;

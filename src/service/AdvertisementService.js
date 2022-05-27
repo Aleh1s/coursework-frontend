@@ -3,24 +3,20 @@ import axios from "axios";
 
 export default class AdvertisementService {
 
-    static async createAdvertisement(formData) {
-        return await $api.post(`/v1/advertisements`, formData)
+    static async createAdvertisement(creationData) {
+        return await $api.post(`/v1/advertisements`, creationData)
     }
 
     static async getAdvertisementDetails(id) {
-        return await axios.get(`${API_URL}/v1/advertisements?_id=${id}`)
+        return await axios.get(`${API_URL}/v1/advertisements/${id}`)
     }
 
-    static async getPageOfSortedAdvertisements(page, limit, category, sortBy) {
-        return await axios.get(`${API_URL}/v1/advertisements/page?_category=${category}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
+    static async getAll(page, limit, category, sortBy, query) {
+        return await axios.get(`${API_URL}/v1/advertisements?_category=${category}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}&_query=${query}`)
     }
 
-    static async getAdvertisementByEmail() {
-        return await $api.get('/v1/advertisements/email')
-    }
-
-    static async getAdvertisementByQuery(query, page, limit, category, sortBy) {
-        return await axios.get(`${API_URL}/v1/advertisements/query?_limit=${limit}&_page=${page}&_sortBy=${sortBy}&_category=${category}&_query=${query}`)
+    static async getAdvertisementsByEmail(email, limit, sortBy, page) {
+        return await $api.get(`/v1/advertisements/one?_email=${email}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
     }
 
     static async removeAdvertisementById(id) {

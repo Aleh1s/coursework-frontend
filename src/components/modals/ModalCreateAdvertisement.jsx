@@ -126,7 +126,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
         <>
             <Modal show={show} onHide={handleClose} size={'lg'}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create advertisement in item category</Modal.Title>
+                    <Modal.Title>Create advertisement in {category.toLowerCase()} category</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
