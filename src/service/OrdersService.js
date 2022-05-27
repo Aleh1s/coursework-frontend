@@ -21,8 +21,8 @@ export default class OrdersService{
         return await $api.patch(`/v1/orders/change-status?_id=${id}&_status=${status}`)
     }
 
-    static async getAllByAdvertisementId(id, limit, page, sortBy) {
-        return await $api.get(`/v1/orders/advertisements/${id}?_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
+    static async getAllByAdvertisementId(id) {
+        return await $api.get(`/v1/orders/advertisements/${id}`)
     }
 
     static async confirmOrder(id) {

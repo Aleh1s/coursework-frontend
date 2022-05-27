@@ -1,7 +1,7 @@
 import React from 'react';
 import {Col, Container, Image, Row} from "react-bootstrap";
 
-const NotFound = () => {
+const NotFoundPage = () => {
     const notFoundImage = 'https://i.stack.imgur.com/6M513.png'
 
     return (
@@ -13,4 +13,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default NotFoundPage;

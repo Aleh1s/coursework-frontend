@@ -2,8 +2,14 @@ import React from 'react';
 import {Accordion, Badge, Button, Col, Figure, Image, Row} from "react-bootstrap";
 import {useDispatch} from "react-redux";
 import {API_URL} from "../../http";
+import OrdersService from "../../service/OrdersService";
+import AcceptEventModal from "../modals/AcceptEventModal";
+import {useState} from "react";
 
-const MyPurchase = ({purchase, setShowCancelOrderModal, setShowMarkAsDeliveredModal}) => {
+const MyPurchase = ({purchase, fetchPurchases}) => {
+
+    const [showCancelPurchase, setShowCancelPurchase] = useState(false)
+    const [showMarkAsDelivered, setShowMarkAsDelivered] = useState(false)
 
     const dispatch = useDispatch()
     const checkOrderStatus = () => {
@@ -26,7 +32,7 @@ const MyPurchase = ({purchase, setShowCancelOrderModal, setShowMarkAsDeliveredMo
             case 'CONFIRMED':
                 if (purchase.delivery.deliveryStatus === 'DELIVERED') {
                     return;
-                } else if(purchase.delivery.deliveryStatus === 'IN_PROCESS'){
+                } else if (purchase.delivery.deliveryStatus === 'IN_PROCESS') {
                     return (
                         <Row className={'d-flex justify-content-start align-items-center'}>
                             <Col className={'col-6'}>
@@ -37,7 +43,7 @@ const MyPurchase = ({purchase, setShowCancelOrderModal, setShowMarkAsDeliveredMo
                             </Col>
                         </Row>
                     )
-                } else if(purchase.delivery.deliveryStatus === 'IN_ROAD') {
+                } else if (purchase.delivery.deliveryStatus === 'IN_ROAD') {
                     return (
                         <Row className={'d-flex justify-content-start align-items-center'}>
                             <Col className={'col-6'}>
@@ -54,14 +60,30 @@ const MyPurchase = ({purchase, setShowCancelOrderModal, setShowMarkAsDeliveredMo
         }
     }
 
+    const handleCancelPurchase = () => {
+        OrdersService.cancelOrder(purchase.uniqueId)
+            .then(() => {
+                setShowCancelPurchase(false)
+                fetchPurchases()
+            })
+            .catch(err => console.log(err))
+    }
+
     const handleCancel = () => {
-        dispatch({type: 'SET_MY_PURCHASE_ID', payload: purchase.uniqueId})
-        setShowCancelOrderModal(true)
+        setShowCancelPurchase(true)
+    }
+
+    const changeDeliveryStatusOfPurchase = () => {
+        OrdersService.changeDeliveryStatus(purchase.uniqueId, 'DELIVERED')
+            .then(() => {
+                setShowMarkAsDelivered(false)
+                fetchPurchases()
+            })
+            .catch(err => console.log(err))
     }
 
     const handleMarkAsDelivered = () => {
-        dispatch({type: 'SET_MY_PURCHASE_ID', payload: purchase.uniqueId})
-        setShowMarkAsDeliveredModal(true)
+        setShowMarkAsDelivered(true)
     }
 
     const getButtonsByOrderStatus = () => {
@@ -113,77 +135,88 @@ const MyPurchase = ({purchase, setShowCancelOrderModal, setShowMarkAsDeliveredMo
     }
 
     return (
-        <Accordion.Item eventKey={purchase.uniqueId}>
-            <Accordion.Header>
-                <Row className={'d-flex justify-content-start align-items-center'}>
-                    <Col className={'col-3'}>
-                        <Image src={`${API_URL}/v1/images/advertisements?_id=${purchase.product.id}`} className={'img-thumbnail'}/>
-                    </Col>
-                    <Col className={'d-flex justify-content-start align-items-center col-9 mx-auto my-auto'}>
-                        <p className={'mx-auto my-auto'}>{onCompleted()} {purchase.product.category} - {purchase.product.title} {checkOrderStatus()}</p>
-                    </Col>
-                </Row>
-            </Accordion.Header>
-            <Accordion.Body>
-                <Row className={'d-flex justify-content-start align-items-start'}>
-                    <Row>
-                        <Col className={'col-12'}>
-                            <Figure>
-                                <Figure.Caption>Unique number: {purchase.uniqueId} created
-                                    at: {purchase.createdAt.substring(0, 10)}</Figure.Caption>
-                            </Figure>
+        <>
+            <Accordion.Item eventKey={purchase.uniqueId}>
+                <Accordion.Header>
+                    <Row className={'d-flex justify-content-start align-items-center'}>
+                        <Col className={'col-3'}>
+                            <Image src={`${API_URL}/v1/images/advertisements?_id=${purchase.product.id}`}
+                                   className={'img-thumbnail'}/>
                         </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '13px'}}><strong>{purchase.orderStatus}</strong></p>
+                        <Col className={'d-flex justify-content-start align-items-center col-9 mx-auto my-auto'}>
+                            <p className={'mx-auto my-auto'}>{onCompleted()} {purchase.product.category} - {purchase.product.title} {checkOrderStatus()}</p>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col className={'col-12'}>
-                            <Figure>
-                                <Figure.Caption>Delivery info</Figure.Caption>
-                            </Figure>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.delivery.city}, {purchase.delivery.address}, {purchase.delivery.postOffice}.
-                            </p>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '13px'}}><strong>{purchase.delivery.deliveryStatus}</strong></p>
-                        </Col>
+                </Accordion.Header>
+                <Accordion.Body>
+                    <Row className={'d-flex justify-content-start align-items-start'}>
+                        <Row>
+                            <Col className={'col-12'}>
+                                <Figure>
+                                    <Figure.Caption>Unique number: {purchase.uniqueId} created
+                                        at: {purchase.createdAt.substring(0, 10)}</Figure.Caption>
+                                </Figure>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '13px'}}><strong>{purchase.orderStatus}</strong></p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className={'col-12'}>
+                                <Figure>
+                                    <Figure.Caption>Delivery info</Figure.Caption>
+                                </Figure>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.delivery.city}, {purchase.delivery.address}, {purchase.delivery.postOffice}.
+                                </p>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '13px'}}><strong>{purchase.delivery.deliveryStatus}</strong></p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className={'col-12'}>
+                                <Figure>
+                                    <Figure.Caption>Sender</Figure.Caption>
+                                </Figure>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.sender.firstName} {purchase.sender.lastName}</p>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.sender.email}</p>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.sender.phoneNumber}</p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col className={'col-12'}>
+                                <Figure>
+                                    <Figure.Caption>Product</Figure.Caption>
+                                </Figure>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.product.title} ({purchase.product.id})</p>
+                            </Col>
+                            <Col className={'col-12'}>
+                                <p style={{fontSize: '14px'}}>{purchase.product.category}</p>
+                            </Col>
+                        </Row>
+                        {getButtonsByOrderStatus()}
                     </Row>
-                    <Row>
-                        <Col className={'col-12'}>
-                            <Figure>
-                                <Figure.Caption>Sender</Figure.Caption>
-                            </Figure>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.sender.firstName} {purchase.sender.lastName}</p>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.sender.email}</p>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.sender.phoneNumber}</p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col className={'col-12'}>
-                            <Figure>
-                                <Figure.Caption>Product</Figure.Caption>
-                            </Figure>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.product.title} ({purchase.product.id})</p>
-                        </Col>
-                        <Col className={'col-12'}>
-                            <p style={{fontSize: '14px'}}>{purchase.product.category}</p>
-                        </Col>
-                    </Row>
-                    {getButtonsByOrderStatus()}
-                </Row>
-            </Accordion.Body>
-        </Accordion.Item>
+                </Accordion.Body>
+            </Accordion.Item>
+            <AcceptEventModal title={'Cancel order ?'} body={'Do you want to cancel order ?'}
+                              action={handleCancelPurchase}
+                              show={showCancelPurchase}
+                              setShow={setShowCancelPurchase}/>
+            <AcceptEventModal title={'Mark as delivered?'} body={'Do you want to mark as delivered?'}
+                              action={changeDeliveryStatusOfPurchase}
+                              setShow={setShowMarkAsDelivered}
+                              show={showMarkAsDelivered}/>
+        </>
     );
 };
 
