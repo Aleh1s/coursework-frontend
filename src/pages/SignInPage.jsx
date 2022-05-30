@@ -79,7 +79,15 @@ const SignInPage = () => {
             .then(response => {
                 localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
                 localStorage.setItem('refreshToken', `Bearer_${response.data.refreshToken}`)
-                dispatch({type: 'AUTHENTICATE', payload: response.data.userResponse})
+                dispatch({type: 'AUTHENTICATE', payload:
+                        {
+                            email: response.data.userResponse.email,
+                            firstName: response.data.userResponse.firstName,
+                            lastName: response.data.userResponse.lastName,
+                            phoneNumber: response.data.userResponse.phoneNumber,
+                            role: response.data.userResponse.role
+                        }
+                })
                 navigate('/')
             })
             .catch(err => {

@@ -10,12 +10,15 @@ import ProfilePage from "../../pages/ProfilePage";
 import {useSelector} from "react-redux";
 import OrderDetailsPage from "../../pages/OrderDetailsPage";
 import NotFoundPage from "../../pages/NotFoundPage";
+import ModerationPage from "../admin/ModerationPage";
+import Feedbacks from "../admin/Feedbacks";
 
 const Router = () => {
 
+    const user = useSelector(state => state.user)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
 
-    if (isAuthenticated) {
+    if (isAuthenticated && user.role === 'USER') {
         return(
             <Routes>
                 <Route path={'/'} element={<HomePage />}/>
@@ -25,6 +28,20 @@ const Router = () => {
                 <Route path={'/my-sales'}/>
                 <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
                 <Route path={'/order/details'} element={<OrderDetailsPage />}/>
+                <Route path={'*'} element={<NotFoundPage />}/>
+            </Routes>
+        );
+    } else if (isAuthenticated && user.role === 'ADMIN') {
+        return (
+            <Routes>
+                <Route path={'/'} element={<HomePage />}/>
+                <Route path={'/personal-info'} element={<ProfilePage />}/>
+                <Route path={'/my-orders'}/>
+                <Route path={'/feedbacks'} element={<Feedbacks />}/>
+                <Route path={'/my-sales'}/>
+                <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
+                <Route path={'/order/details'} element={<OrderDetailsPage />}/>
+                <Route path={'/moderation'} element={<ModerationPage />}/>
                 <Route path={'*'} element={<NotFoundPage />}/>
             </Routes>
         );

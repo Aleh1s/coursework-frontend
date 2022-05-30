@@ -66,7 +66,7 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
         } else {
             setFormValid(true)
         }
-    },[dataError])
+    }, [dataError])
 
     const submitUpdating = () => {
         if (updateData.phoneNumber || updateData.firstName || updateData.lastName) {
@@ -147,7 +147,8 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
                                                    hidden={!dataError.phoneNumber}>{dataError.phoneNumber}</Form.Text>
                                     </Form.Group>
                                     <Col className={'my-2'}>
-                                        <Button variant="primary" disabled={!formValid} onClick={() => submitUpdating()}>
+                                        <Button variant="primary" disabled={!formValid}
+                                                onClick={() => submitUpdating()}>
                                             Update
                                         </Button>
                                     </Col>
@@ -161,8 +162,16 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
                                 <Col className={'col-12 my-2 d-flex justify-content-center'}>
                                     <p className={'h6'} align={'center'}>{`${user.firstName} ${user.lastName}`}</p>
                                 </Col>
+                                {
+                                    user.role === 'ADMIN' ?
+                                        <Col className={'d-flex col-12 justify-content-center my-auto'}>
+                                            <strong style={{color: 'green'}}>ADMINISTRATOR</strong>
+                                        </Col>
+                                        :
+                                        <></>
+                                }
                                 <Col className={'col-12 d-flex justify-content-center my-auto'}>
-                                    <p>Email: {user.email}</p>
+                                    <p>Email: {user.email} </p>
                                 </Col>
                                 <Col className={'col-12 d-flex justify-content-center my-auto'}>
                                     <p>

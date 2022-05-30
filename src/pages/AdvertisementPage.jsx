@@ -6,6 +6,8 @@ import AdvertisementService from "../service/AdvertisementService";
 import CreatorInfo from "../components/UI/CreatorInfo";
 import {useNavigate} from "react-router-dom";
 import {API_URL} from "../http";
+import AdminService from "../service/AdminService";
+import advertisement from "../components/advertisements/Advertisement";
 
 const AdvertisementPage = () => {
 
@@ -36,6 +38,7 @@ const AdvertisementPage = () => {
         city: '',
         category: '',
         createdAt: '',
+        status: '',
         userResponse: {
             email: '',
             firstName: '',
@@ -44,15 +47,83 @@ const AdvertisementPage = () => {
         }
     })
 
-    useEffect
-    (() => {
+    const fetchDetails = () => {
         AdvertisementService.getAdvertisementDetails(id)
             .then(response => {
                 setItemInfo(response.data)
-                console.log(response)
             })
             .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        fetchDetails()
     }, [])
+
+    const handleChangeAdvertisementStatus = (status) => {
+        AdminService.changeAdvertisementStatus(id, status)
+            .then(() => {
+                setNotification({show: true, message: `Advertisement status was changed to ${status.toLowerCase()}`})
+                window.scrollTo(0, 0)
+                fetchDetails()
+            })
+            .catch(err => console.log(err))
+    }
+
+    const getActionButton = () => {
+        if (user.role === 'ADMIN') {
+            return (
+                <Row className={'d-flex justify-content-center align-items-center'}>
+                    <Col className={'col-12 d-flex justify-content-between align-items-center'}>
+                        {getStatus(itemInfo.status)}
+                        <Button style={{width: '120px'}} variant={'success'} className={'mx-auto'}
+                                onClick={() => handleChangeAdvertisementStatus('CHECKED')}>Accept</Button>
+                        <Button style={{width: '120px'}} variant={'danger'} className={'mx-auto'}
+                                onClick={() => handleChangeAdvertisementStatus('BLOCKED')}>Block</Button>
+                    </Col>
+                </Row>
+            )
+        } else if (itemInfo.category === 'ITEM' && itemInfo.userResponse.email !== user.email) {
+            return (
+                <Row>
+                    <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
+                        online</Button>
+                </Row>
+            )
+        } else {
+            return (
+                <></>
+            )
+        }
+    }
+
+    const handleChangeUserStatus = (status) => {
+        AdminService.changeUserStatus(itemInfo.userResponse.email, status)
+            .then(() => {
+                setNotification({show: true, message: `User status was changed to ${status.toLowerCase()}`})
+                window.scrollTo(0, 0)
+                fetchDetails()
+            })
+            .catch(err => console.log(err))
+    }
+
+    const getStatus = (status) => {
+        switch (status) {
+            case 'UNCHECKED':
+                return (
+                    <p>Status: <strong style={{color: 'orange'}}>Unchecked</strong></p>
+                )
+            case 'CHECKED':
+                return (
+                    <p>Status: <strong style={{color: 'green'}}>Checked</strong></p>
+                )
+            case 'BLOCKED':
+                return (
+                    <p>Status: <strong style={{color: 'red'}}>Blocked</strong></p>
+                )
+            default:
+                return <></>
+        }
+    }
 
     return (
         <Container className={'p-2'}>
@@ -74,15 +145,7 @@ const AdvertisementPage = () => {
                             <Image src={locationImage} width={'40px'} height={'40px'}/>
                             <p className={'h4'}>{itemInfo.city}</p>
                         </Col>
-                        {itemInfo.category === 'ITEM' && itemInfo.userResponse.email !== user.email ?
-                            <Col className={'col-12 d-flex align-items-center justify-content-center mx-auto my-auto'}>
-                                <Button variant={'primary'} as={Col} className={'mx-1'} onClick={handleShowModalForm}>Order
-                                    online</Button>
-                            </Col>
-                            :
-                            <></>
-                        }
-
+                        {getActionButton()}
                     </Row>
                 </Col>
                 <Col className={'d-flex col-12 shadow-lg mx-auto my-4 p-2'}>
@@ -101,7 +164,8 @@ const AdvertisementPage = () => {
                         </Col>
                     </Row>
                 </Col>
-                <CreatorInfo creatorInfo={itemInfo.userResponse}/>
+                <CreatorInfo creatorInfo={itemInfo.userResponse}
+                             handleChangeUserStatus={handleChangeUserStatus}/>
                 <ModalMakeOrder show={showModalForm} onHide={handleCloseModalForm}
                                 setNotification={setNotification}/>
             </Row>

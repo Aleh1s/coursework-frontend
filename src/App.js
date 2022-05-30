@@ -21,7 +21,8 @@ function App() {
                             email: response.data.userResponse.email,
                             firstName: response.data.userResponse.firstName,
                             lastName: response.data.userResponse.lastName,
-                            phoneNumber: response.data.userResponse.phoneNumber
+                            phoneNumber: response.data.userResponse.phoneNumber,
+                            role: response.data.userResponse.role
                         }
                 })
             })

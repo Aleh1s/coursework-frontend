@@ -44,7 +44,7 @@ const Advertisements = ({category}) => {
     }
 
     const onCreate = () => {
-        setNotification({show: true, message: 'Advertisement was successfully created'})
+        setNotification({show: true, message: 'Advertisement will be posted after moderation'})
         window.location.reload()
     }
 
@@ -55,7 +55,10 @@ const Advertisements = ({category}) => {
     let numbers = [];
     for (let number = 1; number <= Math.ceil(totalPagesCount / 12); number++) {
         numbers.push(
-            <Pagination.Item key={number} active={number === activePage} onClick={() => setActivePage(number)}>
+            <Pagination.Item key={number} active={number === activePage} onClick={() => {
+                setActivePage(number)
+                window.scrollTo(0, 0)
+            }}>
                 {number}
             </Pagination.Item>
         );

@@ -27,7 +27,10 @@ const MyAdvertisements = ({user, setError}) => {
     let numbers = [];
     for (let number = 1; number <= Math.ceil(totalCount / 10); number++) {
         numbers.push(
-            <Pagination.Item key={number} active={number === activePage} onClick={() => setActivePage(number)}>
+            <Pagination.Item key={number} active={number === activePage} onClick={() => {
+                setActivePage(number)
+                window.scrollTo(0, 0)
+            }}>
                 {number}
             </Pagination.Item>
         );

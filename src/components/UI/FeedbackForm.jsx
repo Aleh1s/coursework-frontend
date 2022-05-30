@@ -38,7 +38,7 @@ const FeedbackForm = () => {
     }, [feedbackError])
 
     const blurHandler = (e) => {
-        switch (e.target.id) {
+        switch (e.target.name) {
             case "email":
                 setFeedbackDirty({...feedbackDirty, email: true})
                 break
@@ -48,7 +48,7 @@ const FeedbackForm = () => {
     }
 
     const dataValidator = (e) => {
-        switch (e.target.id) {
+        switch (e.target.name) {
             case "email":
                 setFeedback({...feedback, email: e.target.value})
                 const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -87,7 +87,7 @@ const FeedbackForm = () => {
                     <Form className={'p-3'} onSubmit={submit}>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Email address</Form.Label>
-                            <Form.Control value={feedback.email} id={'email'} onBlur={event => blurHandler(event)} type="email"
+                            <Form.Control value={feedback.email} name={'email'} onBlur={event => blurHandler(event)} type="email"
                                           placeholder="name@example.com" onChange={
                                 event => dataValidator(event)
                             }/>
@@ -96,7 +96,7 @@ const FeedbackForm = () => {
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                             <Form.Label>Feedback</Form.Label>
-                            <Form.Control value={feedback.text} id={'text'} onBlur={event => blurHandler(event)} as="textarea" rows={3}
+                            <Form.Control value={feedback.text} name={'text'} onBlur={event => blurHandler(event)} as="textarea" rows={3}
                                           onChange={
                                               event => dataValidator(event)
                                           }/>

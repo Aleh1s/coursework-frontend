@@ -53,19 +53,24 @@ const ProfilePage = () => {
                         <></>
                 }
                 <UserInfoTab imageExists={imageExists} setAddProfileImageModal={setShowAddProfileImage} user={user}/>
+                {
+                    user.role === 'USER' ?
+                        <Col className={'col-lg-7 col-12 mx-auto my-4'}>
+                            <Tabs defaultActiveKey="my-purchases" id="uncontrolled-tab-example"
+                                  className="mb-3 justify-content-center">
+                                <Tab eventKey="my-purchases" title="My purchases">
+                                    <MyPurchases user={user}
+                                    />
+                                </Tab>
+                                <Tab eventKey="my-sales" title="My advertisements">
+                                    <MyAdvertisements setError={setError} user={user}/>
+                                </Tab>
+                            </Tabs>
+                        </Col>
+                        :
+                        <></>
+                }
 
-                <Col className={'col-lg-7 col-12 mx-auto my-4'}>
-                    <Tabs defaultActiveKey="my-purchases" id="uncontrolled-tab-example"
-                          className="mb-3 justify-content-center">
-                        <Tab eventKey="my-purchases" title="My purchases">
-                            <MyPurchases user={user}
-                            />
-                        </Tab>
-                        <Tab eventKey="my-sales" title="My advertisements">
-                            <MyAdvertisements setError={setError} user={user}/>
-                        </Tab>
-                    </Tabs>
-                </Col>
             </Row>
 
             <AddProfileImageModal addImage={handleAddImage} show={showAddProfileImage}

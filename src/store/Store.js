@@ -6,7 +6,8 @@ const initialState = {
         email: '',
         firstName: '',
         lastName: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        role: ''
     },
     id: {
         advertisement: '',

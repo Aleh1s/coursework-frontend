@@ -21,7 +21,7 @@ $api.interceptors.response.use((config) => {
         originalRequest._isRetry = true
         AuthService.refresh()
             .then(response => {
-                localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)
+                localStorage.setItem('accessToken', `Bearer_${response.data.token}`)
                 return $api.request(originalRequest)
             })
             .catch(err => console.log("User is not authorized"))

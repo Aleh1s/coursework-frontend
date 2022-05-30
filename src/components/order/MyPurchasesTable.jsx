@@ -2,7 +2,7 @@ import React from 'react';
 import {Container} from "react-bootstrap";
 import MyPurchases from "./MyPurchases";
 
-const MyOrdersTable = ({
+const MyPurchasesTable = ({
                            myOrders,
                            setShowCancelOrderModal,
                            setShowMarkAsDeliveredModal,
@@ -17,4 +17,4 @@ const MyOrdersTable = ({
     );
 };
 
-export default MyOrdersTable;
+export default MyPurchasesTable;
