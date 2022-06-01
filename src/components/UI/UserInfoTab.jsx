@@ -2,9 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Col, Form, Image, Row} from "react-bootstrap";
 import {API_URL} from "../../http";
 import UserService from "../../service/UserService";
+import {useDispatch, useSelector} from "react-redux";
 
-const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
+const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
 
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
     const [formValid, setFormValid] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
     const [error, setError] = useState({
@@ -57,6 +60,8 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
                     setDataError({...dataError, phoneNumber: ''})
                 }
                 break
+            default:
+                console.log('Unknown name')
         }
     }
 
@@ -71,9 +76,14 @@ const UserInfoTab = ({user, setAddProfileImageModal, imageExists}) => {
     const submitUpdating = () => {
         if (updateData.phoneNumber || updateData.firstName || updateData.lastName) {
             UserService.update(updateData)
-                .then(() => {
+                .then(response => {
+                    dispatch({type: 'UPDATE_USER_DATA', payload: response.data})
+                    setUpdateData({
+                        firstName: '',
+                        lastName: '',
+                        phoneNumber: ''
+                    })
                     setIsEditing(false)
-                    window.location.reload()
                 })
                 .catch(err => setError({message: err.response.data.message, show: true}))
         }

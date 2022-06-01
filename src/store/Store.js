@@ -7,7 +7,8 @@ const initialState = {
         firstName: '',
         lastName: '',
         phoneNumber: '',
-        role: ''
+        role: '',
+        status : ''
     },
     id: {
         advertisement: '',
@@ -30,6 +31,8 @@ const reducer = (state = initialState, action) => {
             return {...state, id: {...initialState.id, myOrder: action.payload}}
         case 'SET_MY_PURCHASE_ID':
             return {...state, id: {...initialState.id, myPurchase: action.payload}}
+        case 'UPDATE_USER_DATA':
+            return {...state, user: action.payload}
         default:
             return state
     }

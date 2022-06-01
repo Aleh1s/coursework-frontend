@@ -61,8 +61,8 @@ const FeedbackForm = () => {
                 break
             case "text":
                 setFeedback({...feedback, text: e.target.value})
-                if (e.target.value.length < 40) {
-                    setFeedbackError({...feedbackError, text: 'Text should be more than 40 symbols'})
+                if (e.target.value.length < 40 || e.target.value.length > 255) {
+                    setFeedbackError({...feedbackError, text: 'Text should be more than 40 but less than 255 symbols'})
                 } else {
                     setFeedbackDirty({...feedbackDirty, text: false})
                     setFeedbackError({...feedbackError, text: ''})

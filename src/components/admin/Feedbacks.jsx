@@ -14,7 +14,7 @@ const Feedbacks = () => {
     const fetchFeedbacks = () => {
         AdminService.getFeedbacks(12, activePage - 1, 'createdAt')
             .then(response => {
-                setFeedbacks(response.data.feedbacks.content)
+                setFeedbacks(response.data.feedbacks)
                 setTotalCount(response.data.count)
             })
             .catch(err => console.log(err))

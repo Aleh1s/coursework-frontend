@@ -11,7 +11,6 @@ const MyPurchase = ({purchase, fetchPurchases}) => {
     const [showCancelPurchase, setShowCancelPurchase] = useState(false)
     const [showMarkAsDelivered, setShowMarkAsDelivered] = useState(false)
 
-    const dispatch = useDispatch()
     const checkOrderStatus = () => {
         switch (purchase.orderStatus) {
             case 'UNCONFIRMED':
@@ -57,6 +56,7 @@ const MyPurchase = ({purchase, fetchPurchases}) => {
                 }
             default:
                 console.log('Unknown status')
+                break
         }
     }
 
@@ -122,7 +122,7 @@ const MyPurchase = ({purchase, fetchPurchases}) => {
                     return;
                 }
             default:
-                throw new Error('Unknown status')
+                console.log('Unknown status')
         }
     }
 

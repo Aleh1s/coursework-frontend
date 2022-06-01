@@ -7,7 +7,7 @@ import ModalOrders from "../modals/ModalOrders";
 import AdvertisementService from "../../service/AdvertisementService";
 import OrdersService from "../../service/OrdersService";
 
-const MyAdvertisement = ({advertisement, fetchAdvertisements, setError}) => {
+const MyAdvertisement = ({fetchAdvertisements, advertisement, setError}) => {
 
     const id = advertisement.uniqueId
     const dispatch = useDispatch()

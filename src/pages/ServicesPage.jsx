@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
+import {Carousel, Col, Container, Figure, Image, Row} from "react-bootstrap";
 import CreatorInfo from "../components/UI/CreatorInfo";
-import ModalMakeOrder from "../components/modals/ModalMakeOrder";
 
 const ServicePage = () => {
 

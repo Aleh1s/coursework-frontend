@@ -52,7 +52,7 @@ const ProfilePage = () => {
                         :
                         <></>
                 }
-                <UserInfoTab imageExists={imageExists} setAddProfileImageModal={setShowAddProfileImage} user={user}/>
+                <UserInfoTab imageExists={imageExists} setAddProfileImageModal={setShowAddProfileImage}/>
                 {
                     user.role === 'USER' ?
                         <Col className={'col-lg-7 col-12 mx-auto my-4'}>

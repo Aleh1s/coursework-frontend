@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, Col, Image, Row} from "react-bootstrap";
 import {useSelector} from "react-redux";
 import {API_URL} from "../../http";
@@ -39,7 +39,7 @@ const CreatorInfo = ({creatorInfo, handleChangeUserStatus}) => {
             .catch(err => console.log(err))
     }
 
-    useState(() => {
+    useEffect(() => {
         if (creatorInfo.email !== '') {
             checkImage()
         }
@@ -61,7 +61,7 @@ const CreatorInfo = ({creatorInfo, handleChangeUserStatus}) => {
             <Col className={'my-1'}>
                 <Row className={'shadow-lg'}>
                     <Col className={'d-flex justify-content-start align-items-center my-auto p-3 col-6g'}>
-                        <Image src={imageExists ? `${API_URL}/v1/images/users?_email=${creatorInfo.email}` : DEFAULT_IMAGE} className={'img-fluid'} roundedCircle height={'48px'} width={'48px'}/>
+                        <Image src={imageExists ? `${API_URL}/v1/images/users?_email=${creatorInfo.email}` : DEFAULT_IMAGE} className={'mx-auto'} roundedCircle height={'48px'} width={'48px'}/>
                         <p className={'mx-3 my-auto'}
                            style={{fontSize: '17px'}}>Owner: {creatorInfo.firstName} {creatorInfo.lastName} {user.role === 'ADMIN' ? getStatus(creatorInfo.status) : ''}</p>
                     </Col>

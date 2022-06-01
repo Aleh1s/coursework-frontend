@@ -23,13 +23,15 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
     const [orderDataDirty, setOrderDataDirty] = useState({
         city: false,
         address: false,
-        postOffice: false
+        postOffice: false,
+        wishes: false
     })
 
     const [orderDataError, setOrderDataError] = useState({
         city: 'City can not be empty',
         address: 'Address can not be empty',
-        postOffice: 'Post office can not be empty'
+        postOffice: 'Post office can not be empty',
+        wishes: ''
     })
 
     const blurHandler = (e) => {
@@ -42,6 +44,9 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
                 break
             case 'postOffice':
                 setOrderDataDirty({...orderDataDirty, postOffice: true})
+                break
+            case 'wishes':
+                setOrderDataDirty({...orderDataDirty, wishes: true})
                 break
         }
     }
@@ -99,13 +104,22 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
                     setOrderDataError({...orderDataError, postOffice: ''})
                 }
                 break
+            case 'wishes':
+                setOrderData({...orderData, wishes: e.target.value})
+                if (e.target.value.length > 255) {
+                    setOrderDataError({...orderDataError, wishes: 'Wishes should be less than 255 symbols'})
+                } else {
+                    setOrderDataDirty({...orderDataDirty, wishes: false})
+                    setOrderDataError({...orderDataError, wishes: ''})
+                }
+                break
         }
     }
 
     const [formValid, setFormValid] = useState(false)
 
     useEffect(() => {
-        if (orderDataError.city || orderDataError.address || orderDataError.postOffice) {
+        if (orderDataError.city || orderDataError.address || orderDataError.postOffice || orderDataError.wishes) {
             setFormValid(false)
         } else {
             setFormValid(true)
@@ -116,7 +130,7 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
         e.preventDefault()
         OrdersService.makeOrder(orderData)
             .then(() => {
-                setNotification({show: true, message: 'Order was added to your orders'})
+                setNotification({show: true, message: 'Order was added to your purchases'})
                 window.scrollTo(0, 0)
                 onHide()
             })
@@ -189,11 +203,12 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
                     <Form.Group className="mb-3" controlId="formBasicPost">
                         <Form.Label>Post office</Form.Label>
                         <OverlayTrigger trigger="click" placement="bottom" overlay={postOfficePopover}>
-                        <Form.Control value={orderData.postOffice} name={'postOffice'}
-                                      onBlur={event => blurHandler(event)} type="text" placeholder="Enter post number"
-                                      onChange={
-                                          event => dataValidator(event)
-                                      }/>
+                            <Form.Control value={orderData.postOffice} name={'postOffice'}
+                                          onBlur={event => blurHandler(event)} type="text"
+                                          placeholder="Enter post number"
+                                          onChange={
+                                              event => dataValidator(event)
+                                          }/>
                         </OverlayTrigger>
                         <Form.Text className={'text-danger'}
                                    hidden={!orderDataDirty.postOffice}>{orderDataError.postOffice}</Form.Text>
@@ -204,10 +219,13 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
                         controlId="exampleForm.ControlTextarea1"
                     >
                         <Form.Label>Wishes</Form.Label>
-                        <Form.Control value={orderData.wishes} as="textarea" placeholder={'Enter some extra wishes'}
+                        <Form.Control value={orderData.wishes} onBlur={event => blurHandler(event)} name={'wishes'}
+                                      as="textarea" placeholder={'Enter some extra wishes'}
                                       rows={3} onChange={
-                            event => setOrderData({...orderData, wishes: event.target.value})
+                            event => dataValidator(event)
                         }/>
+                        <Form.Text className={'text-danger'}
+                                   hidden={!orderDataDirty.wishes}>{orderDataError.wishes}</Form.Text>
                     </Form.Group>
 
                     <Button variant="success" type="submit" disabled={!formValid}>
