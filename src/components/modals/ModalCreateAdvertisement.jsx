@@ -80,7 +80,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
             case "city":
                 setCreationData({...creationData, city: e.target.value})
                 const regExpCity = /[A-Za-z]{3}[A-Za-z ]*/
-                if (regExpCity.test(String(e.target.value))) {
+                if (!regExpCity.test(String(e.target.value))) {
                     setCreationDataError({...creationDataError, city: 'City is invalid'})
                 } else {
                     setCreationDataDirty({...creationDataDirty, city: false})

@@ -7,7 +7,6 @@ import AdvertisementPage from "../../pages/AdvertisementPage";
 import AboutPage from "../../pages/AboutPage";
 import ProfilePage from "../../pages/ProfilePage";
 import {useSelector} from "react-redux";
-import OrderDetailsPage from "../../pages/OrderDetailsPage";
 import NotFoundPage from "../../pages/NotFoundPage";
 import ModerationPage from "../admin/ModerationPage";
 import Feedbacks from "../admin/Feedbacks";
@@ -23,10 +22,7 @@ const Router = () => {
                 <Route path={'/'} element={<HomePage />}/>
                 <Route path={'/personal-info'} element={<ProfilePage />}/>
                 <Route path={'/about'} element={<AboutPage />}/>
-                <Route path={'/my-orders'}/>
-                <Route path={'/my-sales'}/>
-                <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
-                <Route path={'/order/details'} element={<OrderDetailsPage />}/>
+                <Route path={'/advertisements/advertisement/:id'} element={<AdvertisementPage />}/>
                 <Route path={'*'} element={<NotFoundPage />}/>
             </Routes>
         );
@@ -35,11 +31,8 @@ const Router = () => {
             <Routes>
                 <Route path={'/'} element={<HomePage />}/>
                 <Route path={'/personal-info'} element={<ProfilePage />}/>
-                <Route path={'/my-orders'}/>
                 <Route path={'/feedbacks'} element={<Feedbacks />}/>
-                <Route path={'/my-sales'}/>
-                <Route path={'/advertisements/advertisement'} element={<AdvertisementPage />}/>
-                <Route path={'/order/details'} element={<OrderDetailsPage />}/>
+                <Route path={'/advertisements/advertisement/:id'} element={<AdvertisementPage />}/>
                 <Route path={'/moderation'} element={<ModerationPage />}/>
                 <Route path={'*'} element={<NotFoundPage />}/>
             </Routes>

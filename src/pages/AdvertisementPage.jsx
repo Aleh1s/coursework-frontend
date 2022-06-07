@@ -4,14 +4,14 @@ import ModalMakeOrder from "../components/modals/ModalMakeOrder";
 import {useSelector} from "react-redux";
 import AdvertisementService from "../service/AdvertisementService";
 import CreatorInfo from "../components/UI/CreatorInfo";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {API_URL} from "../http";
 import AdminService from "../service/AdminService";
 
 const AdvertisementPage = () => {
 
+    const {id} = useParams()
     const user = useSelector(state => state.user)
-    const id = useSelector(state => state.id.advertisement)
     const isAuthenticated = useSelector(state => state.isAuthenticated)
     const [notification, setNotification] = useState({
         show: false,

@@ -6,6 +6,7 @@ import {Card, Col, Row} from "react-bootstrap";
 import {API_URL} from "../../http";
 
 const Advertisement = ({advertisement}) => {
+
     const id = advertisement.id
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -18,8 +19,8 @@ const Advertisement = ({advertisement}) => {
         'E%3Ctext%20x%3D%22108.53125%22%20y%3D%2297.44000034332275%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
 
     const handleViewMore = () => {
-        dispatch({type: 'SET_ADVERTISEMENT_ID', payload: id})
-        navigate('/advertisements/advertisement')
+        // dispatch({type: 'SET_ADVERTISEMENT_ID', payload: id})
+        navigate(`/advertisements/advertisement/${id}`)
     }
 
     const style = {
