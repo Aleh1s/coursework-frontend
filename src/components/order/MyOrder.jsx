@@ -3,7 +3,7 @@ import {Accordion, Badge, Button, Col, Figure, Row} from "react-bootstrap";
 import AcceptEventModal from "../modals/AcceptEventModal";
 import OrdersService from "../../service/OrdersService";
 
-const MyOrder = ({order, setShowOrders, fetchOrders}) => {
+const MyOrder = ({order, fetchOrders}) => {
 
     const [showChangeStatus, setShowChangeStatus] = useState(false)
     const [showDecline, setShowDecline] = useState(false)

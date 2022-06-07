@@ -30,8 +30,6 @@ const OrderDetailsPage = () => {
             .catch(err => console.log(err))
     }
 
-
-
     return (
         <Container>
             <Row className={'shadow-lg mx-auto my-3'}>

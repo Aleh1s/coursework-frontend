@@ -16,7 +16,7 @@ export default class AdvertisementService {
     }
 
     static async getAdvertisementsByEmail(email, limit, sortBy, page) {
-        return await $api.get(`/v1/advertisements/one?_email=${email}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
+        return await $api.get(`/v1/users/advertisements?_email=${email}&_limit=${limit}&_page=${page}&_sortBy=${sortBy}`)
     }
 
     static async removeAdvertisementById(id) {

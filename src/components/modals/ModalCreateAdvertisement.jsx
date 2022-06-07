@@ -58,8 +58,8 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "title":
                 setCreationData({...creationData, title: e.target.value})
-                if (e.target.value.length < 5) {
-                    setCreationDataError({...creationDataError, title: 'Title should be more than 5 symbols'})
+                if (e.target.value.length < 5 || e.target.value.length > 20) {
+                    setCreationDataError({...creationDataError, title: 'Title should be more than 5 and less than 20 symbols'})
                 } else {
                     setCreationDataDirty({...creationDataDirty, title: false})
                     setCreationDataError({...creationDataError, title: ''})
@@ -67,10 +67,10 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "desc":
                 setCreationData({...creationData, description: e.target.value})
-                if (e.target.value.length < 40) {
+                if (e.target.value.length < 40 || e.target.value.length > 2048) {
                     setCreationDataError({
                         ...creationDataError,
-                        description: 'Description should be more than 40 symbols'
+                        description: 'Description should be more than 40 symbols and less than 2048'
                     })
                 } else {
                     setCreationDataDirty({...creationDataDirty, description: false})
@@ -79,7 +79,8 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "city":
                 setCreationData({...creationData, city: e.target.value})
-                if (e.target.value.length < 2) {
+                const regExpCity = /[A-Za-z]{3}[A-Za-z ]*/
+                if (regExpCity.test(String(e.target.value))) {
                     setCreationDataError({...creationDataError, city: 'City is invalid'})
                 } else {
                     setCreationDataDirty({...creationDataDirty, city: false})

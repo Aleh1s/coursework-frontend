@@ -4,7 +4,6 @@ import SignUpPage from "../../pages/SignUpPage";
 import HomePage from "../../pages/HomePage";
 import SignInPage from "../../pages/SignInPage";
 import AdvertisementPage from "../../pages/AdvertisementPage";
-import ServicePage from "../../pages/ServicesPage";
 import AboutPage from "../../pages/AboutPage";
 import ProfilePage from "../../pages/ProfilePage";
 import {useSelector} from "react-redux";

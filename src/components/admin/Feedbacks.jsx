@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import AdminService from "../../service/AdminService";
 import {Col, Container, Image, Pagination, Row} from "react-bootstrap";
-import MyAdvertisement from "../sale/MyAdvertisement";
 import Feedback from "./Feedback";
 
 const Feedbacks = () => {
@@ -25,7 +24,7 @@ const Feedbacks = () => {
     }, [activePage])
 
     let numbers = [];
-    for (let number = 1; number <= Math.ceil(totalCount / 10); number++) {
+    for (let number = 1; number <= Math.ceil(totalCount / 10)   ; number++) {
         numbers.push(
             <Pagination.Item key={number} active={number === activePage} onClick={() => {
                 setActivePage(number)

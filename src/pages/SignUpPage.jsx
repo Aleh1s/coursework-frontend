@@ -53,13 +53,13 @@ const SignUpPage = () => {
                 navigate('/sign-in')
             })
             .catch(err => {
-                handleShowServerErrorAlert(err.response.data.message)
+                handleShowErrorAlert(err.response.data.message)
                 window.scrollTo(0, 0)
             })
     }
 
-    const handleShowServerErrorAlert = (message) => setServerError({...serverError, show: true, message: message})
-    const handleCloseServerErrorAlert = () => setServerError({...serverError, show: false, message: ''})
+    const handleShowErrorAlert = (message) => setServerError({...serverError, show: true, message: message})
+    const handleCloseErrorAlert = () => setServerError({...serverError, show: false, message: ''})
 
     const blurHandler = (e) => {
         switch (e.target.name) {
@@ -139,7 +139,7 @@ const SignUpPage = () => {
         <div>
             <Container>
                 <Row>
-                    <ServerErrorAlert show={serverError.show} onHide={handleCloseServerErrorAlert}
+                    <ServerErrorAlert show={serverError.show} onHide={handleCloseErrorAlert}
                                       message={serverError.message}/>
                 </Row>
                 <Row>

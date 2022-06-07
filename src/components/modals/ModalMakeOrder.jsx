@@ -76,9 +76,10 @@ const ModalMakeOrder = ({show, onHide, setNotification}) => {
     const dataValidator = (e) => {
         switch (e.target.name) {
             case 'city':
+                const regExpCity = /[A-Za-z]{3}[A-Za-z ]*/
                 setOrderData({...orderData, city: e.target.value})
-                if (e.target.value.length < 3) {
-                    setOrderDataError({...orderDataError, city: 'City can not be less than 3 symbols'})
+                if (!regExpCity.test(String(e.target.value))) {
+                    setOrderDataError({...orderDataError, city: 'Invalid city'})
                 } else {
                     setOrderDataDirty({...orderDataDirty, city: false})
                     setOrderDataError({...orderDataError, city: ''})

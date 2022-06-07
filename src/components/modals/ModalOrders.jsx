@@ -27,7 +27,7 @@ const ModalOrders = ({
                 <Row>
                     <Accordion>
                         {
-                            myOrders.length !== 0 ? myOrders.map(order => <MyOrder order={order} setShowOrders={setShow}
+                            myOrders.length !== 0 ? myOrders.map(order => <MyOrder order={order}
                                                                                    fetchOrders={fetchOrders}/>) :
                                 <Row className={'d-flex justify-content-center'}>
                                     <Col className={'cow-12 d-flex justify-content-center'}>

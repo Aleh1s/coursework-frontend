@@ -1,10 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Accordion, Badge, Button, Col, Figure, Image, Row} from "react-bootstrap";
-import {useDispatch} from "react-redux";
 import {API_URL} from "../../http";
 import OrdersService from "../../service/OrdersService";
 import AcceptEventModal from "../modals/AcceptEventModal";
-import {useState} from "react";
 
 const MyPurchase = ({purchase, fetchPurchases}) => {
 
@@ -42,7 +40,7 @@ const MyPurchase = ({purchase, fetchPurchases}) => {
                             </Col>
                         </Row>
                     )
-                } else if (purchase.delivery.deliveryStatus === 'IN_ROAD') {
+                } else {
                     return (
                         <Row className={'d-flex justify-content-start align-items-center'}>
                             <Col className={'col-6'}>
