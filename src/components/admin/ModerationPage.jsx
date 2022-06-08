@@ -37,6 +37,11 @@ const ModerationPage = () => {
 
     return (
         <Container>
+            <Row className={"d-flex justify-content-center align-items-start mx-auto my-3"}>
+                <Col className={"d-flex justify-content-center align-items-center col-12 mx-auto my-auto"}>
+                    <h1>Moderation</h1>
+                </Col>
+            </Row>
             <Row>
                 {
                     advertisements.length !== 0 ?

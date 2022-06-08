@@ -6,12 +6,13 @@ import AcceptEventModal from "../modals/AcceptEventModal";
 import ModalOrders from "../modals/ModalOrders";
 import AdvertisementService from "../../service/AdvertisementService";
 import OrdersService from "../../service/OrdersService";
+import {useNavigate} from "react-router-dom";
 
 const MyAdvertisement = ({fetchAdvertisements, advertisement, setError}) => {
 
     const id = advertisement.uniqueId
     const dispatch = useDispatch()
-
+    const navigate = useNavigate()
     const [showOrders, setShowOrders] = useState(false)
     const [showRemove, setShowRemove] = useState(false)
     const [myOrders, setMyOrders] = useState([])
@@ -88,6 +89,7 @@ const MyAdvertisement = ({fetchAdvertisements, advertisement, setError}) => {
                                         :
                                         <></>
                                 }
+                                <Button variant={'primary'} onClick={() => navigate(`/edit-advertisement/${id}`)}>Edit</Button>
                                 <Button variant={'danger'} onClick={() => {
                                     setShowRemove(true)
                                     dispatch({type: 'SET_ADVERTISEMENT_ID', payload: id})

@@ -22,4 +22,8 @@ export default class AdvertisementService {
     static async removeAdvertisementById(id) {
         return await $api.delete(`/v1/advertisements?_id=${id}`)
     }
+
+    static async updateAdvertisement(data) {
+        return await $api.patch(`/v1/advertisements`, data)
+    }
 }

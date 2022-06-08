@@ -58,8 +58,8 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "title":
                 setCreationData({...creationData, title: e.target.value})
-                if (e.target.value.length < 5 || e.target.value.length > 20) {
-                    setCreationDataError({...creationDataError, title: 'Title should be more than 5 and less than 20 symbols'})
+                if (e.target.value.length < 5 || e.target.value.length > 50) {
+                    setCreationDataError({...creationDataError, title: 'Title should be more than 5 and less than 50 symbols'})
                 } else {
                     setCreationDataDirty({...creationDataDirty, title: false})
                     setCreationDataError({...creationDataError, title: ''})
@@ -148,7 +148,6 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                                 name={'title'} onBlur={event => blurHandler(event)}
                                 type="text"
                                 placeholder="Enter title"
-                                autoFocus
                                 onChange={event => dataValidator(event)}
                             />
                             <Form.Text className={'text-danger'}

@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import NotFoundPage from "../../pages/NotFoundPage";
 import ModerationPage from "../admin/ModerationPage";
 import Feedbacks from "../admin/Feedbacks";
+import EditAdvertisementPage from "../../pages/EditAdvertisementPage";
 
 const Router = () => {
 
@@ -22,6 +23,9 @@ const Router = () => {
                 <Route path={'/'} element={<HomePage />}/>
                 <Route path={'/personal-info'} element={<ProfilePage />}/>
                 <Route path={'/about'} element={<AboutPage />}/>
+                <Route path={'/sign-in'} element={<SignInPage />}/>
+                <Route path={'/sign-up'} element={<SignUpPage />}/>
+                <Route path={'/edit-advertisement/:id'} element={<EditAdvertisementPage />}/>
                 <Route path={'/advertisements/advertisement/:id'} element={<AdvertisementPage />}/>
                 <Route path={'*'} element={<NotFoundPage />}/>
             </Routes>
@@ -32,6 +36,8 @@ const Router = () => {
                 <Route path={'/'} element={<HomePage />}/>
                 <Route path={'/personal-info'} element={<ProfilePage />}/>
                 <Route path={'/feedbacks'} element={<Feedbacks />}/>
+                <Route path={'/sign-in'} element={<SignInPage />}/>
+                <Route path={'/sign-up'} element={<SignUpPage />}/>
                 <Route path={'/advertisements/advertisement/:id'} element={<AdvertisementPage />}/>
                 <Route path={'/moderation'} element={<ModerationPage />}/>
                 <Route path={'*'} element={<NotFoundPage />}/>

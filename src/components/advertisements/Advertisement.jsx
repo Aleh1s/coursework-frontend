@@ -9,7 +9,6 @@ const Advertisement = ({advertisement}) => {
 
     const id = advertisement.id
     const navigate = useNavigate()
-    const dispatch = useDispatch()
     const [overlay, setOverlay] = useState(false)
     const DEFAULT_IMAGE = 'data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22286%22%20height%3D%22180%22%20xmlns%3D%22http%3A%' +
         '2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20286%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E' +
@@ -19,7 +18,6 @@ const Advertisement = ({advertisement}) => {
         'E%3Ctext%20x%3D%22108.53125%22%20y%3D%2297.44000034332275%22%3E286x180%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E'
 
     const handleViewMore = () => {
-        // dispatch({type: 'SET_ADVERTISEMENT_ID', payload: id})
         navigate(`/advertisements/advertisement/${id}`)
     }
 

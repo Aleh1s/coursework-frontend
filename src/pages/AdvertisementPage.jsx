@@ -165,7 +165,7 @@ const AdvertisementPage = () => {
                 </Col>
                 <CreatorInfo creatorInfo={itemInfo.userResponse}
                              handleChangeUserStatus={handleChangeUserStatus}/>
-                <ModalMakeOrder show={showModalForm} onHide={handleCloseModalForm}
+                <ModalMakeOrder id={id} show={showModalForm} onHide={handleCloseModalForm}
                                 setNotification={setNotification}/>
             </Row>
         </Container>
