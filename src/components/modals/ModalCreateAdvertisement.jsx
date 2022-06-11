@@ -58,7 +58,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "title":
                 setCreationData({...creationData, title: e.target.value})
-                if (e.target.value.length < 5 || e.target.value.length > 50) {
+                if (e.target.value.length < 5 || e.target.value.length > 50 || e.target.value.trim() === '') {
                     setCreationDataError({...creationDataError, title: 'Title should be more than 5 and less than 50 symbols'})
                 } else {
                     setCreationDataDirty({...creationDataDirty, title: false})
@@ -67,7 +67,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "desc":
                 setCreationData({...creationData, description: e.target.value})
-                if (e.target.value.length < 40 || e.target.value.length > 2048) {
+                if (e.target.value.length < 40 || e.target.value.length > 2048 || e.target.value.trim() === '') {
                     setCreationDataError({
                         ...creationDataError,
                         description: 'Description should be more than 40 symbols and less than 2048'
@@ -79,7 +79,7 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                 break
             case "city":
                 setCreationData({...creationData, city: e.target.value})
-                const regExpCity = /[A-Za-z]{3}[A-Za-z ]*/
+                const regExpCity = /^[A-Za-z]{3}[A-Za-z ]*[a-zA-Z]$/im
                 if (!regExpCity.test(String(e.target.value))) {
                     setCreationDataError({...creationDataError, city: 'City is invalid'})
                 } else {
@@ -103,9 +103,9 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
     const handleSubmit = () => {
         const data = new FormData()
         data.append("_image", creationData.image)
-        data.append("_title", creationData.title)
-        data.append("_description", creationData.description)
-        data.append("_city", creationData.city)
+        data.append("_title", creationData.title.trim())
+        data.append("_description", creationData.description.trim())
+        data.append("_city", creationData.city.trim())
         data.append("_category", creationData.category)
         AdvertisementService.createAdvertisement(data)
             .then(() => {
@@ -133,7 +133,10 @@ const ModalCreateAdvertisement = ({show, handleClose, category, onCreate}) => {
                     <Form>
                         <Form.Group controlId="formFileMultiple" className="mb-3">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control name={'image'} onBlur={event => blurHandler(event)} type="file" multiple
+                            <Form.Control name={'image'}
+                                          onBlur={event => blurHandler(event)}
+                                          type="file"
+                                          accept=".png,.jpg,.jpeg"
                                           onChange={event => {
                                               dataValidator(event)
                                           }}/>

@@ -75,7 +75,7 @@ const ModalMakeOrder = ({id, show, onHide, setNotification}) => {
     const dataValidator = (e) => {
         switch (e.target.name) {
             case 'city':
-                const regExpCity = /[A-Za-z]{3}[A-Za-z ]*/
+                const regExpCity = /[A-Za-z]{3}[A-Za-z ]*[a-zA-Z]$/im
                 setOrderData({...orderData, city: e.target.value})
                 if (!regExpCity.test(String(e.target.value))) {
                     setOrderDataError({...orderDataError, city: 'Invalid city'})
@@ -86,7 +86,7 @@ const ModalMakeOrder = ({id, show, onHide, setNotification}) => {
                 break
             case 'address':
                 setOrderData({...orderData, address: e.target.value})
-                const rexExpAddress = /S [A-Za-z]+ \d+? - HN \d+ - FN \d+/
+                const rexExpAddress = /S [A-Za-z]+ \d+? - HN \d+ - FN \d+/im
                 if (!rexExpAddress.test(String(e.target.value))) {
                     setOrderDataError({...orderDataError, address: 'Invalid address'})
                 } else {
@@ -96,7 +96,7 @@ const ModalMakeOrder = ({id, show, onHide, setNotification}) => {
                 break
             case 'postOffice':
                 setOrderData({...orderData, postOffice: e.target.value})
-                const rexExpPostOffice = /N [A-Za-z ]+ - ON \d+/
+                const rexExpPostOffice = /N [A-Za-z ]+ - ON \d+/im
                 if (!rexExpPostOffice.test(String(e.target.value))) {
                     setOrderDataError({...orderDataError, postOffice: 'Invalid post office'})
                 } else {

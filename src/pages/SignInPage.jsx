@@ -63,7 +63,8 @@ const SignInPage = () => {
                 break
             case "password":
                 setSignInData({...signInData, password: e.target.value})
-                if (e.target.value.length < 5 || e.target.value.length > 30) {
+                const passwordRegex = /\b[A-Za-z\d!@#$%^&*()-_+=?<>|\\"'.,~`]{5,50}\b/im
+                if (!passwordRegex.test(String(e.target.value))) {
                     setSignInDataError({...signInDataError, password: 'Password should be more than 5 symbols'})
                 } else {
                     setSignInDataDirty({...signInDataDirty, password: false})
@@ -75,6 +76,11 @@ const SignInPage = () => {
 
     const signIn = (e) => {
         e.preventDefault()
+        setSignInData(
+            {
+                ...signInData, email: signInData.email.trim()
+            }
+        )
         AuthService.authenticate(signInData)
             .then(response => {
                 localStorage.setItem('accessToken', `Bearer_${response.data.accessToken}`)

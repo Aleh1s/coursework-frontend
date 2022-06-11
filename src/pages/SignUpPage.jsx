@@ -48,6 +48,9 @@ const SignUpPage = () => {
 
     const signUp = (e) => {
         e.preventDefault()
+        setSignUpData({
+            ...signUpData, email: signUpData.email.trim()
+        })
         AuthService.register(signUpData)
             .then(() => {
                 navigate('/sign-in')
@@ -85,7 +88,7 @@ const SignUpPage = () => {
         switch (e.target.name) {
             case "email":
                 setSignUpData({...signUpData, email: e.target.value})
-                const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                const regExpEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/im
                 if (!regExpEmail.test(String(e.target.value).toLowerCase())) {
                     setSignUpDataError({...signUpDataError, email: 'Email is invalid'})
                 } else {
@@ -95,8 +98,9 @@ const SignUpPage = () => {
                 break
             case "password":
                 setSignUpData({...signUpData, password: e.target.value})
-                if (e.target.value.length < 5 || e.target.value.length > 30) {
-                    setSignUpDataError({...signUpDataError, password: 'Password should be more than 5 symbols'})
+                const passwordRegex = /\b[A-Za-z\d!@#$%^&*()-_+=?<>|\\"'.,~`]{5,50}\b/im;
+                if (!passwordRegex.test(String(e.target.value))) {
+                    setSignUpDataError({...signUpDataError, password: 'Password format is invalid'})
                 } else {
                     setSignUpDataDirty({...signUpDataDirty, password: false})
                     setSignUpDataError({...signUpDataError, password: ''})
@@ -104,7 +108,7 @@ const SignUpPage = () => {
                 break
             case "firstName":
                 setSignUpData({...signUpData, firstName: e.target.value})
-                const regExpFirstName = /^[A-Za-z][A-Za-z ]+?$/
+                const regExpFirstName = /^[A-Za-z][A-Za-z ]{2,40}[A-Za-z]$/im
                 if (!regExpFirstName.test(String(e.target.value))) {
                     setSignUpDataError({...signUpDataError, firstName: 'First name should contains only latin symbols'})
                 } else {
@@ -114,7 +118,7 @@ const SignUpPage = () => {
                 break
             case "lastName":
                 setSignUpData({...signUpData, lastName: e.target.value})
-                const regExpLastName = /^[A-Za-z][A-Za-z ]+?$/
+                const regExpLastName = /^[A-Za-z][A-Za-z ]{2,40}[A-Za-z]$/im
                 if (!regExpLastName.test(String(e.target.value))) {
                     setSignUpDataError({...signUpDataError, lastName: 'Last name should contains only latin symbols'})
                 } else {

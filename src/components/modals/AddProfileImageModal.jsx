@@ -19,7 +19,11 @@ const AddProfileImageModal = ({show, setShow, addImage}) => {
                     <Form>
                         <Form.Group controlId="formFileMultiple" className="mb-3">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control type="file" multiple onChange={event => setImage(event.target.files[0])}/>
+                            <Form.Control
+                                type="file"
+                                accept=".png,.jpg,.jpeg"
+                                onChange={event => setImage(event.target.files[0])}
+                            />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

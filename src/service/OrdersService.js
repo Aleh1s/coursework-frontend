@@ -9,10 +9,6 @@ export default class OrdersService{
         return await $api.post('/v1/orders', orderData)
     }
 
-    static async getOrderDetailsModel(id) {
-        return await $api.get(`/v1/orders?_id=${id}`)
-    }
-
     static async cancelOrder(id) {
         return await $api.patch(`/v1/orders/cancel?_id=${id}`)
     }

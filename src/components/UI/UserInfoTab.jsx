@@ -33,7 +33,7 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
             case 'firstName':
                 const firstName = e.target.value
                 setUpdateData({...updateData, firstName: firstName})
-                const regExpFN = /^[A-Za-z][A-Za-z ]+?$/
+                const regExpFN = /^[A-Za-z][A-Za-z ]{2,40}[A-Za-z]$/
                 if (firstName && !regExpFN.test(String(firstName))) {
                     setDataError({...dataError, firstName: 'First name must contains only latin letters'})
                 } else {
@@ -43,7 +43,7 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
             case 'lastName':
                 const lastName = e.target.value
                 setUpdateData({...updateData, lastName: lastName})
-                const regExpLN = /^[A-Za-z][A-Za-z ]+?$/
+                const regExpLN = /^[A-Za-z][A-Za-z ]{2,40}[A-Za-z]$/
                 if (lastName && !regExpLN.test(String(lastName))) {
                     setDataError({...dataError, lastName: 'Last name must contains only latin letters'})
                 } else {

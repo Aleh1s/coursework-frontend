@@ -38,7 +38,7 @@ function App() {
             <main>
 
             </main>
-            <footer style={{backgroundColor: '#212529', height: '80px'}}>
+            <footer style={{backgroundColor: '#212529', height: '200px'}}>
 
             </footer>
         </div>
