@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, Form, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, FormControl, InputGroup, Row} from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from "react-router-dom";
 import ServerErrorAlert from "../components/alert/ServerErrorAlert";
@@ -8,6 +8,7 @@ import AuthService from "../service/AuthService";
 const SignUpPage = () => {
 
     const navigate = useNavigate()
+    const [countryCode, setCountryCode] = useState('+380');
     const [serverError, setServerError] = useState({
         show: false,
         message: ''
@@ -46,12 +47,14 @@ const SignUpPage = () => {
         }
     }, [signUpDataError])
 
-    const signUp = (e) => {
-        e.preventDefault()
-        setSignUpData({
-            ...signUpData, email: signUpData.email.trim()
+    const signUp = () => {
+        AuthService.register({
+            email: signUpData.email.trim(),
+            password: signUpData.password,
+            firstName: signUpData.firstName.trim(),
+            lastName: signUpData.lastName.trim(),
+            phoneNumber: countryCode + signUpData.phoneNumber.trim()
         })
-        AuthService.register(signUpData)
             .then(() => {
                 navigate('/sign-in')
             })
@@ -128,8 +131,8 @@ const SignUpPage = () => {
                 break
             case "phoneNumber":
                 setSignUpData({...signUpData, phoneNumber: e.target.value})
-                const regExpPhoneNumber = /^(\+38)?0\d{9}$/im
-                if (!regExpPhoneNumber.test(String(e.target.value))) {
+                const regExPhoneNumber = /^\d{8,10}$/
+                if (!regExPhoneNumber.test(String(e.target.value))) {
                     setSignUpDataError({...signUpDataError, phoneNumber: 'Phone number is invalid'})
                 } else {
                     setSignUpDataDirty({...signUpDataDirty, phoneNumber: false})
@@ -193,22 +196,45 @@ const SignUpPage = () => {
                                                hidden={!signUpDataDirty.lastName}>{signUpDataError.lastName}</Form.Text>
                                 </Form.Group>
                             </Row>
+                            <Row className="mb-3 d-flex justify-content-center">
+                                <Form.Label>Country code</Form.Label>
+                                <Form.Select style={{width: '480px'}} value={countryCode} onChange={event => setCountryCode(event.target.value)}>
+                                    <option value="+380">Ukraine (+380)</option>
+                                    <option value="+48">Poland (+48)</option>
+                                    <option value="+49">Germany (+49)</option>
+                                    <option value="+33">France (+33)</option>
+                                    <option value="+44">England (+44)</option>
+                                    <option value="+39">Italy (+39)</option>
+                                    <option value="+34">Spain (+34)</option>
+                                    <option value="+370">Lithuania (+370)</option>
+                                    <option value="+371">Latvia (+371)</option>
+                                    <option value="+372">Estonia (+372)</option>
+                                    <option value="+421">Slovakia (+421)</option>
+                                    <option value="+43">Austria (+43)</option>
+                                    <option value="+351">Portugal (+351)</option>
+                                </Form.Select>
 
-                            <Row className="mb-3">
-
-                                <Form.Group as={Col} controlId="formGridZip">
-                                    <Form.Label>Phone number</Form.Label>
-                                    <Form.Control name={'phoneNumber'} onBlur={e => blurHandler(e)}
-                                                  placeholder={'+380XXXXXXXXX'} value={signUpData.phoneNumber}
-                                                  onChange={
-                                                      event => dataValidator(event)}/>
-                                    <Form.Text className={'text-danger'}
-                                               hidden={!signUpDataDirty.phoneNumber}>{signUpDataError.phoneNumber}</Form.Text>
-                                </Form.Group>
+                                <Form.Label className={'my-2'}>Phone number</Form.Label>
+                                <InputGroup className="mb-3">
+                                    <InputGroup.Text id="basic-addon1">{countryCode}</InputGroup.Text>
+                                    <FormControl
+                                        name="phoneNumber"
+                                        placeholder="Phone number"
+                                        aria-label="Phone number"
+                                        aria-describedby="basic-addon1"
+                                        onBlur={e => blurHandler(e)}
+                                        value={signUpData.phoneNumber}
+                                        onChange={event => dataValidator(event)}
+                                    />
+                                    <InputGroup.Text className={'text-danger'}
+                                                     hidden={!signUpDataDirty.phoneNumber}>{signUpDataError.phoneNumber}</InputGroup.Text>
+                                </InputGroup>
                             </Row>
 
                             <Row className={'my-4 mx-auto'}>
-                                <Button variant="primary" type="submit" disabled={!formValid}>
+                                <Button variant="primary" onClick={() => {
+                                    signUp()
+                                }} disabled={!formValid}>
                                     Sign up
                                 </Button>
                             </Row>

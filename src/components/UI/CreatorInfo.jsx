@@ -66,7 +66,7 @@ const CreatorInfo = ({creatorInfo, handleChangeUserStatus}) => {
                            style={{fontSize: '17px'}}>Owner: {creatorInfo.firstName} {creatorInfo.lastName} {user.role === 'ADMIN' ? getStatus(creatorInfo.status) : ''}</p>
                     </Col>
                     <Col className={'d-flex justify-content-end align-items-center my-auto col-3'}>
-                        +380-XXX-XXX-XXX
+                        +XXX-XXX-XXX-XXX
                     </Col>
                     {getActionButton()}
                     <ModalPhone show={showModalPhone} phoneNumber={creatorInfo.phoneNumber} onHide={handleCloseModalPhone}/>

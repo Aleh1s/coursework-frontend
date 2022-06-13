@@ -16,8 +16,7 @@ const ModalPhone = (props) => {
             </Modal.Header>
             <Modal.Body>
                 <p>
-                    {props.phoneNumber.includes('+38') ?
-                        props.phoneNumber : `+38${props.phoneNumber}`}
+                    {props.phoneNumber}
                 </p>
             </Modal.Body>
             <Modal.Footer>

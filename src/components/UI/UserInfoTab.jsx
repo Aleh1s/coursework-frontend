@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, Col, Form, Image, Row} from "react-bootstrap";
+import {Alert, Button, Col, Form, FormControl, Image, InputGroup, Row} from "react-bootstrap";
 import {API_URL} from "../../http";
 import UserService from "../../service/UserService";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,6 +10,7 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
     const dispatch = useDispatch()
     const [formValid, setFormValid] = useState(false)
     const [isEditing, setIsEditing] = useState(false)
+    const [countryCode, setCountryCode] = useState('+380')
     const [error, setError] = useState({
         message: '',
         show: false
@@ -53,8 +54,8 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
             case 'phoneNumber':
                 const phoneNumber = e.target.value
                 setUpdateData({...updateData, phoneNumber: phoneNumber})
-                const regExpPN = /^(\+38)?0\d{9}$/im
-                if (phoneNumber && !regExpPN.test(String(phoneNumber))) {
+                const isValid = /^\d{8,10}$/
+                if (!isValid.test(String(e.target.value))) {
                     setDataError({...dataError, phoneNumber: 'Invalid phone number'})
                 } else {
                     setDataError({...dataError, phoneNumber: ''})
@@ -75,7 +76,11 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
 
     const submitUpdating = () => {
         if (updateData.phoneNumber || updateData.firstName || updateData.lastName) {
-            UserService.update(updateData)
+            UserService.update({
+                firstName: updateData.firstName,
+                lastName: updateData.lastName,
+                phoneNumber: countryCode + updateData.phoneNumber
+            })
                 .then(response => {
                     dispatch({type: 'UPDATE_USER_DATA', payload: response.data})
                     setUpdateData({
@@ -145,17 +150,39 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
                                                    hidden={!dataError.lastName}>{dataError.lastName}</Form.Text>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridZip">
-                                        <Form.Label>Phone number</Form.Label>
-                                        <Form.Control name={'phoneNumber'}
-                                                      placeholder={'+380XXXXXXXXX'} value={updateData.phoneNumber}
-                                                      onChange={
-                                                          event => dataValidator(event)
-                                                      }
-                                        />
-                                        <Form.Text className={'text-danger'}
-                                                   hidden={!dataError.phoneNumber}>{dataError.phoneNumber}</Form.Text>
-                                    </Form.Group>
+                                    <Row className="mb-3 d-flex justify-content-center">
+                                        <Form.Label>Country code</Form.Label>
+                                        <Form.Select style={{width: '480px'}} value={countryCode} onChange={event => setCountryCode(event.target.value)}>
+                                            <option value="+380">Ukraine (+380)</option>
+                                            <option value="+48">Poland (+48)</option>
+                                            <option value="+49">Germany (+49)</option>
+                                            <option value="+33">France (+33)</option>
+                                            <option value="+44">England (+44)</option>
+                                            <option value="+39">Italy (+39)</option>
+                                            <option value="+34">Spain (+34)</option>
+                                            <option value="+370">Lithuania (+370)</option>
+                                            <option value="+371">Latvia (+371)</option>
+                                            <option value="+372">Estonia (+372)</option>
+                                            <option value="+421">Slovakia (+421)</option>
+                                            <option value="+43">Austria (+43)</option>
+                                            <option value="+351">Portugal (+351)</option>
+                                        </Form.Select>
+
+                                        <Form.Label className={'my-2'}>Phone number</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <InputGroup.Text id="basic-addon1">{countryCode}</InputGroup.Text>
+                                            <FormControl
+                                                name="phoneNumber"
+                                                placeholder="Phone number"
+                                                aria-label="Phone number"
+                                                aria-describedby="basic-addon1"
+                                                value={updateData.phoneNumber}
+                                                onChange={event => dataValidator(event)}
+                                            />
+                                            <InputGroup.Text className={'text-danger'}
+                                                             hidden={!dataError.phoneNumber}>{dataError.phoneNumber}</InputGroup.Text>
+                                        </InputGroup>
+                                    </Row>
                                     <Col className={'my-2'}>
                                         <Button variant="primary" disabled={!formValid}
                                                 onClick={() => submitUpdating()}>
@@ -164,7 +191,6 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
                                     </Col>
                                 </Form>
                             </Row>
-
                         </Col>
                         :
                         <Col className={'col-12 mx-auto my-4'}>
@@ -185,9 +211,7 @@ const UserInfoTab = ({setAddProfileImageModal, imageExists}) => {
                                 </Col>
                                 <Col className={'col-12 d-flex justify-content-center my-auto'}>
                                     <p>
-                                        Phone number: {
-                                        user.phoneNumber.includes('+38') ?
-                                            user.phoneNumber : `+38${user.phoneNumber}`}
+                                        Phone number: {user.phoneNumber}
                                     </p>
                                 </Col>
                             </Row>
